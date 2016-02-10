@@ -5,12 +5,14 @@ $show_accept_dialog => undef
 </%args>
 
 <center>
-<br/><br/>
-<& homepage/iconmenu.mas &>
+<br/>
+<& homepage/carousel.mas &>
 <br/><br/>
 </center>
 
-
-
+<div class="well">
+<& /homepage/usage_popup.mas &>
+<br/>
+</div>
 
 
