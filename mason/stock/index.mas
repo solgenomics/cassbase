@@ -1,0 +1,736 @@
+<%doc>
+
+=head1 NAME
+
+/stock/index.mas - a page for displaying stock details (e.g. accession, population, etc.) 
+
+=head1 DESCRIPTION
+
+parameters:
+
+=over 1
+
+=item $stockref
+
+a hashref with all the parameters needed for printing the stock page! 
+
+ $stockref->{stock_id}
+ $stockref->{stock}
+ $stockref->{schema}
+ $stockref->{uniquename}
+ $stockref->{curator}  (boolean)
+ $stockref->{submitter} (boolean)
+ $stockref->{is_owner} (boolean)
+ $stockref->{props} (hash of arrayrefs of stockprops. Keys = prop name, value = prop value)
+ $stockref->{has_pedigree} (boolean)
+ $stockref->{has_descendants} (boolean)
+ locus_add_uri
+ locus_autocomplete_uri => '/ajax/locus/autocomplete/'
+ cvterm_add_uri
+ cvterm_autocomplete_uri => '/ajax/cvterm/autocomplete/'
+ barcode_tempdir
+ barcode_tempuri 
+ organism_autocomplete_uri => '/ajax/organism/autocomplete/'
+
+=back
+
+=head1 AUTHOR
+
+Naama Menda <nm249@cornell.edu>
+
+=cut
+
+</%doc>
+
+<%args>
+$stock_row
+$stockref => undef
+$locus_add_uri => ''
+$locus_autocomplete_uri => undef
+$cvterm_add_uri => ''
+$cvterm_autocomplete_uri => undef
+$barcode_tempdir => undef
+$barcode_tempuri => undef
+$identifier_prefix => 'SGN'
+$organism_autocomplete_uri => '/ajax/organism/autocomplete/'
+
+</%args>
+
+
+<%perl>
+
+use Bio::Chado::Schema;
+use CXGN::Chado::Stock;
+use CXGN::Page::FormattingHelpers qw / html_optional_show info_table_html /;
+use CXGN::People::Person;
+use CXGN::Chado::Publication;
+use CXGN::Cview::Map::SGN::Genotype;
+use CXGN::Cview::MapOverviews;
+use Data::Dumper;
+
+my $stock = $stockref->{stock};
+my $stock_id = $stockref->{stock_id};
+my $action = $stockref->{action} || 'view';
+my $person_id = $stockref->{person_id};
+my $curator = $stockref->{curator};
+my $submitter = $stockref->{submitter};
+my $sequencer = $stockref->{sequencer};
+my $pubs = $stockref->{pubs};
+my $has_pedigree = $stockref->{has_pedigree};
+my $has_descendants = $stockref->{has_descendants};
+my $trait_ontology_db_name = $stockref->{trait_ontology_db_name};
+my $editable_stock_props_string = $stockref->{editable_stock_props};
+my $schema = $stockref->{schema};
+my $dbh = $stockref->{dbh};
+
+my @editable_stock_props = split "," , $editable_stock_props_string;
+
+my $stockprop_cv = $schema->resultset("Cv::Cv")->search( {
+ 'me.name' => 'stock_property'} );
+
+
+my ($type_name, $uniquename);
+my $type = $stock_row ? $stock_row->type : undef;
+$type_name  = $type->name() if $type;
+$uniquename = $stock->get_uniquename if $type;
+#################
+my $is_owner = $stockref->{is_owner};
+
+my $this_page = "/stock/$stock_id/view";
+
+my $add_image_link = qq|<a href="/image/add?type_id=$stock_id&action=new&type=stock&refering_page=$this_page">[Add new image]</a>|;
+my $image_ids =  $stockref->{image_ids} || [] ;
+my $stockprops = $stockref->{props};
+
+print STDERR Dumper $stockprops;
+
+my %stockprops_hash = %$stockprops;
+my $is_ethz_cass_transgenic;
+if ($stockprops_hash{'ethz_cass_transgenic'}) {
+  $is_ethz_cass_transgenic = 1;
+}
+
+###this is replaced by $editable_stock_props. Needs to be provided in the conf file
+my $metadata = ['variety', 'donor', 'donor institute', 'country', 'state' , 'adaptation' , 'notes', 'GSOR', 'NPGS', 'Gpno', 'IRGSP', 'NSFTV', 'CIor', 'PI', 'subpopulation'];
+####
+
+
+#my $pedigree= ['pedigree', 'male parent', 'female parent'];
+# get pedigree of stock
+#my $stock_pedigree = $stockref->{stock_pedigree};
+#my $stock_descendants = $stockref->{stock_descendants};
+
+
+my $experiment = ['year', 'location', 'replicate']; # these values should be in nd_experimentprop ?
+
+my $resources = [ 'stock_synonym', 'solcap number'];
+
+my $allele_div = "stock_alleles";
+my $new_locus_link = !$person_id ? qq|<a href="/solpeople/login.pl">[log-in to associate new locus]</a> | : '' ;
+
+#owner
+my $owners = $stockref->{owners};
+my $editor_link;
+foreach my $o_id (@$owners) {
+  my $person = CXGN::People::Person->new($dbh, $o_id);
+  my $first_name = $person->get_first_name;
+  my $last_name = $person->get_last_name;
+  $editor_link .= qq|<a href="/solpeople/personal-info.pl?sp_person_id=$o_id">$first_name $last_name</a> |;
+}
+
+#phenotypes measured directly on this stock
+my $direct_phenotypes = $stockref->{direct_phenotypes} || undef;
+
+# get all phenotypes of subjects
+my $members_phenotypes = $stockref->{members_phenotypes};
+my $p_download_link = qq|<a href = "/stock/$stock_id/phenotypes">[Download phenotypes]</a>| if ( (keys %$direct_phenotypes) || ( keys %$members_phenotypes) );
+my $direct_genotypes = $stockref->{direct_genotypes};
+my $g_download_link = qq|<a href =  "/stock/$stock_id/genotypes">Download genotypes</a>| if (keys %$direct_genotypes) ;
+############################
+my $map_html = $stockref->{map_html};
+my $map;
+if ($stock_id) {
+  $map = CXGN::Cview::Map::SGN::Genotype->new($dbh, $stock_id);
+  if ($map->get_chromosome_count > 1 ) {
+    my $overview = CXGN::Cview::MapOverviews::Generic->new($map,
+                                                           {
+                                                            dbh=> $dbh,
+                                                            basepath => $stockref->{cview_basepath},
+                                                            tempfiles_subdir => $stockref->{cview_tmp_dir } });
+    if ($overview) {
+      $overview->render_map();
+      $map_html .= $overview->get_image_html();
+    }
+  }
+}
+#########################################
+my $has_qtl_data = $stockref->{has_qtl_data};
+
+
+my $new_pub_link = $curator || $submitter || $sequencer  ?   qq|<a href="/chado/add_publication.pl?type=stock&amp;type_id=$stock_id&amp;refering_page=$this_page&amp;action=new"> [Associate publication] </a>| : qq|<span class=\"ghosted\">[Associate publication]</span>| ;
+
+my $pub_count = scalar( keys %$pubs );
+
+## EUSOL, tgrc (stock_dbxref)
+my $dbxrefs = $stockref->{dbxrefs};
+my %source_dbs;
+my @dbx_ref_ethz_cass_construct_accessions;
+my @dbx_ref_ethz_cass_transgenic_accessions;
+foreach my $db_name ( keys %$dbxrefs ) {
+  foreach my $dbxref ( @{ $dbxrefs->{$db_name} } ) {
+    my $url = $dbxref->db->urlprefix . $dbxref->db->url;
+    $url .= $dbxref->accession if $url =~ m/\?$|\=$/ ;
+    $source_dbs{$url} = $db_name . ": " . $dbxref->accession if $url;
+
+    if ($dbxref->description eq 'ETHZ_CASS vector_construct id') {
+      push @dbx_ref_ethz_cass_construct_accessions, $dbxref->accession;
+    } elsif ($dbxref->description eq 'ETHZ_CASS transgenic id') {
+      push @dbx_ref_ethz_cass_transgenic_accessions, $dbxref->accession;
+    }
+    
+  }
+}
+
+my $ontology_subtitle = $curator || $submitter || $sequencer  ?
+  qq|<a href="javascript:Tools.toggleContent('associate_cvterm_form', 'stock_ontology')">[Add ontology annotations]</a> | :
+  qq |<span class = "ghosted"> [Add ontology annotations]</span> |;
+
+my $add_phenotype_link =  $curator || $submitter || $sequencer  ? qq| <a href="javascript:Tools.toggleContent('add_phenotype_form', 'stock_phenotype')" >[Add phenotype]</a> | :   qq |<span class = "ghosted"> [Add phenotype]</span> |;
+
+my $edit_privs = $curator || $submitter || $sequencer;
+
+my $project_name = lc($c->config->{project_name});
+my $test_url = "/jbrowse_$project_name/current/data/json/accessions/" . $stock_id . "/trackList.json";
+my $jbrowse_url = "/jbrowse/?data=data%2Fjson%2Faccessions%2F" . $stock_id . "&tracks=DNA%2CGene%20exons%2C" . $uniquename . "_2015_V6_imputed&highlight=";
+
+</%perl>
+<& /util/import_javascript.mas, classes => ["jquery", "jqueryui", "thickbox", "CXGN.Page.FormattingHelpers", "jquery.cookie", "CXGN.Stock"] &>
+
+
+<script language="javascript">
+function jqueryStuff() { 
+   jQuery(function() {
+     jQuery("#species_name").autocomplete({
+        source: '/organism/autocomplete'
+     });
+  });
+}
+</script>
+<& /page/page_title.mas, title=> join( ': ', grep $_, ucfirst($type_name), $uniquename ) || 'Create a new stock' &>
+
+
+<&| /page/info_section.mas, title=>"Stock details" , subtitle => "<a href=/phenome/qtl_form.pl>New QTL population</a> | <a href=/search/stocks/>Back to stock search</a>"  &>
+
+<div class="row">
+  <div class="col-sm-6">
+
+  <& /page/form.mas,
+  object_type=>'stock',
+  object_id=>"$stock_id",
+  form_name=> 'stock_form',
+  server_side_script => '/phenome/stock/stock_ajax_form.pl',
+  form_div_name=>'stock_details',
+  js_object_name=> 'stockForm',
+  page_url => "/stock/$stock_id/view/" ,
+  alternate_new_button => '<a href ="/stock/0/new">[New]</a>'
+  &>
+
+  </div>
+  <div class="col-sm-6">
+<& /util/barcode.mas, identifier => "$identifier_prefix"."$stock_id", text=> "$identifier_prefix stock $stock_id ($uniquename)", format=>"code128"  &><br /><br />
+% #<& /util/barcode.mas, identifier => "http://solgenomics.net/stock/$stock_id/view", text=>"SGN stock $stock_id ($uniquename)", format=>"qrcode" &>
+
+  </div>
+</div>
+
+<div><b>Stock editors: </b> <% $editor_link %></div>
+<br />
+% foreach my $db_url (keys %source_dbs) {
+<div><a href=<% $db_url %>><% $source_dbs{$db_url} %></a> </div>
+%}
+<br />
+% my $div_name = join("_", @$resources);
+% my $subtitle = $edit_privs ? "[<a id=\"stock_add_synonym\" href=\"javascript:synonyms_addPropDialog()\">Add...</a>]" : "[Add]";
+   <&| /page/info_section.mas, title => "Synonyms" , is_subsection => 1 , subtitle=>$subtitle &>
+      <& /stock/stockprops.mas,
+       stock_id    => $stock_id,
+	props      => $stockprops ,
+	div_name   =>'synonyms',
+	subset     =>$resources,
+	editable   => [ 'stock_synonym' ],
+	edit_privs => $edit_privs   &>
+</&>
+%  $div_name = join("_", @editable_stock_props);
+% my $props_subtitle = $edit_privs ? "[<a id=\"stock_add_props\" href=\"javascript:stockprops_addPropDialog()\">Add...</a>]" : "[Add]";
+
+    <&| /page/info_section.mas, title => "Additional information" , collapsible=> 1, is_subsection => 1, subtitle=>$props_subtitle &>
+      <& /stock/stockprops.mas,
+	 stock_id  =>$stock_id,
+	props      => $stockprops,
+        div_name   => 'stockprops',
+	edit_privs => $edit_privs,
+	subset     => \@editable_stock_props,
+	editable   => \@editable_stock_props  &>
+</&>
+
+% if ($is_ethz_cass_transgenic == 1) {
+
+<div class="well">
+
+<div id="ethz_cass_transgenic_details">
+</div>
+
+<br/>
+
+<h3>Transformations</h3>
+<table class="table" id="transgenics_transformations_datatable">
+<thead>
+<tr>
+<th>Date</th>
+<th>Plates</th>
+<th>Meda Type</th>
+<th>Comments</th>
+</tr>
+</thead>
+
+</table>
+
+<br/>
+
+<h3>Transactions</h3>
+<table class="table" id="transgenics_transactions_datatable">
+<thead>
+<tr>
+<th>Date</th>
+<th>Jars</th>
+<th>Meda Type</th>
+<th>Comments</th>
+</tr>
+</thead>
+
+</table>
+</div>
+
+<script>
+
+  jQuery(document).ready(function() {
+  
+    jQuery.ajax({
+      type: 'GET',
+      url: 'https://cass.pb.ethz.ch/rest/transgenic/'+jQuery('#stock_dbxref_transgenic_accession').val()+'/details',
+      beforeSend: function() {
+        jQuery('#working_modal').modal("show");
+      },
+      success: function(response) { 
+        console.log(response);
+        if (response.error) { 
+            jQuery('#working_modal').modal("hide");
+            alert(response.error);
+        }
+        else {
+          if (response.construct) {
+            jQuery('#working_modal').modal("hide");
+            var html = '<h3>ETH CASS Transgenics Info</h3><br/><table class="table table-bordered"><thead><tr><th>Construct</th></tr></thead><tbody>';
+            var length = response.construct.length;
+            for (i=0; i<length; i++) {
+              var html = html + '<tr><td>'+response.construct[i]+'</td>';
+            }
+            var html = html + '</tbody></table>';
+            jQuery('#ethz_cass_transgenic_details').html(html);
+          } 
+        }
+      },
+      error: function(response) { 
+        jQuery('#working_modal').modal("hide");
+        alert("An error occurred.");
+      }
+    });
+
+    jQuery('#transgenics_transformations_datatable').dataTable({
+        "bProcessing": true,
+        "sAjaxSource": 'https://cass.pb.ethz.ch/rest/transgenic/'+jQuery('#stock_dbxref_transgenic_accession').val()+'/transformation/datatable',
+        "aoColumns": [
+            { "mData": "date" },
+            { "mData": "plates" },
+            { "mData": "mediatype" },
+            { "mData": "comment" }
+        ]
+    });
+
+    jQuery('#transgenics_transactions_datatable').dataTable({
+        "bProcessing": true,
+        "sAjaxSource": 'https://cass.pb.ethz.ch/rest/transgenic/'+jQuery('#stock_dbxref_transgenic_accession').val()+'/transaction/datatable',
+        "aoColumns": [
+            { "mData": "date" },
+            { "mData": "jars" },
+            { "mData": "mediatype" },
+            { "mData": "comment" }
+        ]
+    });
+
+  });
+
+</script>
+
+% }
+
+</&>
+
+% if ($stock->get_type->name() ne 'vector_construct') {
+
+<&| /page/info_section.mas, title => "Associated loci (" . $stockref->{allele_count} . ")" , subtitle => $new_locus_link, collapsible=> 1 , collapsed => 1 &>
+
+<& /phenome/associate_locus.mas, object_id => $stock_id , object_name => "stock", locus_add_uri=> $locus_add_uri,   allele_div => $allele_div , show_form => $is_owner &>
+
+</&>
+
+
+<&| /page/info_section.mas, title => "Experimental data" , collapsible=> 1, is_subsection => 0 &>
+      <& /stock/stockprops.mas, stock_id=>$stock_id, props=> $stockprops, subset=> $experiment  &>
+</&>
+
+% if($is_owner) {
+<&| /page/info_section.mas, title=>"Stock history", collapsible=>1, collapsed=>1 &>
+
+</&>
+
+
+% }
+
+<%perl>
+ my $collapsible = 0; 
+ if ($has_pedigree==1) {
+  $collapsible = 1;
+ }
+ my $add_parent_link = "Add parent";
+ if ($person_id && ($submitter || $curator || $sequencer)) { $add_parent_link = qq | <a id="add_parent_link" >Add parent</a> |; }
+
+my $remove_parent_link = "Remove parent";
+if ($person_id && ($submitter || $curator || $sequencer)) { $remove_parent_link = qq | <a id="remove_parent_link">Remove parent</a> |; }
+
+</%perl>
+
+<div id="remove_parent_dialog">
+Remove a parent (this will only remove the link to the parent, not the parent accession itself).<br /><br />
+  <div id="remove_parent_list">[loading parent list...]</div>
+</div>
+
+
+<&| /page/info_section.mas, title=>"Pedigree" , collapsible=> $collapsible, collapsed=>0, subtitle=>"[$add_parent_link] [$remove_parent_link]" &>
+  <& /pedigree/stock_pedigree.mas, stock_id => $stock_id, has_pedigree => $has_pedigree &>
+</&>
+
+% if ($has_descendants==1) {
+
+<&| /page/info_section.mas, title=>"Descendants" , collapsible=>1, collapsed=>0 &>
+  <& /pedigree/stock_descendants.mas, stock_id => $stock_id &>
+</&>
+
+% } else {
+
+<&| /page/info_section.mas, title=>"Descendants" , collapsible=>1, collapsed=>1 &>
+</&>
+
+% }
+
+<& /pedigree/stock_pedigree_string.mas, stock_id => $stock_id &>
+
+
+% if ($type) {
+<&| /page/info_section.mas, title=>"Related stocks" , collapsible=>1, collapsed=>0 &>
+  <& /stock/related_stocks.mas, stock => $stock_row &>
+
+</&>
+
+% }
+
+
+<&| /page/info_section.mas, title=>"Images (" .  scalar(@$image_ids)  . ")", subtitle => "$add_image_link", collapsible=>1, collapsed=>1 &>
+  <& /image/print_images.mas , images=>$image_ids , dbh=>$dbh &>
+
+</&>
+
+
+<&| /page/info_section.mas, title=>"Literature annotation ($pub_count)" , subtitle=>$new_pub_link, id=>"publications" , collapsible=>1, collapsed=>1 &>
+
+% my $pub_count = 0;
+% foreach my $full_accession ( keys %$pubs  ) {
+% my $pub = CXGN::Chado::Publication->new($dbh, $pubs->{$full_accession}->pub_id );
+% my ($pub_db_name, $accession) = split ':' , $full_accession;
+<& /chado/publication.mas, pub=>$pub, count=>$pub_count++, db=>$pub_db_name, accession=>$accession &>
+  <br >
+% }
+
+</&>
+
+<&| /page/info_section.mas,
+  id   => 'stock_ontology',
+  title=>"Ontology annotation (" . $stockref->{ontology_count} . ")",
+  collapsible=>1,
+  collapsed=>1,
+  subtitle=>$ontology_subtitle &>
+  <& /ontology/associate_ontology.mas,
+  trait_db_name => $trait_ontology_db_name,
+  object_id     => $stock_id ,
+  object_name   => "stock",
+  cvterm_add_uri=> $cvterm_add_uri,
+  ontology_url  => "/stock/$stock_id/ontologies/",
+  reference_uri => "/stock/$stock_id/references/",
+  evidence_with_uri => "/stock/$stock_id/evidences/",
+  show_form     => $is_owner  &>
+</&>
+
+<&| /page/info_section.mas, title=>"Phenotype data " ,  subtitle=>$p_download_link ,  collapsible => 1, collapsed => 1 &>
+% foreach my $project (keys %$direct_phenotypes) {
+%   my $rs = $direct_phenotypes->{$project} ;
+
+<&| /page/info_section.mas,
+    id       => "stock_phenotype",
+    title    =>"Experiment: $project",
+    subtitle => $add_phenotype_link,
+    is_subsection => 1,
+    collapsible => 1
+&>
+    <& /stock/add_phenotype.mas,
+      stock_id => $stock_id ,
+      trait_ontology_db_name => $trait_ontology_db_name,
+      project=>$project
+    &>
+  <& /phenotypes/phenotype_data.mas ,
+      phenotypes=> $rs
+    &>
+  </&>
+% }
+
+% foreach my $key (keys %$members_phenotypes) {
+% my $m_rs = $members_phenotypes->{$key};
+<&| /page/info_section.mas,
+     title         => "Member phenotypes",
+     subtitle      => $key,
+     is_subsection => 1,
+     collapsible   => 1,
+ &>
+    <& /phenotypes/phenotype_data.mas,
+         phenotypes => $m_rs,
+         object_id  => $stock_id,
+         has_qtl    => $has_qtl_data,
+     &>
+  </&>
+% }
+</&>
+
+<div id="stock_trials_info_popup">
+  <table id="stock_trials_info_table" >
+    <thead>
+    <tr><th>Trait</th><th>Average</th><th>Std dev</th></tr>
+    </thead>
+  </table>
+</div>
+
+<link rel="stylesheet" type="text/css" href="/documents/inc/datatables/jquery.dataTables.css">
+
+
+<&| /page/info_section.mas, title => "Trials" &>
+
+  <& /stock/trials.mas, stock_id => $stock_id &>
+
+</&>
+
+<&| /page/info_section.mas, title => "Traits assayed" &>
+
+  <& /stock/traits.mas, stock_id => $stock_id &>
+
+</&>
+
+%#<&| /page/info_section.mas, title => "Phenotypic data" &>
+  
+%#  <& /stock/phenotypes.mas, stock_id => $stock_id &>
+
+%#</&>
+
+<&| /page/info_section.mas, title=>"Genotype data ", subtitle=> $g_download_link, collapsible => 1 , collapsed => 1 &>
+% print $map_html;
+% foreach my $project (keys %$direct_genotypes) {
+%  my $genotypes = $direct_genotypes->{$project} ;
+<&| /page/info_section.mas, title=>"Experiment: $project", is_subsection => 1, collapsible => 1 &>
+% foreach my $genotype (@$genotypes) {
+%  print $genotype->description . "\n";
+% }       
+  </&>
+% }
+</&>
+
+
+<&| /page/info_section.mas, title=>"Accession JBrowse", collapsible => 1 , collapsed => 0 &>
+<p id="jbrowse_check">[loading...]</p>
+</&>
+
+
+<script>
+  jQuery(document).ready(function() { 
+
+    stock_detail_page_init_dialogs();
+    prepareJbrowse();
+
+    jQuery('#remove_parent_link').click( function() { 
+      jQuery('#remove_parent_dialog').dialog("open");
+      get_remove_parents_list(<% $stock_id %>);
+    });
+
+    function prepareJbrowse () { //ajax function to test for existence of given jbrowse trial url
+    jQuery.ajax({
+    type: 'GET',
+    url: "<% $test_url %>",
+    statusCode: {
+        200: function () {  // if page is found, create and display link
+    jQuery('#jbrowse_check').replaceWith('<a id="jbrowse_link" href="<% $jbrowse_url %>">View vcf tracks for <% $uniquename %> in JBrowse</a>');
+  },
+  404: function () { // if page not found, display message that jbrowse instance wasn't found
+    jQuery('#jbrowse_check').html(" <i>No Jbrowse instance found for this accession</i>.");
+        }
+  }
+  });
+  }
+
+});
+</script>
+
+
+% } elsif ($stock->get_type->name() eq 'vector_construct') {
+
+% foreach (@dbx_ref_ethz_cass_construct_accessions) {
+  <input type='hidden' value='<% $_ %>' id='stock_dbxref_construct_accession' />
+% }
+
+<div id="ethz_cass_construct_details">
+</div>
+
+<script>
+
+  jQuery(document).ready(function() {
+
+    jQuery.ajax({
+      type: 'GET',
+      url: 'https://cass.pb.ethz.ch/rest/construct/'+jQuery('#stock_dbxref_construct_accession').val()+'/details',
+      beforeSend: function() {
+        jQuery('#working_modal').modal("show");
+      },
+      success: function(response) { 
+        //console.log(response);
+        if (response.error) { 
+            jQuery('#working_modal').modal("hide");
+            alert(response.error);
+        }
+        else { 
+            jQuery('#working_modal').modal("hide");
+            var html = '<div class="well"><h3>ETH CASS Contruct Info</h3><br/><table class="table table-bordered"><thead><tr><th>3UTR</th><th>5UTR</th><th>CTAG</th><th>Gene</th><th>NTag</th><th>Promoter</th><th>SP NTP</th><th>Terminator</th></tr></thead><tbody>';
+            var length = response.cassette.length;
+            for (i=0; i<length; i++) {
+              var html = html + '<tr><td>'+response.cassette[i]["3utr"]+'</td><td>'+response.cassette[i]["5utr"]+'</td><td>'+response.cassette[i].ctag+'</td><td>'+response.cassette[i].gene+'</td><td>'+response.cassette[i].ntag+'</td><td>'+response.cassette[i].sp_ntp+'</td><td>'+response.cassette[i].terminator+'</td>';
+            }
+            var html = html + '</tbody></table></div>';
+            jQuery('#ethz_cass_construct_details').html(html);
+        }
+      },
+      error: function(response) { 
+        jQuery('#working_modal').modal("hide");
+        alert("An error occurred.");
+      }
+    });
+
+  });
+
+</script>
+  
+% } 
+
+
+% foreach (@dbx_ref_ethz_cass_transgenic_accessions) {
+  <input type='hidden' value='<% $_ %>' id='stock_dbxref_transgenic_accession' />
+% }
+
+
+
+
+<& /page/comments.mas, object_type=>'stock', object_id=>$stock_id, referer=>$this_page &>
+
+
+<script>
+
+  jQuery(document).ready(function() {
+
+    //Constructs
+
+    jQuery.ajax({
+      type: 'GET',
+      url: 'https://cass.pb.ethz.ch/rest/construct',
+      beforeSend: function() {
+        jQuery('#working_modal').modal("show");
+      },
+      success: function(response) { 
+        //console.log(response);
+        if (response.error) { 
+            jQuery('#working_modal').modal("hide");
+            alert(response.error);
+        }
+        else { 
+            jQuery('#working_modal').modal("hide");
+
+            jQuery.ajax({
+              type: 'POST',
+              data: {'data': JSON.stringify(response)},
+              url: '/ajax/cass_vector_construct/sync',
+              success: function(response) {
+                //console.log(response);
+              },
+              error: function(response) {
+                //alert('An Error Occured Syncing Constructs.');
+              }
+            });
+        }
+      },
+      error: function(response) { 
+        jQuery('#working_modal').modal("hide");
+        alert("An error occurred.");
+      }
+    });
+
+  
+    jQuery.ajax({
+      type: 'GET',
+      url: 'https://cass.pb.ethz.ch/rest/transgenic',
+      beforeSend: function() {
+        jQuery('#working_modal').modal("show");
+      },
+      success: function(response) { 
+        //console.log(response);
+        if (response.error) { 
+            jQuery('#working_modal').modal("hide");
+            alert(response.error);
+        }
+        else { 
+            jQuery('#working_modal').modal("hide");
+
+            jQuery.ajax({
+              type: 'POST',
+              data: {'data': JSON.stringify(response)},
+              url: '/ajax/cass_transgenics/sync',
+              success: function(response) {
+                //console.log(response);
+              },
+              error: function(response) {
+                //alert('An Error Occured Syncing Transgenics.');
+              }
+            });
+        }
+      },
+      error: function(response) { 
+        jQuery('#working_modal').modal("hide");
+        alert("An error occurred.");
+      }
+    });
+
+  });
+
+</script>
+
