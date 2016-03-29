@@ -1,0 +1,82 @@
+
+<& /page/page_title.mas, title=> 'Sync Transgenics and Constructs From ETHZ CASS DB' &>
+
+<script>
+
+  jQuery(document).ready(function() {
+
+    //Constructs
+
+    jQuery.ajax({
+      type: 'GET',
+      url: 'https://cass.pb.ethz.ch/rest/construct',
+      beforeSend: function() {
+        jQuery('#working_modal').modal("show");
+      },
+      success: function(response) { 
+        //console.log(response);
+        if (response.error) { 
+            jQuery('#working_modal').modal("hide");
+            alert(response.error);
+        }
+        else { 
+            jQuery('#working_modal').modal("hide");
+
+            jQuery.ajax({
+              type: 'POST',
+              data: {'data': JSON.stringify(response)},
+              url: '/ajax/cass_vector_construct/sync',
+              success: function(response) {
+                //console.log(response);
+              },
+              error: function(response) {
+                //alert('An Error Occured Syncing Constructs.');
+              }
+            });
+        }
+      },
+      error: function(response) { 
+        jQuery('#working_modal').modal("hide");
+        alert("An error occurred.");
+      }
+    });
+
+  
+    jQuery.ajax({
+      type: 'GET',
+      url: 'https://cass.pb.ethz.ch/rest/transgenic',
+      beforeSend: function() {
+        jQuery('#working_modal').modal("show");
+      },
+      success: function(response) { 
+        console.log(response);
+        if (response.error) { 
+            jQuery('#working_modal').modal("hide");
+            alert(response.error);
+        }
+        else { 
+            jQuery('#working_modal').modal("hide");
+
+            jQuery.ajax({
+              type: 'POST',
+              data: {'data': JSON.stringify(response)},
+              url: '/ajax/cass_transgenics/sync',
+              success: function(response) {
+                //console.log(response);
+              },
+              error: function(response) {
+                //alert('An Error Occured Syncing Transgenics.');
+              }
+            });
+        }
+      },
+      error: function(response) { 
+        jQuery('#working_modal').modal("hide");
+        alert("An error occurred.");
+      }
+    });
+
+  });
+
+</script>
+
