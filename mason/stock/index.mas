@@ -176,7 +176,11 @@ my $dbxrefs = $stockref->{dbxrefs};
 my %source_dbs;
 my @dbx_ref_ethz_cass_construct_accessions;
 my @dbx_ref_ethz_cass_transgenic_accessions;
+my $is_ethz_cass;
 foreach my $db_name ( keys %$dbxrefs ) {
+  if ($db_name eq 'ETHZ_CASS') {
+    $is_ethz_cass = 1;
+  }
   foreach my $dbxref ( @{ $dbxrefs->{$db_name} } ) {
     my $url = $dbxref->db->urlprefix . $dbxref->db->url;
     $url .= $dbxref->accession if $url =~ m/\?$|\=$/ ;
@@ -371,6 +375,10 @@ function jqueryStuff() {
   });
 
 </script>
+
+% foreach (@dbx_ref_ethz_cass_transgenic_accessions) {
+  <input type='hidden' value='<% $_ %>' id='stock_dbxref_transgenic_accession' />
+% }
 
 % }
 
@@ -598,6 +606,9 @@ Remove a parent (this will only remove the link to the parent, not the parent ac
 
 % } elsif ($stock->get_type->name() eq 'vector_construct') {
 
+
+% if ($is_ethz_cass) {
+
 % foreach (@dbx_ref_ethz_cass_construct_accessions) {
   <input type='hidden' value='<% $_ %>' id='stock_dbxref_construct_accession' />
 % }
@@ -645,12 +656,7 @@ Remove a parent (this will only remove the link to the parent, not the parent ac
 % } 
 
 
-% foreach (@dbx_ref_ethz_cass_transgenic_accessions) {
-  <input type='hidden' value='<% $_ %>' id='stock_dbxref_transgenic_accession' />
 % }
-
-
-
 
 <& /page/comments.mas, object_type=>'stock', object_id=>$stock_id, referer=>$this_page &>
 
