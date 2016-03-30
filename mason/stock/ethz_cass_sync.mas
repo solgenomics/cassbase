@@ -14,7 +14,7 @@
         jQuery('#working_modal').modal("show");
       },
       success: function(response) { 
-        //console.log(response);
+        console.log(response);
         if (response.error) { 
             jQuery('#working_modal').modal("hide");
             alert(response.error);
@@ -40,6 +40,9 @@
         alert("An error occurred.");
       }
     });
+
+
+    //Transgenics
 
   
     jQuery.ajax({
