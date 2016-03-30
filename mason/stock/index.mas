@@ -102,7 +102,7 @@ my $add_image_link = qq|<a href="/image/add?type_id=$stock_id&action=new&type=st
 my $image_ids =  $stockref->{image_ids} || [] ;
 my $stockprops = $stockref->{props};
 
-print STDERR Dumper $stockprops;
+#print STDERR Dumper $stockprops;
 
 my %stockprops_hash = %$stockprops;
 my $is_transgenic;
@@ -222,6 +222,7 @@ function jqueryStuff() {
 </script>
 <& /page/page_title.mas, title=> join( ': ', grep $_, ucfirst($type_name), $uniquename ) || 'Create a new stock' &>
 
+% if ($stockref->{user} ) {
 
 <&| /page/info_section.mas, title=>"Stock details" , subtitle => "<a href=/phenome/qtl_form.pl>New QTL population</a> | <a href=/search/stocks/>Back to stock search</a>"  &>
 
@@ -682,4 +683,11 @@ Remove a parent (this will only remove the link to the parent, not the parent ac
 
 <& /page/comments.mas, object_type=>'stock', object_id=>$stock_id, referer=>$this_page &>
 
-
+% } else {
+  <br/>
+  <center>
+  <div class="well">
+  <h3>Please <a href="/solpeople/login.pl">login</a> to view this page.</h3>
+  </div>
+  </center>
+% }
