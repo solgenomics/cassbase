@@ -340,7 +340,26 @@ function jqueryStuff() {
             var html = '<h3>ETH CASS Transgenics Info</h3><br/><table class="table table-bordered"><thead><tr><th>Construct</th></tr></thead><tbody>';
             var length = response.construct.length;
             for (i=0; i<length; i++) {
-              var html = html + '<tr><td>'+response.construct[i]+'</td>';
+
+              jQuery.ajax({
+                type: 'POST',
+                async: false,
+                data: {'uniquename': response.construct[i]},
+                url: '/stock_lookup/uniquename/stock_id',
+                context: { html: html }, 
+                success: function(response) {
+                  //console.log(response);
+                  if (response.stock_id) {
+                    html = this.html + '<tr><td><a href="/stock/'+response.stock_id+'/view">'+response.uniquename+'</a></td></tr>';
+                  } else {
+                    html = this.html + '<tr><td>'+response.uniquename+'</td></tr>';
+                  }
+                },
+                error: function(response) {
+                  alert("Error during stock_lookup of stock_id from stock uniquename.");
+                }
+              });
+
             }
             var html = html + '</tbody></table>';
             jQuery('#ethz_cass_transgenic_details').html(html);
@@ -633,38 +652,111 @@ Remove a parent (this will only remove the link to the parent, not the parent ac
       },
       success: function(response) { 
         console.log(response);
-        if (response.error) { 
-            jQuery('#working_modal').modal("hide");
-            alert(response.error);
-        }
-        else { 
             jQuery('#working_modal').modal("hide");
             var html = '<div class="panel panel-info"><div class="panel-heading">ETHZ CASS Database</div><div class="panel-body">';
 
-            var html = html + '<div class="well"><h3>Construct Info</h3><table class="table table-bordered"><thead><tr><th>BAC Antibiotic</th><th>Backbone</th><th>Construct</th><th>Level</th><th>Made By</th><th>Plant Antibiotic</th><th>Position</th><th>Progress</th></tr></thead><tbody>';
+            html = html + '<div class="well"><h3>Construct Info</h3><table class="table table-bordered"><thead><tr><th>BAC Antibiotic</th><th>Backbone</th><th>Construct</th><th>Level</th><th>Made By</th><th>Plant Antibiotic</th><th>Position</th><th>Progress</th></tr></thead><tbody>';
             var length = response.construct.length;
             for (i=0; i<length; i++) {
               c_length = response.construct[i].cassette.length;
-              var html = html+'<tr class="table-info"><td>'+response.construct[i].bac_antibiotic+'</td><td>'+response.construct[i].backbone+'</td><td>'+response.construct[i].construct+'</td><td>'+response.construct[i].level+'</td><td>'+response.construct[i].madeby+'</td><td>'+response.construct[i].plant_antibiotic+'</td><td>'+response.construct[i].position+'</td><td>'+response.construct[i].progress+'</td></tr>';
+
+              var backbone = response.construct[i].backbone;
+              jQuery.ajax({
+                type: 'POST',
+                async: false,
+                data: {'uniquename': backbone},
+                url: '/stock_lookup/uniquename/stock_id',
+                context: { backbone: backbone }, 
+                success: function(response) {
+                  //console.log(response);
+                  if (response.stock_id) {
+                    backbone = '<a href="/stock/'+response.stock_id+'/view">'+response.uniquename+'';
+                  }
+                },
+                error: function(response) {
+                  //alert("Error during stock_lookup of stock_id from backbone uniquename.");
+                }
+              });
+
+              var construct = response.construct[i].construct;
+              jQuery.ajax({
+                type: 'POST',
+                async: false,
+                data: {'uniquename': construct},
+                url: '/stock_lookup/uniquename/stock_id',
+                context: { construct: construct }, 
+                success: function(response) {
+                  //console.log(response);
+                  if (response.stock_id) {
+                    construct = '<a href="/stock/'+response.stock_id+'/view">'+response.uniquename+'';
+                  }
+                },
+                error: function(response) {
+                  //alert("Error during stock_lookup of stock_id from construct uniquename.");
+                }
+              });
+
+              html = html+'<tr class="table-info"><td>'+response.construct[i].bac_antibiotic+'</td><td>'+backbone+'</td><td>'+construct+'</td><td>'+response.construct[i].level+'</td><td>'+response.construct[i].madeby+'</td><td>'+response.construct[i].plant_antibiotic+'</td><td>'+response.construct[i].position+'</td><td>'+response.construct[i].progress+'</td></tr>';
               if (c_length > 0) {
                 var html = html+'</tbody></table><div class="row"><div class="col-sm-1"><center><br/><small>Cassette</small><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></center></div><div class="col-sm-11"><table class="table table-sm table-bordered"><thead><tr><th>3overhang</th><th>3utr</th><th>5overhang</th><th>5utr</th><th>Ctag</th><th>Gene</th><th>Ntag</th><th>Promoter</th><th>SP NTP</th><th>Terminator</th></tr></thead><tbody>';
                 for (j=0; j<c_length; j++) {
-                  var html = html+'<tr><td>'+response.construct[i].cassette[j]["3overhang"]+'</td><td>'+response.construct[i].cassette[j]["3utr"]+'</td><td>'+response.construct[i].cassette[j]["5overhang"]+'</td><td>'+response.construct[i].cassette[j]["5utr"]+'</td><td>'+response.construct[i].cassette[j].ctag+'</td><td>'+response.construct[i].cassette[j].gene+'</td><td>'+response.construct[i].cassette[j].ntag+'</td><td>'+response.construct[i].cassette[j].promoter+'</td><td>'+response.construct[i].cassette[j].sp_ntp+'</td><td>'+response.construct[i].cassette[j].terminator+'</td></tr>';
+
+                  var promoter = response.construct[i].cassette[j].promoter;
+                  jQuery.ajax({
+                    type: 'POST',
+                    async: false,
+                    data: {'uniquename': promoter},
+                    url: '/stock_lookup/uniquename/stock_id',
+                    context: { promoter: promoter }, 
+                    success: function(response) {
+                      //console.log(response);
+                      if (response.stock_id) {
+                        promoter = '<a href="/stock/'+response.stock_id+'/view">'+response.uniquename+'';
+                      }
+                    },
+                    error: function(response) {
+                      //alert("Error during stock_lookup of stock_id from promoter uniquename.");
+                    }
+                  });
+
+                  html = html+'<tr><td>'+response.construct[i].cassette[j]["3overhang"]+'</td><td>'+response.construct[i].cassette[j]["3utr"]+'</td><td>'+response.construct[i].cassette[j]["5overhang"]+'</td><td>'+response.construct[i].cassette[j]["5utr"]+'</td><td>'+response.construct[i].cassette[j].ctag+'</td><td>'+response.construct[i].cassette[j].gene+'</td><td>'+response.construct[i].cassette[j].ntag+'</td><td>'+promoter+'</td><td>'+response.construct[i].cassette[j].sp_ntp+'</td><td>'+response.construct[i].cassette[j].terminator+'</td></tr>';
                 }
-                var html = html + '</tbody></table></div></div><table class="table table-bordered"><thead><tr><th>BAC Antibiotic</th><th>Backbone</th><th>Construct</th><th>Level</th><th>Made By</th><th>Plant Antibiotic</th><th>Position</th><th>Progress</th></tr></thead><tbody>';
+                html = html + '</tbody></table></div></div>';
+
+                if (i< length-1) {
+                  html = html +'<table class="table table-bordered"><thead><tr><th>BAC Antibiotic</th><th>Backbone</th><th>Construct</th><th>Level</th><th>Made By</th><th>Plant Antibiotic</th><th>Position</th><th>Progress</th></tr></thead><tbody>';
+                }
               }
 
             }
-            var html = html + '</tbody></table></div>';
+            html = html + '</tbody></table></div>';
 
-            var html = html + '<div class="well"><h3>Cassette Info</h3><table class="table table-bordered"><thead><tr><th>3UTR</th><th>5UTR</th><th>CTAG</th><th>Gene</th><th>NTag</th><th>Promoter</th><th>SP NTP</th><th>Terminator</th></tr></thead><tbody>';
+            html = html + '<div class="well"><h3>Cassette Info</h3><table class="table table-bordered"><thead><tr><th>3UTR</th><th>5UTR</th><th>CTAG</th><th>Gene</th><th>NTag</th><th>Promoter</th><th>SP NTP</th><th>Terminator</th></tr></thead><tbody>';
             var length = response.cassette.length;
             for (i=0; i<length; i++) {
-              var html = html + '<tr><td>'+response.cassette[i]["3utr"]+'</td><td>'+response.cassette[i]["5utr"]+'</td><td>'+response.cassette[i].ctag+'</td><td>'+response.cassette[i].gene+'</td><td>'+response.cassette[i].ntag+'</td><td>'+response.cassette[i].sp_ntp+'</td><td>'+response.cassette[i].terminator+'</td>';
+
+              var cassette_promoter = response.cassette[i].promoter;
+              jQuery.ajax({
+                type: 'POST',
+                async: false,
+                data: {'uniquename': cassette_promoter},
+                url: '/stock_lookup/uniquename/stock_id',
+                context: { cassette_promoter: cassette_promoter }, 
+                success: function(response) {
+                  //console.log(response);
+                  if (response.stock_id) {
+                    cassette_promoter = '<a href="/stock/'+response.stock_id+'/view">'+response.uniquename+'';
+                  }
+                },
+                error: function(response) {
+                  //alert("Error during stock_lookup of stock_id from cassette_promoter uniquename.");
+                }
+              });
+
+              html = html + '<tr><td>'+response.cassette[i]["3utr"]+'</td><td>'+response.cassette[i]["5utr"]+'</td><td>'+response.cassette[i].ctag+'</td><td>'+response.cassette[i].gene+'</td><td>'+response.cassette[i].ntag+'</td><td>'+cassette_promoter+'</td><td>'+response.cassette[i].sp_ntp+'</td><td>'+response.cassette[i].terminator+'</td></tr>';
             }
-            var html = html + '</tbody></table></div></div></div>';
+            html = html + '</tbody></table></div></div></div>';
             jQuery('#ethz_cass_construct_details').html(html);
-        }
       },
       error: function(response) { 
         jQuery('#working_modal').modal("hide");
