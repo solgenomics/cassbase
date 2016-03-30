@@ -687,7 +687,7 @@ Remove a parent (this will only remove the link to the parent, not the parent ac
   <br/>
   <center>
   <div class="well">
-  <h3>Please <a href="/solpeople/login.pl">login</a> to view this page.</h3>
+  <h3>Please <a href="/solpeople/login.pl?goto_url=/stock/<% $stock_id %>/view">login</a> to view this page.</h3>
   </div>
   </center>
 % }
