@@ -18,5 +18,9 @@
     
     <li><a href="https://twitter.com/solgenomics">Twitter</a></li>
     <li><a href="https://www.facebook.com/solgenomics">Facebook</a></li>
+
+    <li role="separator" class="divider"></li>
+
+    <li><a href="ftp://ftp.cassbase.org">FTP Site</a></li>
   </ul>
 </li>
