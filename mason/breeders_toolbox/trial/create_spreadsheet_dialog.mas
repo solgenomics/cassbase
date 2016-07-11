@@ -96,6 +96,7 @@ jQuery(document).ready(function() {
             'rel_cv': 'relationship',
             'selectbox_name': 'create_spreadsheet_plant_age_select',
             'selectbox_id': 'create_spreadsheet_plant_age',
+            'empty': 1,
         },
         success: function (response) {
             if (response.error) {
@@ -121,6 +122,7 @@ jQuery(document).ready(function() {
             'rel_cv': 'relationship',
             'selectbox_name': 'create_spreadsheet_tod_select_name',
             'selectbox_id': 'create_spreadsheet_tod_select',
+            'empty': 1,
         },
         success: function (response) {
             if (response.error) {
