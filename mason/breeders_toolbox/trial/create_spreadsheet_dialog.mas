@@ -76,6 +76,13 @@ $trial_name => undef
                         </div>
                     </div>
     	        </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label"><small>Units: </small></label>
+                    <div class="col-sm-7" >
+                        <div id="create_spreadsheet_units_div">
+                        </div>
+                    </div>
+    	        </div>
             </div>
             
 	       </form><br/>
@@ -108,13 +115,11 @@ jQuery(document).ready(function() {
         url: '/ajax/html/select/ontology_children',
         dataType: "json",
         data: {
-            'parent_node_cvterm': 'cass number of weeks',
-            'parent_node_cv': 'cass_time_ontology',
+            'parent_node_cvterm': 'cass number of weeks|CASSTIME:0000005',
             'rel_cvterm': 'is_a',
             'rel_cv': 'relationship',
             'selectbox_name': 'create_spreadsheet_plant_age_select',
             'selectbox_id': 'create_spreadsheet_plant_age',
-            'empty': 1,
         },
         success: function (response) {
             if (response.error) {
@@ -134,13 +139,11 @@ jQuery(document).ready(function() {
         url: '/ajax/html/select/ontology_children',
         dataType: "json",
         data: {
-            'parent_node_cvterm': 'cass time of day',
-            'parent_node_cv': 'cass_time_ontology',
+            'parent_node_cvterm': 'cass time of day|CASSTIME:0000001',
             'rel_cvterm': 'is_a',
             'rel_cv': 'relationship',
             'selectbox_name': 'create_spreadsheet_tod_select_name',
             'selectbox_id': 'create_spreadsheet_tod_select',
-            'empty': 1,
         },
         success: function (response) {
             if (response.error) {
@@ -160,8 +163,7 @@ jQuery(document).ready(function() {
         url: '/ajax/html/select/ontology_children',
         dataType: "json",
         data: {
-            'parent_node_cvterm': 'cass_tissues',
-            'parent_node_cv': 'cass_tissue_ontology',
+            'parent_node_cvterm': 'cass_tissues|CASSTISS:0000000',
             'rel_cvterm': 'is_a',
             'rel_cv': 'relationship',
             'selectbox_name': 'create_spreadsheet_tissue_select_name',
@@ -181,11 +183,35 @@ jQuery(document).ready(function() {
         }
     });
     
+    new jQuery.ajax({
+        type: 'POST',
+        url: '/ajax/html/select/ontology_children',
+        dataType: "json",
+        data: {
+            'parent_node_cvterm': 'cass_units|CASSUNIT:0000000',
+            'rel_cvterm': 'is_a',
+            'rel_cv': 'relationship',
+            'selectbox_name': 'create_spreadsheet_units_select_name',
+            'selectbox_id': 'create_spreadsheet_units_select',
+        },
+        success: function (response) {
+            if (response.error) {
+                alert(response.error);
+            } else {
+                jQuery('#create_spreadsheet_units_div').html(response.select);
+            }
+        },
+        error: function () {
+            jQuery('#working_modal').modal("hide");
+            alert('An error occurred getting CASS units ontology select.');
+        }
+    });
+    
   });
   
   jQuery(document).on("change", '#create_spreadsheet_tissue_select', function() {
     var val = jQuery('#create_spreadsheet_tissue_select option:selected').text();
-    if (val == 'cass leaf' || val == 'cass root' || val == 'cass stem') {
+    if (val == 'cass leaf|CASSTISS:0000001' || val == 'cass root|CASSTISS:0000003' || val == 'cass stem|CASSTISS:0000002') {
         new jQuery.ajax({
             type: 'POST',
             url: '/ajax/html/select/ontology_children',
@@ -221,6 +247,7 @@ jQuery(document).ready(function() {
         jQuery("#create_spreadsheet_tissue_select").val('');
         jQuery("#create_spreadsheet_tod_select").val('');
         jQuery("#create_spreadsheet_plant_age").val('');
+        jQuery("#create_spreadsheet_units_select").val('');
         jQuery('#create_spreadsheet_plant_options').hide();
       }
   });
@@ -248,11 +275,12 @@ function create_phenotype_spreadsheet() {
             'trait_list': trait_list,
             'data_level': jQuery("#create_spreadsheet_data_level").val(),
             'sample_number': jQuery("#create_spreadsheet_sample_number").val(),
-            'predefined_columns' : JSON.stringify({ 
-                'cass_tissue|CASSTISS:000000': jQuery("#create_spreadsheet_tissue_select").val(),
-                'cass time of day|CASSTIME:0000001': jQuery("#create_spreadsheet_tod_select").val(),
-                'cass number of weeks|CASSTIME:0000005': jQuery("#create_spreadsheet_plant_age").val(),
-            }),
+            'predefined_columns' : JSON.stringify( [
+                { 'cass_tissue|CASSTISS:0000000': jQuery("#create_spreadsheet_tissue_select").val() },
+                { 'cass time of day|CASSTIME:0000001': jQuery("#create_spreadsheet_tod_select").val() },
+                { 'cass number of weeks|CASSTIME:0000005': jQuery("#create_spreadsheet_plant_age").val() },
+                { 'cass_units|CASSTIME:0000000': jQuery("#create_spreadsheet_units_select").val() }
+            ] ),
         },
         beforeSend: function() {
             jQuery('#working_modal').modal("show");
