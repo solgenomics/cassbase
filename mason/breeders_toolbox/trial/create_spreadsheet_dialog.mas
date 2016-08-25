@@ -266,6 +266,16 @@ function create_phenotype_spreadsheet() {
     if (! trait_list_id == "") {
         trait_list = JSON.stringify(list.getList(trait_list_id));
     }
+    var predefcol_data = [];
+    if (jQuery("#create_spreadsheet_data_level").val() == 'plants') {
+        predefcol_data = [
+            { 'cass_tissue|CASSTISS:0000000': jQuery("#create_spreadsheet_tissue_select").val() },
+            { 'cass time of day|CASSTIME:0000001': jQuery("#create_spreadsheet_tod_select").val() },
+            { 'cass number of weeks|CASSTIME:0000005': jQuery("#create_spreadsheet_plant_age").val() },
+            { 'cass_units|CASSTIME:0000000': jQuery("#create_spreadsheet_units_select").val() }
+        ];
+    }
+
     new jQuery.ajax({
         type: 'POST',
         url: '/ajax/phenotype/create_spreadsheet',
@@ -275,12 +285,7 @@ function create_phenotype_spreadsheet() {
             'trait_list': trait_list,
             'data_level': jQuery("#create_spreadsheet_data_level").val(),
             'sample_number': jQuery("#create_spreadsheet_sample_number").val(),
-            'predefined_columns' : JSON.stringify( [
-                { 'cass_tissue|CASSTISS:0000000': jQuery("#create_spreadsheet_tissue_select").val() },
-                { 'cass time of day|CASSTIME:0000001': jQuery("#create_spreadsheet_tod_select").val() },
-                { 'cass number of weeks|CASSTIME:0000005': jQuery("#create_spreadsheet_plant_age").val() },
-                { 'cass_units|CASSTIME:0000000': jQuery("#create_spreadsheet_units_select").val() }
-            ] ),
+            'predefined_columns' : JSON.stringify( predefcol_data ),
         },
         beforeSend: function() {
             jQuery('#working_modal').modal("show");
