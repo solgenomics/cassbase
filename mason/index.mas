@@ -17,9 +17,10 @@ $show_accept_dialog => undef
 	</div>
 </div>
 
-<div class="well">
-<& /homepage/usage_popup.mas &>
-<br/>
+<div class="container-fluid">
+  <center>
+    <& homepage/usage_popup.mas &>
+  </center>
 </div>
 
 
