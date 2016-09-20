@@ -10,6 +10,11 @@
     jQuery.ajax({
       type: 'GET',
       url: 'https://cass.pb.ethz.ch/rest/construct',
+        dataType: 'json',
+        xhrFields: {
+        withCredentials: true
+        },
+        crossDomain: true,
       beforeSend: function() {
         jQuery('#working_modal').modal("show");
       },
@@ -48,6 +53,11 @@
     jQuery.ajax({
       type: 'GET',
       url: 'https://cass.pb.ethz.ch/rest/transgenic',
+      dataType: 'json',
+      xhrFields: {
+      withCredentials: true
+      },
+      crossDomain: true,
       beforeSend: function() {
         jQuery('#working_modal').modal("show");
       },
