@@ -344,13 +344,13 @@ function jqueryStuff() {
         else {
             var transformations_table_html = '';
             for (var j=0; j<response.transformation.length; j++) {
-                transformations_table_html = transformations_table_html+'<tr><td>'+response.transformation[j].date+'</td><td>'+response.transformation[j].plates+'</td><td>'+response.transformation[j].mediatype+'</td><td>'+response.transformation[i].comment+'</td></tr>';
+                transformations_table_html = transformations_table_html+'<tr><td>'+response.transformation[j].date+'</td><td>'+response.transformation[j].plates+'</td><td>'+response.transformation[j].mediatype+'</td><td>'+response.transformation[j].comment+'</td></tr>';
             }
             jQuery('#transgenics_transformations_datatable_body').empty().html(transformations_table_html);
             
             var transactions_table_html = '';
             for (var j=0; j<response.transactions.length; j++) {
-                transactions_table_html = transactions_table_html+'<tr><td>'+response.transactions[j].date+'</td><td>'+response.transactions[j].jars+'</td><td>'+response.transactions[j].mediatype+'</td><td>'+response.transactions[i].comment+'</td></tr>';
+                transactions_table_html = transactions_table_html+'<tr><td>'+response.transactions[j].date+'</td><td>'+response.transactions[j].jars+'</td><td>'+response.transactions[j].mediatype+'</td><td>'+response.transactions[j].comment+'</td></tr>';
             }
             jQuery('#transgenics_transactions_datatable_body').empty().html(transactions_table_html);
         
