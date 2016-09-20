@@ -391,9 +391,9 @@ function jqueryStuff() {
       }
     });
 
-    jQuery('#transgenics_transformations_datatable').dataTable({});
+    jQuery('#transgenics_transformations_datatable').dataTable();
 
-    jQuery('#transgenics_transactions_datatable').dataTable({});
+    jQuery('#transgenics_transactions_datatable').dataTable();
 
   });
 
