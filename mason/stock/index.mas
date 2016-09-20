@@ -295,11 +295,12 @@ function jqueryStuff() {
 <tr>
 <th>Date</th>
 <th>Plates</th>
-<th>Meda Type</th>
+<th>Media Type</th>
 <th>Comments</th>
 </tr>
 </thead>
-
+<tbody id="transgenics_transformations_datatable_body">
+</tbody>
 </table>
 
 <br/>
@@ -310,11 +311,12 @@ function jqueryStuff() {
 <tr>
 <th>Date</th>
 <th>Jars</th>
-<th>Meda Type</th>
+<th>Media Type</th>
 <th>Comments</th>
 </tr>
 </thead>
-
+<tbody id="transgenics_transactions_datatable_body">
+</tbody>
 </table>
 </div>
 
@@ -340,6 +342,18 @@ function jqueryStuff() {
             alert(response.error);
         }
         else {
+            var transformations_table_html = '';
+            for (var j=0; j<response.transformation.length; j++) {
+                transformations_table_html = transformations_table_html+'<tr><td>'+response.transformation[j].date+'</td><td>'+response.transformation[j].plates+'</td><td>'+response.transformation[j].mediatype+'</td><td>'+response.transformation[i].comment+'</td></tr>';
+            }
+            jQuery('#transgenics_transformations_datatable_body').empty().html(transformations_table_html);
+            
+            var transactions_table_html = '';
+            for (var j=0; j<response.transactions.length; j++) {
+                transactions_table_html = transactions_table_html+'<tr><td>'+response.transactions[j].date+'</td><td>'+response.transactions[j].jars+'</td><td>'+response.transactions[j].mediatype+'</td><td>'+response.transactions[i].comment+'</td></tr>';
+            }
+            jQuery('#transgenics_transactions_datatable_body').empty().html(transactions_table_html);
+        
           if (response.construct) {
             jQuery('#working_modal').modal("hide");
             var html = '<h3>ETH CASS Transgenics Info</h3><br/><table class="table table-bordered"><thead><tr><th>Construct</th></tr></thead><tbody>';
@@ -377,41 +391,9 @@ function jqueryStuff() {
       }
     });
 
-    jQuery('#transgenics_transformations_datatable').dataTable({
-        "ajax": {
-         "url": "https://cass.pb.ethz.ch/rest/transgenic/'+jQuery('#stock_dbxref_transgenic_accession').val()+'/transformation/datatable",
-         dataType: 'json',
-         xhrFields: {
-         withCredentials: true
-         },
-         crossDomain: true,
-      },
-        "bProcessing": true,
-        "aoColumns": [
-            { "mData": "date" },
-            { "mData": "plates" },
-            { "mData": "mediatype" },
-            { "mData": "comment" }
-        ]
-    });
+    jQuery('#transgenics_transformations_datatable').dataTable({});
 
-    jQuery('#transgenics_transactions_datatable').dataTable({
-        "ajax": {
-         "url": "https://cass.pb.ethz.ch/rest/transgenic/'+jQuery('#stock_dbxref_transgenic_accession').val()+'/transaction/datatable",
-         dataType: 'json',
-         xhrFields: {
-         withCredentials: true
-         },
-         crossDomain: true,
-        },
-        "bProcessing": true,
-        "aoColumns": [
-            { "mData": "date" },
-            { "mData": "jars" },
-            { "mData": "mediatype" },
-            { "mData": "comment" }
-        ]
-    });
+    jQuery('#transgenics_transactions_datatable').dataTable({});
 
   });
 
