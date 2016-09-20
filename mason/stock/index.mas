@@ -378,8 +378,15 @@ function jqueryStuff() {
     });
 
     jQuery('#transgenics_transformations_datatable').dataTable({
+        "ajax": {
+         "url": "https://cass.pb.ethz.ch/rest/transgenic/'+jQuery('#stock_dbxref_transgenic_accession').val()+'/transformation/datatable",
+         dataType: 'json',
+         xhrFields: {
+         withCredentials: true
+         },
+         crossDomain: true,
+      },
         "bProcessing": true,
-        "sAjaxSource": 'https://cass.pb.ethz.ch/rest/transgenic/'+jQuery('#stock_dbxref_transgenic_accession').val()+'/transformation/datatable',
         "aoColumns": [
             { "mData": "date" },
             { "mData": "plates" },
@@ -389,8 +396,15 @@ function jqueryStuff() {
     });
 
     jQuery('#transgenics_transactions_datatable').dataTable({
+        "ajax": {
+         "url": "https://cass.pb.ethz.ch/rest/transgenic/'+jQuery('#stock_dbxref_transgenic_accession').val()+'/transaction/datatable",
+         dataType: 'json',
+         xhrFields: {
+         withCredentials: true
+         },
+         crossDomain: true,
+        },
         "bProcessing": true,
-        "sAjaxSource": 'https://cass.pb.ethz.ch/rest/transgenic/'+jQuery('#stock_dbxref_transgenic_accession').val()+'/transaction/datatable',
         "aoColumns": [
             { "mData": "date" },
             { "mData": "jars" },
