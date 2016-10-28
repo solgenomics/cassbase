@@ -1,3 +1,29 @@
+#!/usr/bin/env perl
+
+=head1
+make_all_phenotyped_multiterm_traits_variables.pl
+
+=head1 SYNOPSIS
+
+    perl make_all_phenotyped_multiterm_traits_variables.pl -H localhost -D fixture2 -c postcomposed_terms
+
+=head1 COMMAND-LINE OPTIONS
+
+ -H  host name
+ -D  database name
+ -c  the cv name that the multiterm traits are under.
+
+=head2 DESCRIPTION
+
+
+=head2 AUTHOR
+
+Nicolas Morales (nm529@cornell.edu)
+
+=head2
+
+=cut
+
 
 use strict;
 use warnings;
@@ -11,13 +37,13 @@ use Data::Dumper;
 use SGN::Model::Cvterm;
 use Try::Tiny;
 
-our ($opt_H, $opt_D, $opt_l, $opt_d, $opt_c);
-getopts('H:D:l:d:c:');
+our ($opt_H, $opt_D, $opt_c);
+getopts('H:D:c:');
 
 
 
-if (!$opt_D || !$opt_H || !$opt_l || !$opt_d || !$opt_c ) {
-  die("Exiting: options missing\nRequires: -D -H -l -d -c");
+if (!$opt_D || !$opt_H || !$opt_c ) {
+  die("Exiting: options missing\nRequires: -D -H -c ");
 }
 
 my $dbh = CXGN::DB::InsertDBH
@@ -36,18 +62,18 @@ my $coderef = sub {
 
     my $variable_term_id;
     try {
-        $variable_term_id = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'VARIABLE_OF', 'cassava_trait')->cvterm_id();
+        $variable_term_id = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'VARIABLE_OF', $opt_c)->cvterm_id();
     } catch {
         my $variable_term = $chado_schema->resultset("Cv::Cvterm")->create_with({
             name => 'VARIABLE_OF',
-            cv   => 'CASSFT',
+            cv   => $opt_c,
         });
         $variable_term_id = $variable_term->cvterm_id();
     };
 
-    my $q = "SELECT cvterm.cvterm_id FROM phenotype JOIN cvterm on (phenotype.cvalue_id=cvterm.cvterm_id);";
+    my $q = "SELECT cvterm.cvterm_id FROM phenotype JOIN cvterm on (phenotype.cvalue_id=cvterm.cvterm_id) JOIN cv on (cvterm.cv_id=cv.cv_id) WHERE cv.name=?;";
     my $h = $chado_schema->storage->dbh()->prepare($q);
-    $h->execute();
+    $h->execute($opt_c);
     my %cvterm_ids;
     while (my ($cvterm) = $h->fetchrow_array()) {
         $cvterm_ids{$cvterm} = 1;
@@ -60,8 +86,8 @@ my $coderef = sub {
     foreach (keys %cvterm_ids) {
 
         my $count_stmt = $count_h->execute($_);
-    my $count = $count_h->fetchrow;
-    print STDERR "$_ ::: $count\n";
+        my $count = $count_h->fetchrow;
+        print STDERR "$_ ::: $count\n";
         if (!$count || $count == 0){
             my $create_q = "INSERT INTO cvterm_relationship (type_id, subject_id, object_id) VALUES ($variable_term_id, ?, ?);";
             my $create_h = $chado_schema->storage->dbh()->prepare($create_q);

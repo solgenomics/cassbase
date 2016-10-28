@@ -7,7 +7,7 @@ concatenate_cvterms_into_multi_term_traits.pl
 
     this script is very specific to cassbase ontologies, but could possibly be generalized through more sophisticated recursion.
 
-    perl concatenate_cvterms_into_multiterm_traits.pl -H localhost -D fixture2 -l 'chebi_compounds|CHEBI:00000[OR]ec_terms|EC:0000000,cass_tissues|CASSTISS:0000000,cass time of day|CASSTIME:0000001,cass number of weeks|CASSTIME:0000005,cass_units|CASSUNIT:0000000' -d CASSFT -c cassava_trait
+    perl concatenate_cvterms_into_multiterm_traits.pl -H localhost -D fixture2 -l 'chebi_compounds|CHEBI:00000[OR]ec_terms|EC:0000000,cass_tissues|CASSTISS:0000000,cass time of day|CASSTIME:0000001,cass number of weeks|CASSTIME:0000005,cass_units|CASSUNIT:0000000' -d CASSFT -c postcomposed_terms
 
 =head1 COMMAND-LINE OPTIONS
 
