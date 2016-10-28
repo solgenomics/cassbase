@@ -71,6 +71,19 @@ my $coderef = sub {
         $variable_term_id = $variable_term->cvterm_id();
     };
 
+    my $is_a_term_id = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'is_a', 'relationship')->cvterm_id();
+
+    my $root_term_id;
+    try {
+        $root_term_id = SGN::Model::Cvterm->get_cvterm_row($chado_schema, $opt_c, $opt_c)->cvterm_id();
+    } catch {
+        my $variable_term = $chado_schema->resultset("Cv::Cvterm")->create_with({
+            name => $opt_c,
+            cv   => $opt_c,
+        });
+        $root_term_id = $variable_term->cvterm_id();
+    };
+
     my $q = "SELECT cvterm.cvterm_id FROM phenotype JOIN cvterm on (phenotype.cvalue_id=cvterm.cvterm_id) JOIN cv on (cvterm.cv_id=cv.cv_id) WHERE cv.name=?;";
     my $h = $chado_schema->storage->dbh()->prepare($q);
     $h->execute($opt_c);
@@ -91,7 +104,7 @@ my $coderef = sub {
         if (!$count || $count == 0){
             my $create_q = "INSERT INTO cvterm_relationship (type_id, subject_id, object_id) VALUES ($variable_term_id, ?, ?);";
             my $create_h = $chado_schema->storage->dbh()->prepare($create_q);
-            $create_h->execute($_, $_);
+            $create_h->execute($_, $root_term_id);
         } elsif ($count == 1) {
             my $update_q = "UPDATE cvterm_relationship SET type_id=$variable_term_id WHERE subject_id=? and type_id=$is_a_term_id;";
             my $update_h = $chado_schema->storage->dbh()->prepare($update_q);
