@@ -71,8 +71,6 @@ my $coderef = sub {
         $variable_term_id = $variable_term->cvterm_id();
     };
 
-    my $is_a_term_id = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'is_a', 'relationship')->cvterm_id();
-
     my $root_term_id;
     try {
         $root_term_id = SGN::Model::Cvterm->get_cvterm_row($chado_schema, $opt_c, $opt_c)->cvterm_id();
