@@ -93,7 +93,7 @@ my $coderef = sub {
     }
 
 
-    my $count_q = "SELECT count(*) FROM cvterm_relationship WHERE subject_id=? and type_id=$is_a_term_id;";
+    my $count_q = "SELECT count(*) FROM cvterm_relationship WHERE subject_id=? and (type_id=$is_a_term_id or type_id=$variable_term_id);";
     my $count_h = $chado_schema->storage->dbh()->prepare($count_q);
 
     foreach (keys %cvterm_ids) {
@@ -106,7 +106,7 @@ my $coderef = sub {
             my $create_h = $chado_schema->storage->dbh()->prepare($create_q);
             $create_h->execute($_, $root_term_id);
         } elsif ($count == 1) {
-            my $update_q = "UPDATE cvterm_relationship SET type_id=$variable_term_id WHERE subject_id=? and type_id=$is_a_term_id;";
+            my $update_q = "UPDATE cvterm_relationship SET type_id=$variable_term_id WHERE subject_id=? and (type_id=$is_a_term_id or type_id=$variable_term_id);";
             my $update_h = $chado_schema->storage->dbh()->prepare($update_q);
             $update_h->execute($_);
         } else {
