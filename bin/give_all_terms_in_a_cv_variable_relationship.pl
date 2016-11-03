@@ -89,7 +89,7 @@ my $coderef = sub {
             my $update_h = $chado_schema->storage->dbh()->prepare($update_q);
             $update_h->execute($_);
         } else {
-            die "More than one is_a relationship already saved...\n";
+            print STDERR "Nested\n";
         }
 
     }
