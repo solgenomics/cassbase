@@ -83,7 +83,7 @@ my $coderef = sub {
         #if (!$count || $count == 0){
             my $create_q = "INSERT INTO cvterm_relationship (type_id, subject_id, object_id) VALUES ($variable_term_id, ?, ?);";
             my $create_h = $chado_schema->storage->dbh()->prepare($create_q);
-            $create_h->execute($_, $root_term_id);
+            $create_h->execute($_, $_);
         #} elsif ($count == 1) {
         #    my $update_q = "UPDATE cvterm_relationship SET type_id=$variable_term_id WHERE subject_id=? and (type_id=$is_a_term_id or type_id=$variable_term_id);";
         #    my $update_h = $chado_schema->storage->dbh()->prepare($update_q);
