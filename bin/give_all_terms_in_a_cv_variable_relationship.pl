@@ -5,13 +5,14 @@ give_all_terms_in_a_cv_variable_relationship.pl
 
 =head1 SYNOPSIS
 
-    perl give_all_terms_in_a_cv_variable_relationship.pl -H localhost -D fixture2 -c chebi_compounds
+    perl give_all_terms_in_a_cv_variable_relationship.pl -H localhost -D fixture2 -c chebi_ontology -f chebi_compounds
 
 =head1 COMMAND-LINE OPTIONS
 
  -H  host name
  -D  database name
- -c  the cv ontology name that all the terms fall under. should also be the root term that all sub terms are under e.g.chebi_compounds
+ -c  the cv ontology name that all the terms fall under
+ -f  the root term that the relationship will be formed under
 
 =head2 DESCRIPTION
 
@@ -37,13 +38,13 @@ use Data::Dumper;
 use SGN::Model::Cvterm;
 use Try::Tiny;
 
-our ($opt_H, $opt_D, $opt_c);
-getopts('H:D:c:');
+our ($opt_H, $opt_D, $opt_c, $opt_f);
+getopts('H:D:c:f:');
 
 
 
-if (!$opt_D || !$opt_H || !$opt_c ) {
-  die("Exiting: options missing\nRequires: -D -H -c ");
+if (!$opt_D || !$opt_H || !$opt_c || !$opt_f) {
+  die("Exiting: options missing\nRequires: -D -H -c -f");
 }
 
 my $dbh = CXGN::DB::InsertDBH
@@ -61,16 +62,7 @@ my $coderef = sub {
     my $is_a_term_id = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'is_a', 'relationship')->cvterm_id();
     my $variable_term_id = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'VARIABLE_OF', 'relationship')->cvterm_id();
 
-    my $root_term_id;
-    try {
-        $root_term_id = SGN::Model::Cvterm->get_cvterm_row($chado_schema, $opt_c, $opt_c)->cvterm_id();
-    } catch {
-        my $variable_term = $chado_schema->resultset("Cv::Cvterm")->create_with({
-            name => $opt_c,
-            cv   => $opt_c,
-        });
-        $root_term_id = $variable_term->cvterm_id();
-    };
+    my $root_term_id = SGN::Model::Cvterm->get_cvterm_row($chado_schema, $opt_f, $opt_c)->cvterm_id();
 
     my $q = "SELECT cvterm.cvterm_id FROM cvterm JOIN cv USING(cv_id) WHERE cv.name=?;";
     my $h = $chado_schema->storage->dbh()->prepare($q);
