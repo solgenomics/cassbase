@@ -62,11 +62,11 @@ my $coderef = sub {
 
     my $variable_term_id;
     try {
-        $variable_term_id = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'VARIABLE_OF', 'relationship')->cvterm_id();
+        $variable_term_id = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'VARIABLE_OF', $opt_c)->cvterm_id();
     } catch {
         my $variable_term = $chado_schema->resultset("Cv::Cvterm")->create_with({
             name => 'VARIABLE_OF',
-            cv   => 'relationship',
+            cv   => $opt_c,
         });
         $variable_term_id = $variable_term->cvterm_id();
     };
