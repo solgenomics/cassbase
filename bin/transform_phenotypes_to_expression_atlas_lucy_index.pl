@@ -138,7 +138,7 @@ open($fh, ">", $opt_o);
     print STDERR $opt_o."\n";
     foreach (@data_out) {
         my $values = $_->[5];
-        print $fh "$_->[0]\t$_->[1]\t$_->[2]\t$_->[3]\t$_->[4]\t".join(',', @$values),"\n";
+        print $fh "$_->[0]\t$_->[2]\t$_->[1]\t$_->[3]\t$_->[4]\t".join(',', @$values),"\n";
     }
 close $fh;
 
