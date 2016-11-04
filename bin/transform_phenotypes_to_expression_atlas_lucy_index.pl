@@ -31,12 +31,12 @@ use Spreadsheet::ParseExcel;
 use Bio::Chado::Schema;
 use Statistics::Basic qw(:all);
 
-our ($opt_i, $opt_o);
+our ($opt_i, $opt_o, $opt_c);
 
-getopts('i:o:');
+getopts('i:o:c:');
 
-if (!$opt_i || !$opt_o) {
-    pod2usage(-verbose => 2, -message => "Must provide options -i (input file) -o (out file)\n");
+if (!$opt_i || !$opt_o || !$opt_c) {
+    pod2usage(-verbose => 2, -message => "Must provide options -i (input file) -o (lucy out file) -c (corr out file)\n");
 }
 
 my $parser   = Spreadsheet::ParseExcel->new();
@@ -63,6 +63,7 @@ for my $col ( 14 .. $col_max) {
 }
 
 my %intermed;
+my %step2s;
 for my $row ( 4 .. $row_max ) {
 
 	my $accession_name = $worksheet->get_cell($row,7)->value();
@@ -83,29 +84,37 @@ for my $row ( 4 .. $row_max ) {
         my $age_term = @traits[$i]->[3];
         
         my $temp_key = "$chebi_term, $accession_name, $tissue_term, $collection_term, $age_term";
+        my $step2 = "$accession_name $tissue_term, $collection_term, $age_term";
         if (exists($intermed{$temp_key})) {
             my $values = $intermed{$temp_key}->[3];
             push @$values, $value;
             $intermed{$temp_key}->[3] = $values;
         } else {
             if (index($tissue_term, 'leaf') != -1) {
-                $intermed{$temp_key} = [$chebi_term, "$accession_name Leaf, $collection_term, $age_term", "$accession_name $tissue_term, $collection_term, $age_term", [$value]];
+                $intermed{$temp_key} = [$chebi_term, "$accession_name Leaf, $collection_term, $age_term", $step2, [$value]];
             }
             if (index($tissue_term, 'root') != -1) {
-                $intermed{$temp_key} = [$chebi_term, "$accession_name Root, $collection_term, $age_term", "$accession_name $tissue_term, $collection_term, $age_term", [$value]];
+                $intermed{$temp_key} = [$chebi_term, "$accession_name Root, $collection_term, $age_term", $step2, [$value]];
             }
             if (index($tissue_term, 'stem') != -1) {
-                $intermed{$temp_key} = [$chebi_term, "$accession_name Stem, $collection_term, $age_term", "$accession_name $tissue_term, $collection_term, $age_term", [$value]];
+                $intermed{$temp_key} = [$chebi_term, "$accession_name Stem, $collection_term, $age_term", $step2, [$value]];
             }
         }
+        $step2s{$step2} = 1;
     }
 
     }
 
 }
 #print STDERR Dumper \%intermed;
-print STDERR Dumper keys %intermed;
+#print STDERR Dumper keys %intermed;
 
+my @step2s_sorted;
+foreach (sort keys %step2s) {
+    push @step2s_sorted, $_;
+}
+
+my %corr_out;
 foreach (keys %intermed) {
     my $chebi_term = $intermed{$_}->[0];
     my $step1 = $intermed{$_}->[1];
@@ -115,8 +124,11 @@ foreach (keys %intermed) {
     my $stddev = stddev($values);
     
     push @data_out, [$chebi_term, $step1, $step2, $average->query, $stddev->query, $values];
+
+    $corr_out{$chebi_term}->{$step2} = $average->query;
 }
 #print STDERR Dumper \@data_out;
+#print STDERR Dumper \%corr_out;
 
 my $fh;
 open($fh, ">", $opt_o);
@@ -125,7 +137,25 @@ open($fh, ">", $opt_o);
         my $values = $_->[5];
         print $fh "$_->[0]\t$_->[1]\t$_->[2]\t$_->[3]\t$_->[4]\t".join(',', @$values),"\n";
     }
+close $fh;
 
+open($fh, ">", $opt_c);
+    print STDERR $opt_c."\n";
+    print $fh "Metabolites\t", join("\t", @step2s_sorted), "\n";
+    foreach my $chebi (sort keys %corr_out) {
+        print $fh "$chebi\t";
+        my $vals = $corr_out{$chebi};
+        my $step = 1;
+        foreach my $step2 (@step2s_sorted) {
+            my $c = $vals->{$step2} ? $vals->{$step2} : '';
+            print $fh "$c";
+            if ($step < scalar(@step2s_sorted)) {
+                print $fh "\t";
+            }
+            $step++;
+        }
+        print $fh "\n";
+    }
 close $fh;
 
 print STDERR "Script Complete.\n";
