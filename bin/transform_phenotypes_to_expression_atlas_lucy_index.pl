@@ -63,12 +63,12 @@ for my $col ( 14 .. $col_max) {
 }
 
 my %intermed;
-my %step2s;
+my %corr_steps;
 for my $row ( 4 .. $row_max ) {
 
 	my $accession_name = $worksheet->get_cell($row,7)->value();
     #print STDERR $accession_name."\n";
-    if ($accession_name eq 'IITA-TMS-IBA011412'){
+    #if ($accession_name eq 'IITA-TMS-IBA011412'){
     
     for( my $i=0; $i<scalar(@traits); $i++) {
         my $trait_col = $i + 14;
@@ -84,48 +84,51 @@ for my $row ( 4 .. $row_max ) {
         my $age_term = @traits[$i]->[3];
         
         my $temp_key = "$chebi_term, $accession_name, $tissue_term, $collection_term, $age_term";
-        my $step2 = "$accession_name $tissue_term, $collection_term, $age_term";
+        my $step2 = "$accession_name";
+        my $corr_step = "$accession_name, $tissue_term";
         if (exists($intermed{$temp_key})) {
             my $values = $intermed{$temp_key}->[3];
             push @$values, $value;
             $intermed{$temp_key}->[3] = $values;
         } else {
-            if (index($tissue_term, 'leaf') != -1) {
-                $intermed{$temp_key} = [$chebi_term, "$accession_name Leaf, $collection_term, $age_term", $step2, [$value]];
-            }
-            if (index($tissue_term, 'root') != -1) {
-                $intermed{$temp_key} = [$chebi_term, "$accession_name Root, $collection_term, $age_term", $step2, [$value]];
-            }
-            if (index($tissue_term, 'stem') != -1) {
-                $intermed{$temp_key} = [$chebi_term, "$accession_name Stem, $collection_term, $age_term", $step2, [$value]];
-            }
+            $intermed{$temp_key} = [$chebi_term, $tissue_term, $step2, [$value], $corr_step];
         }
-        $step2s{$step2} = 1;
+        $corr_steps{$corr_step} = 1;
     }
 
-    }
+    #}
 
 }
 #print STDERR Dumper \%intermed;
 #print STDERR Dumper keys %intermed;
 
-my @step2s_sorted;
-foreach (sort keys %step2s) {
-    push @step2s_sorted, $_;
+my @corr_steps_sorted;
+foreach (sort keys %corr_steps) {
+    push @corr_steps_sorted, $_;
 }
 
 my %corr_out;
-foreach (keys %intermed) {
+foreach (sort keys %intermed) {
     my $chebi_term = $intermed{$_}->[0];
     my $step1 = $intermed{$_}->[1];
     my $step2 = $intermed{$_}->[2];
     my $values = $intermed{$_}->[3];
-    my $average = mean($values);
-    my $stddev = stddev($values);
-    
-    push @data_out, [$chebi_term, $step1, $step2, $average->query, $stddev->query, $values];
+    my $corr_step = $intermed{$_}->[4];
 
-    $corr_out{$chebi_term}->{$step2} = $average->query;
+    my @non_empty_values = grep($_ ne "", @$values);
+    my $average = mean(\@non_empty_values);
+    my $stddev = stddev(\@non_empty_values);
+
+    my $display_average = sprintf("%.2f", $average->query);
+    my $display_stddev = sprintf("%.2f", $stddev->query);
+    my @non_empty_values_formatted;
+    foreach (@non_empty_values) {
+        push @non_empty_values_formatted, sprintf("%.2f", $_);
+    }
+
+    push @data_out, [$chebi_term, $step1, $step2, $display_average, $display_stddev, \@non_empty_values_formatted];
+
+    $corr_out{$chebi_term}->{$corr_step} = $display_average;
 }
 #print STDERR Dumper \@data_out;
 #print STDERR Dumper \%corr_out;
@@ -141,15 +144,15 @@ close $fh;
 
 open($fh, ">", $opt_c);
     print STDERR $opt_c."\n";
-    print $fh "Metabolites\t", join("\t", @step2s_sorted), "\n";
+    print $fh "Metabolites\t", join("\t", @corr_steps_sorted), "\n";
     foreach my $chebi (sort keys %corr_out) {
         print $fh "$chebi\t";
         my $vals = $corr_out{$chebi};
         my $step = 1;
-        foreach my $step2 (@step2s_sorted) {
-            my $c = $vals->{$step2} ? $vals->{$step2} : '';
+        foreach my $corr_step (@corr_steps_sorted) {
+            my $c = $vals->{$corr_step};
             print $fh "$c";
-            if ($step < scalar(@step2s_sorted)) {
+            if ($step < scalar(@corr_steps_sorted)) {
                 print $fh "\t";
             }
             $step++;
