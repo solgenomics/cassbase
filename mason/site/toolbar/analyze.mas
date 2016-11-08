@@ -1,8 +1,7 @@
 <li class="dropdown"><a class="menu_click_dropdown dropdown-toggle" data-toggle="dropdown" href="/tools/">Analyze</a>
 <!-- <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Genomes<span class="caret"></span></a> -->
   <ul class="dropdown-menu">
-    <li class="dropdown-header">Breeder Tools</li>
-    <li><a href="/breeders/home/">Breeder Home</a></li>
+    <li><a href="http://cea.sgn.cornell.edu">Expression Atlas</a></li>
     <li><a href="/barcode">Barcode Tools</a></li>
     <li><a href="/solgs/search">Genomic Selection</a></li>
     <li><a href="/pca/analysis">Population Structure</a></li>
