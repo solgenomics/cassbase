@@ -7,10 +7,13 @@ transform_phenotypes_to_expression_atlas_lucy_index.pl
 =head1 SYNOPSIS
 
     transform_phenotypes_to_expression_atlas_lucy_index.pl  -i [infile]
+    
+    perl bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i /home/vagrant/Downloads/cass_phenotype.xls -o /home/vagrant/cxgn/cassbase/bin/lucy.tsv -c /home/vagrant/cxgn/cassbase/bin/pre_corr.tsv -f /home/vagrant/cxgn/cassbase/bin/corr.tsv -p /home/vagrant/cxgn/cassbase/bin/project.txt
 
 =head1 COMMAND-LINE OPTIONS
   ARGUMENTS
  -i phenotype file downloaded directly from website
+ use absolute paths for output files
 
 =head1 DESCRIPTION
 
@@ -30,13 +33,14 @@ use Pod::Usage;
 use Spreadsheet::ParseExcel;
 use Bio::Chado::Schema;
 use Statistics::Basic qw(:all);
+use Statistics::R;
 
-our ($opt_i, $opt_o, $opt_c);
+our ($opt_i, $opt_p, $opt_o, $opt_c, $opt_f);
 
-getopts('i:o:c:');
+getopts('i:p:o:c:f:');
 
-if (!$opt_i || !$opt_o || !$opt_c) {
-    pod2usage(-verbose => 2, -message => "Must provide options -i (input file) -o (lucy out file) -c (corr out file)\n");
+if (!$opt_i || !$opt_p || !$opt_o || !$opt_c || !$opt_f) {
+    pod2usage(-verbose => 2, -message => "Must provide options -i (input file) -p (project file out) -o (lucy out file) -c (corr pre-3col out file) -f (corr out file)\n");
 }
 
 my $parser   = Spreadsheet::ParseExcel->new();
@@ -64,9 +68,22 @@ for my $col ( 14 .. $col_max) {
 
 my %intermed;
 my %corr_steps;
+my %project_info;
 for my $row ( 4 .. $row_max ) {
 
-	my $accession_name = $worksheet->get_cell($row,7)->value();
+    my $accession_name = $worksheet->get_cell($row,7)->value();
+    my $project_name = $worksheet->get_cell($row,2)->value();
+    my $project_design = $worksheet->get_cell($row,3)->value();
+    my $project_location = $worksheet->get_cell($row,5)->value();
+    my $project_year = $worksheet->get_cell($row,0)->value();
+    
+    $project_info{$project_name} = {
+        $accession_name => {},
+        design => $project_design,
+        location => $project_location,
+        year => $project_year
+    };
+
     #print STDERR $accession_name."\n";
     #if ($accession_name eq 'IITA-TMS-IBA011412'){
     
@@ -138,11 +155,14 @@ open($fh, ">", $opt_o);
     print STDERR $opt_o."\n";
     foreach (@data_out) {
         my $values = $_->[5];
-        print $fh "$_->[0]\t$_->[2]\t$_->[1]\t$_->[3]\t$_->[4]\t".join(',', @$values),"\n";
+        my $metabolite = $_->[0];
+        $metabolite =~ s/ /_/g;
+        $metabolite =~ s/\s/_/g;
+        print $fh "$metabolite\t$_->[2]\t$_->[1]\t$_->[3]\t$_->[4]\t".join(',', @$values),"\n";
     }
 close $fh;
 
-open($fh, ">", $opt_c);
+open($fh, ">", $opt_c) || die("\nERROR:\n");
     print STDERR $opt_c."\n";
     print $fh "Metabolites\t", join("\t", @corr_steps_sorted), "\n";
     foreach my $chebi (sort keys %corr_out) {
@@ -160,5 +180,64 @@ open($fh, ">", $opt_c);
         print $fh "\n";
     }
 close $fh;
+
+my $R = Statistics::R->new();
+my $out1 = $R->run(
+    qq`data<-read.delim(exp <- "$opt_c", header=TRUE)`,
+    qq`rownames(data)<-data[,1]`,
+    qq`data<-data[,-1]`,
+    qq`minexp <- 0`,
+    qq`CorrMat<-as.data.frame(cor(t(data[rowSums(data)>minexp,]), method="spearman"))`,
+    qq`write.table(CorrMat, file="$opt_f", sep="\t")`,
+);
+
+open (my $file_fh, "<", "$opt_f") || die ("\nERROR: the file $opt_f could not be found\n");
+    my $header = <$file_fh>;
+    chomp($header);
+    my @gene_header = split("\t",$header);
+    unshift(@gene_header,"");
+
+    my %pairs;
+    my @final_out;
+    while (my $line = <$file_fh>) {
+        chomp($line);
+        my @line = split("\t",$line);
+
+        for (my $n = 1; $n < @gene_header; $n++) {
+            $line[0] =~ s/\"//g;
+            $gene_header[$n] =~ s/\"//g;
+
+            my $hash_key = $line[0]."_".$gene_header[$n];
+            my $hash_key2 = $gene_header[$n]."_".$line[0];
+
+            if ($line[$n] >= 0.65 && $line[0] ne $gene_header[$n]) {
+                if (!$pairs{$hash_key}) {
+                    push @final_out, "$line[0]\t$gene_header[$n]\t".sprintf("%.2f",$line[$n]);
+                    $pairs{$hash_key} = 1;
+                    $pairs{$hash_key2} = 1;
+                }
+            }
+        }
+    }
+close $file_fh;
+
+open (my $file_fh, ">", "$opt_f") || die ("\nERROR:\n");
+    print STDERR $opt_f."\n";
+    foreach (@final_out) {
+        print $file_fh $_;
+        print $file_fh "\n";
+    }
+close $file_fh;
+
+open (my $file_fh, ">", "$opt_p") || die ("\nERROR:\n");
+    print STDERR $opt_p."\n";
+    print $file_fh "#organism\norganism_species: Manihot esculenta\norganism_variety: \norganism_description: Manihot esculenta\n# organism - end\n\n";
+    foreach my $project_name (keys %project_info) {
+        my $project_year = $project_info{$project_name}->{year};
+        my $project_design = $project_info{$project_name}->{design};
+        my $project_location = $project_info{$project_name}->{location};
+        print $file_fh "#project\nproject_name: $project_name\nproject_contact: \nproject_description: Accessions used in Trial '$project_name', Location: '$project_location', Breeding Program: 'CASS', Project Design: '$project_design'\nexpr_unit: ug/gDW\nindex_dir_name: cass_index\n# project - end\n\n";
+    }
+close $file_fh;
 
 print STDERR "Script Complete.\n";
