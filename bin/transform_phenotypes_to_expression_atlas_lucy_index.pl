@@ -64,11 +64,12 @@ for my $col ( 14 .. $col_max) {
     $collection_term =~ s/cass //g;
     $age_term =~ s/cass //g;
     my ($tiss, $tiss_ont) = split /\|/, $tissue_term; #/#
+    my ($metabolite, $chebi_ont) = split /\|/, $chebi_term; #/#
     $tiss =~ s/ /_/g;
     $tiss =~ s/\s/_/g;
-    $chebi_term =~ s/ /_/g;
-    $chebi_term =~ s/\s/_/g;
-    push @traits, [$chebi_term, $tiss, $collection_term, $age_term];
+    $metabolite =~ s/ /_/g;
+    $metabolite =~ s/\s/_/g;
+    push @traits, [$metabolite, $tiss, $collection_term, $age_term];
 }
 
 my %intermed;
@@ -204,6 +205,7 @@ open(my $fh, ">", $opt_c) || die("\nERROR:\n");
         my $step = 1;
         foreach my $corr_step (@corr_steps_sorted) {
             my $c = $vals->{$corr_step};
+            if (!$c) { $c = 0;}
             print $fh "$c";
             if ($step < scalar(@corr_steps_sorted)) {
                 print $fh "\t";
@@ -243,7 +245,7 @@ open (my $file_fh, "<", "$opt_f") || die ("\nERROR: the file $opt_f could not be
             my $hash_key = $line[0]."_".$gene_header[$n];
             my $hash_key2 = $gene_header[$n]."_".$line[0];
 
-            if ($line[$n] >= 0.65 && $line[0] ne $gene_header[$n]) {
+            if ($line[$n] >= 0.10 && $line[0] ne $gene_header[$n]) {
                 if (!$pairs{$hash_key}) {
                     push @final_out, "$line[0]\t$gene_header[$n]\t".sprintf("%.2f",$line[$n]);
                     $pairs{$hash_key} = 1;
