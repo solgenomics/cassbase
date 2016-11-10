@@ -8,7 +8,7 @@ transform_phenotypes_to_expression_atlas_lucy_index.pl
 
     transform_phenotypes_to_expression_atlas_lucy_index.pl  -i [infile]
     
-    perl bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i /home/vagrant/Downloads/cass_phenotype.xls -o /home/vagrant/cxgn/cassbase/bin/lucy.tsv -c /home/vagrant/cxgn/cassbase/bin/pre_corr.tsv -f /home/vagrant/cxgn/cassbase/bin/corr.tsv -p /home/vagrant/cxgn/cassbase/bin/project.txt
+    perl bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i /home/vagrant/Downloads/cass_phenotype.xls -o /home/vagrant/cxgn/cassbase/bin/lucy.tsv -c /home/vagrant/cxgn/cassbase/bin/pre_corr.tsv -f /home/vagrant/cxgn/cassbase/bin/corr.tsv -p /home/vagrant/cxgn/cassbase/bin/project.txt -d /home/vagrant/cxgn/cassbase/bin/desc.tsv
 
 =head1 COMMAND-LINE OPTIONS
   ARGUMENTS
@@ -35,12 +35,12 @@ use Bio::Chado::Schema;
 use Statistics::Basic qw(:all);
 use Statistics::R;
 
-our ($opt_i, $opt_p, $opt_o, $opt_c, $opt_f);
+our ($opt_i, $opt_p, $opt_o, $opt_c, $opt_f, $opt_d);
 
-getopts('i:p:o:c:f:');
+getopts('i:p:o:c:f:d:');
 
-if (!$opt_i || !$opt_p || !$opt_o || !$opt_c || !$opt_f) {
-    pod2usage(-verbose => 2, -message => "Must provide options -i (input file) -p (project file out) -o (lucy out file) -c (corr pre-3col out file) -f (corr out file)\n");
+if (!$opt_i || !$opt_p || !$opt_o || !$opt_c || !$opt_f || !$opt_d) {
+    pod2usage(-verbose => 2, -message => "Must provide options -i (input file) -p (project file out) -o (lucy out file) -c (corr pre-3col out file) -f (corr out file) -d (metabolite description oufile )\n");
 }
 
 my $parser   = Spreadsheet::ParseExcel->new();
@@ -60,15 +60,21 @@ for my $col ( 14 .. $col_max) {
     my $tissue_term = @component_terms[1];
     my $collection_term = @component_terms[2];
     my $age_term = @component_terms[3];
-    $tissue_term =~ s/cass //;
-    $collection_term =~ s/cass //;
-    $age_term =~ s/cass //;
-    push @traits, [$chebi_term, $tissue_term, $collection_term, $age_term];
+    $tissue_term =~ s/cass //g;
+    $collection_term =~ s/cass //g;
+    $age_term =~ s/cass //g;
+    my ($tiss, $tiss_ont) = split /\|/, $tissue_term; #/#
+    $tiss =~ s/ /_/g;
+    $tiss =~ s/\s/_/g;
+    $chebi_term =~ s/ /_/g;
+    $chebi_term =~ s/\s/_/g;
+    push @traits, [$chebi_term, $tiss, $collection_term, $age_term];
 }
 
 my %intermed;
 my %corr_steps;
 my %project_info;
+my %accession_info_hash;
 for my $row ( 4 .. $row_max ) {
 
     my $accession_name = $worksheet->get_cell($row,7)->value();
@@ -78,7 +84,6 @@ for my $row ( 4 .. $row_max ) {
     my $project_year = $worksheet->get_cell($row,0)->value();
     
     $project_info{$project_name} = {
-        $accession_name => {},
         design => $project_design,
         location => $project_location,
         year => $project_year
@@ -99,7 +104,21 @@ for my $row ( 4 .. $row_max ) {
         my $tissue_term = @traits[$i]->[1];
         my $collection_term = @traits[$i]->[2];
         my $age_term = @traits[$i]->[3];
-        
+
+        my $stage;
+        if (index($tissue_term, 'leaf') != -1) {
+            $stage = 'leaf';
+        } elsif (index($tissue_term, 'root') != -1) {
+            $stage = 'root';
+        } elsif (index($tissue_term, 'stem') != -1) {
+            $stage = 'stem';
+        }
+        if (!$stage) {
+            die "Tissue not leaf, root, or stem";
+        }
+
+        $accession_info_hash{$project_name}->{$accession_name}->{$stage}->{$tissue_term} = 1;
+
         my $temp_key = "$chebi_term, $accession_name, $tissue_term, $collection_term, $age_term";
         my $step2 = "$accession_name";
         my $corr_step = "$accession_name, $tissue_term";
@@ -118,6 +137,13 @@ for my $row ( 4 .. $row_max ) {
 }
 #print STDERR Dumper \%intermed;
 #print STDERR Dumper keys %intermed;
+#print STDERR Dumper \%project_info;
+#print STDERR Dumper \%accession_info_hash;
+
+foreach my $project_name (keys %accession_info_hash) {
+    $project_info{$project_name}->{accessions} = $accession_info_hash{$project_name};
+}
+#print STDERR Dumper \%project_info;
 
 my @corr_steps_sorted;
 foreach (sort keys %corr_steps) {
@@ -125,6 +151,7 @@ foreach (sort keys %corr_steps) {
 }
 
 my %corr_out;
+my %unique_metabolites;
 foreach (sort keys %intermed) {
     my $chebi_term = $intermed{$_}->[0];
     my $step1 = $intermed{$_}->[1];
@@ -146,23 +173,29 @@ foreach (sort keys %intermed) {
     push @data_out, [$chebi_term, $step1, $step2, $display_average, $display_stddev, \@non_empty_values_formatted];
 
     $corr_out{$chebi_term}->{$corr_step} = $display_average;
+    $unique_metabolites{$chebi_term}++;
 }
+
 #print STDERR Dumper \@data_out;
 #print STDERR Dumper \%corr_out;
 
-my $fh;
-open($fh, ">", $opt_o);
+open(my $fh, ">", $opt_d);
+    print STDERR $opt_d."\n";
+    foreach (keys %unique_metabolites) {
+        print $fh "$_\t$_\n";
+    }
+close $fh;
+
+open(my $fh, ">", $opt_o);
     print STDERR $opt_o."\n";
     foreach (@data_out) {
         my $values = $_->[5];
         my $metabolite = $_->[0];
-        $metabolite =~ s/ /_/g;
-        $metabolite =~ s/\s/_/g;
         print $fh "$metabolite\t$_->[2]\t$_->[1]\t$_->[3]\t$_->[4]\t".join(',', @$values),"\n";
     }
 close $fh;
 
-open($fh, ">", $opt_c) || die("\nERROR:\n");
+open(my $fh, ">", $opt_c) || die("\nERROR:\n");
     print STDERR $opt_c."\n";
     print $fh "Metabolites\t", join("\t", @corr_steps_sorted), "\n";
     foreach my $chebi (sort keys %corr_out) {
@@ -236,7 +269,26 @@ open (my $file_fh, ">", "$opt_p") || die ("\nERROR:\n");
         my $project_year = $project_info{$project_name}->{year};
         my $project_design = $project_info{$project_name}->{design};
         my $project_location = $project_info{$project_name}->{location};
+
         print $file_fh "#project\nproject_name: $project_name\nproject_contact: \nproject_description: Accessions used in Trial '$project_name', Location: '$project_location', Breeding Program: 'CASS', Project Design: '$project_design'\nexpr_unit: ug/gDW\nindex_dir_name: cass_index\n# project - end\n\n";
+
+        my $accession_hash = $project_info{$project_name}->{accessions};
+        foreach my $accession (keys %$accession_hash) {
+
+            print $file_fh "# figure --- All info needed for a cluster of images (usually includes a stage and all its tissues). Copy this block as many times as you need (including as many tissue layer blocks as you need).\nfigure_name: $accession\ncube_stage_name: $accession\nconditions:\n# write figure metadata\n\n";
+
+            my $stage_hash = $accession_hash->{$accession};
+            foreach my $stage (keys %$stage_hash) {
+                print $file_fh "#stage layer\nlayer_name: $accession\nlayer_description:\nlayer_type: stage\nbg_color:\nlayer_image: $accession.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: 10\nimg_ordinal: 10\norgan: $stage\n# layer - end\n\n";
+
+                my $tissue_hash = $stage_hash->{$stage};
+                foreach my $tissue (keys %$tissue_hash) {
+                    print $file_fh "#tissue layer\nlayer_name: $tissue\nlayer_description: $tissue\nlayer_type: tissue\nbg_color:\nlayer_image: $tissue.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: 100\nimg_ordinal: 100\norgan: $stage\n# layer - end\n\n";
+                }
+            }
+
+            print $file_fh "# figure - end\n\n";
+        }
     }
 close $file_fh;
 
