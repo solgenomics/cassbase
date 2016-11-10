@@ -69,6 +69,8 @@ for my $col ( 14 .. $col_max) {
     $tiss =~ s/\s/_/g;
     $metabolite =~ s/ /_/g;
     $metabolite =~ s/\s/_/g;
+    $metabolite =~ s/\(//g;
+    $metabolite =~ s/\)//g;
     push @traits, [$metabolite, $tiss, $collection_term, $age_term];
 }
 
@@ -183,7 +185,7 @@ foreach (sort keys %intermed) {
 open(my $fh, ">", $opt_d);
     print STDERR $opt_d."\n";
     foreach (keys %unique_metabolites) {
-        print $fh "$_\t$_\n";
+        print $fh "1\t$_\t$_\n";
     }
 close $fh;
 
