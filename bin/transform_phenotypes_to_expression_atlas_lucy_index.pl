@@ -54,7 +54,7 @@ my @data_out;
 
 my @traits;
 for my $col ( 14 .. $col_max) {
-    my $multiterm_trait = $worksheet->get_cell(3,$col)->value();
+    my $multiterm_trait = $worksheet->get_cell(0,$col)->value();
     my @component_terms = split /\|\|/, $multiterm_trait;
     my $chebi_term = @component_terms[0];
     my $tissue_term = @component_terms[1];
@@ -78,7 +78,7 @@ my %intermed;
 my %corr_steps;
 my %project_info;
 my %accession_info_hash;
-for my $row ( 4 .. $row_max ) {
+for my $row ( 1 .. $row_max ) {
 
     my $accession_name = $worksheet->get_cell($row,7)->value();
     my $project_name = $worksheet->get_cell($row,2)->value();
