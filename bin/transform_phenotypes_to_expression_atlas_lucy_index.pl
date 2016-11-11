@@ -270,11 +270,14 @@ open (my $file_fh, ">", "$opt_p") || die ("\nERROR:\n");
     print STDERR $opt_p."\n";
     print $file_fh "#organism\norganism_species: Manihot esculenta\norganism_variety: \norganism_description: Manihot esculenta\n# organism - end\n\n";
     foreach my $project_name (keys %project_info) {
+        my $project_name_index_dir = $project_name;
+        $project_name_index_dir =~ s/ //g;
+        $project_name_index_dir =~ s/\s//g;
         my $project_year = $project_info{$project_name}->{year};
         my $project_design = $project_info{$project_name}->{design};
         my $project_location = $project_info{$project_name}->{location};
 
-        print $file_fh "#project\nproject_name: $project_name\nproject_contact: \nproject_description: Accessions used in Trial '$project_name', Location: '$project_location', Breeding Program: 'CASS', Project Design: '$project_design'\nexpr_unit: ug/gDW\nindex_dir_name: cass_index\n# project - end\n\n";
+        print $file_fh "#project\nproject_name: $project_name\nproject_contact: \nproject_description: Accessions used in Trial '$project_name', Location: '$project_location', Breeding Program: 'CASS', Project Design: '$project_design'\nexpr_unit: ug/gDW\nindex_dir_name: cass_index_$project_name_index_dir\n# project - end\n\n";
 
         my $accession_hash = $project_info{$project_name}->{accessions};
         foreach my $accession (keys %$accession_hash) {
