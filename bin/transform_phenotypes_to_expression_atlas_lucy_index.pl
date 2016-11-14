@@ -31,7 +31,6 @@ use Data::Dumper;
 use Carp qw /croak/ ;
 use Pod::Usage;
 use Spreadsheet::ParseExcel;
-use Bio::Chado::Schema;
 use Statistics::Basic qw(:all);
 use Statistics::R;
 

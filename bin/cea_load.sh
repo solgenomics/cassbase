@@ -21,11 +21,12 @@ sleep 15
 perl ${root_dir}/cassbase/bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i ${processing_file_dir}/phenotype_download.xls -o ${processing_file_dir}/lucy.tsv -c ${processing_file_dir}/pre_corr.tsv -f ${processing_file_dir}/corr.tsv -p ${processing_file_dir}/project.txt -d ${processing_file_dir}/desc.tsv
 
 if ${clear_old_database}; then
-yes ${database_password} | dropdb -U ${database_user} -h ${database_host} ${database_name}
-yes ${database_password} | createdb -U ${database_user} -h ${database_host} ${database_name}
+PGPASSWORD=${database_password}
+dropdb -U ${database_user} -h ${database_host} ${database_name}
+createdb -U ${database_user} -h ${database_host} ${database_name}
 #DROP SCHEMA public CASCADE;
 #CREATE SCHEMA public;
-yes ${database_password} | psql -U ${database_user} -d ${database_name} -h ${database_host} -a -f ${root_dir}/Tea/import_project/create_tea_schema.sql
+psql -U ${database_user} -d ${database_name} -h ${database_host} -a -f ${root_dir}/Tea/import_project/create_tea_schema.sql
 fi
 
 mkdir ${root_dir}/indexed_files/correlation_indexes/${directory_name}
