@@ -6,7 +6,7 @@ $trial_name
 <div class="well">
     <h3>Export Trial Plant Phenotypes to Cassava Expression Atlas</h3>
     <button class="btn btn-primary" id="export_cassbase_trial_to_cea" name="export_cassbase_trial_to_cea">Export</button>
-    <a href="cea.sgn.cornell.edu" class="btn btn-primary" >Go To Cassava Expression Atlas</a>
+    <a href="http://cea.sgn.cornell.edu" target="_blank" class="btn btn-primary" >Go To Cassava Expression Atlas</a>
 </div>
 
 <script>
