@@ -1,0 +1,36 @@
+<%args>
+$trial_id
+$trial_name
+</%args>
+
+<div class="well">
+    <h3>Export Trial Plant Phenotypes to Cassava Expression Atlas</h3>
+    <button class="btn btn-primary" id="export_cassbase_trial_to_cea" name="export_cassbase_trial_to_cea">Export</button>
+    <a href="cea.sgn.cornell.edu" class="btn btn-primary" >Go To Cassava Expression Atlas</a>
+</div>
+
+<script>
+
+jQuery(document).ready(function() {
+
+    jQuery("#export_cassbase_trial_to_cea").click( function () {
+        new jQuery.ajax({
+            type: 'GET',
+            url: "http://cea.sgn.cornell.edu/cassava_expression_atlas/cassbase_transfer/<% $trial_id %>?trial_name=<% $trial_name %>",
+            beforeSend: function() {
+                jQuery('#working_modal').modal('show');
+            },
+            success: function (response) {
+                jQuery('#working_modal').modal("hide");
+                alert('Succesfully exported trial to CEA!');
+            },
+            error: function () {
+                jQuery('#working_modal').modal("hide");
+                alert('An error occurred exporting trial to CEA.');
+            }
+        });
+    });
+
+});
+
+</script>
