@@ -52,7 +52,7 @@ my ( $col_min, $col_max ) = $worksheet->col_range();
 my @data_out;
 
 my @traits;
-for my $col ( 14 .. $col_max) {
+for my $col ( 15 .. $col_max) {
     my $multiterm_trait = $worksheet->get_cell(0,$col)->value();
     my @component_terms = split /\|\|/, $multiterm_trait;
     my $chebi_term = @component_terms[0];
@@ -95,7 +95,7 @@ for my $row ( 1 .. $row_max ) {
     #if ($accession_name eq 'IITA-TMS-IBA011412'){
     
     for( my $i=0; $i<scalar(@traits); $i++) {
-        my $trait_col = $i + 14;
+        my $trait_col = $i + 15;
         #print STDERR "$row $trait_col\n";
         my $value = '';
         if ($worksheet->get_cell($row,$trait_col)) {
