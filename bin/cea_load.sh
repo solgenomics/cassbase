@@ -16,7 +16,6 @@ database_password=${10}
 directory_name=${11} #cass_index_<Project_name>
 
 wget --no-check-certificate --output-document=${processing_file_dir}/phenotype_download.xls "${host_address}/brapi/v1/studies/${trial_id}/table?format=xls&observationLevel=plant"
-sleep 15
 
 perl ${root_dir}/cassbase/bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i ${processing_file_dir}/phenotype_download.xls -o ${processing_file_dir}/lucy.tsv -c ${processing_file_dir}/pre_corr.tsv -f ${processing_file_dir}/corr.tsv -p ${processing_file_dir}/project.txt -d ${processing_file_dir}/desc.tsv
 

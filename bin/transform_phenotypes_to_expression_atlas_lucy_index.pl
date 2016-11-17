@@ -64,13 +64,25 @@ for my $col ( 15 .. $col_max) {
     $age_term =~ s/cass //g;
     my ($tiss, $tiss_ont) = split /\|/, $tissue_term; #/#
     my ($metabolite, $chebi_ont) = split /\|/, $chebi_term; #/#
+    my ($collection, $collection_ont) = split /\|/, $collection_term; #/#
+    my ($age, $age_ont) = split /\|/, $age_term; #/#
     $tiss =~ s/ /_/g;
     $tiss =~ s/\s/_/g;
+    $tiss =~ s/\(//g;
+    $tiss =~ s/\)//g;
     $metabolite =~ s/ /_/g;
     $metabolite =~ s/\s/_/g;
     $metabolite =~ s/\(//g;
     $metabolite =~ s/\)//g;
-    push @traits, [$metabolite, $tiss, $collection_term, $age_term];
+    $collection =~ s/ /_/g;
+    $collection =~ s/\s/_/g;
+    $collection =~ s/\(//g;
+    $collection =~ s/\)//g;
+    $age =~ s/ /_/g;
+    $age =~ s/\s/_/g;
+    $age =~ s/\(//g;
+    $age =~ s/\)//g;
+    push @traits, [$metabolite, $tiss, $collection, $age];
 }
 
 my %intermed;
@@ -119,11 +131,15 @@ for my $row ( 1 .. $row_max ) {
             die "Tissue not leaf, root, or stem";
         }
 
-        $accession_info_hash{$project_name}->{$accession_name}->{$stage}->{$tissue_term} = 1;
-
         my $temp_key = "$chebi_term, $accession_name, $tissue_term, $collection_term, $age_term";
-        my $step2 = "$accession_name";
-        my $corr_step = "$accession_name, $tissue_term";
+        #my $step2 = "$accession_name";
+        #my $corr_step = "$accession_name, $tissue_term";
+        my $step2 = "$accession_name-$collection_term-$age_term";
+        my $corr_step = "$accession_name, $tissue_term, $collection_term, $age_term";
+
+        #$accession_info_hash{$project_name}->{$accession_name}->{$stage}->{$tissue_term} = 1;
+        $accession_info_hash{$project_name}->{$step2}->{$stage}->{$tissue_term} = 1;
+
         if (exists($intermed{$temp_key})) {
             my $values = $intermed{$temp_key}->[3];
             push @$values, $value;
