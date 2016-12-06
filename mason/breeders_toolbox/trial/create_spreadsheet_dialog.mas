@@ -49,40 +49,57 @@ $trial_name => undef
  
             <div id="create_spreadsheet_plant_options" style="display:none">
                 <hr>
+
+                <div class="form-group">
+                    <label class="col-sm-5 control-label "><small>Trait list type: </small></label>
+                    <div class="col-sm-7" >
+                        <select class="form-control" id="create_spreadsheet_trait_list_type">
+                            <option value="metabolic">Metabolic</option>
+                            <option value="agronomic">Agronomic</option>
+                        </select>
+                    </div>
+                </div>
+
+                <hr>
                 <div class="form-group">
                     <label class="col-sm-5 control-label "><small>Sample Number: </small></label>
                     <div class="col-sm-7" >
                         <input type="text" class="form-control" id="create_spreadsheet_sample_number" placeholder="All Plants"/>
                     </div>
-    	        </div>
-                <div class="form-group">
-                    <label class="col-sm-5 control-label"><small>Tissue: </small></label>
-                    <div class="col-sm-7" >
-                        <div id="create_spreadsheet_tissue_div">
-                        </div>
-                    </div>
-    	        </div>
-                <div class="form-group">
-                    <label class="col-sm-5 control-label"><small>Time of Day: </small></label>
-                    <div class="col-sm-7" >
-                        <div id="create_spreadsheet_tod_div">
-                        </div>
-                    </div>
-    	        </div>
+                </div>
                 <div class="form-group">
                     <label class="col-sm-5 control-label"><small>Plant age (number of weeks): </small></label>
                     <div class="col-sm-7" >
                         <div id="create_spreadsheet_plant_age_div">
                         </div>
                     </div>
-    	        </div>
-                <div class="form-group">
-                    <label class="col-sm-5 control-label"><small>Units: </small></label>
-                    <div class="col-sm-7" >
-                        <div id="create_spreadsheet_units_div">
+                </div>
+
+                <div id="create_spreadsheet_plant_metabolite">
+
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label"><small>Tissue: </small></label>
+                        <div class="col-sm-7" >
+                            <div id="create_spreadsheet_tissue_div">
+                            </div>
                         </div>
                     </div>
-    	        </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label"><small>Time of Day: </small></label>
+                        <div class="col-sm-7" >
+                            <div id="create_spreadsheet_tod_div">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label"><small>Units: </small></label>
+                        <div class="col-sm-7" >
+                            <div id="create_spreadsheet_units_div">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
             
 	       </form><br/>
@@ -100,6 +117,15 @@ $trial_name => undef
 <script>
 
 jQuery(document).ready(function() {
+
+    jQuery(document).on('change', '#create_spreadsheet_trait_list_type', function() {
+        if (jQuery("#create_spreadsheet_trait_list_type").val() == 'metabolic') {
+            jQuery("#create_spreadsheet_plant_metabolite").show();
+        }
+        if (jQuery("#create_spreadsheet_trait_list_type").val() == 'agronomic') {
+            jQuery("#create_spreadsheet_plant_metabolite").hide();
+        }
+    });
 
     if(jQuery("#html_select_trial_for_create_spreadsheet").length == 0) {
       get_select_box('trials', 'select_trial_for_create_spreadsheet', { 'name' : 'html_select_trial_for_create_spreadsheet', 'id' : 'html_select_trial_for_create_spreadsheet' });
@@ -267,12 +293,17 @@ function create_phenotype_spreadsheet() {
         trait_list = JSON.stringify(list.getList(trait_list_id));
     }
     var predefcol_data = [];
-    if (jQuery("#create_spreadsheet_data_level").val() == 'plants') {
+    if (jQuery("#create_spreadsheet_data_level").val() == 'plants' && jQuery("#create_spreadsheet_trait_list_type").val() == 'metabolic') {
         predefcol_data = [
             { 'cass_tissue|CASSTISS:0000000': jQuery("#create_spreadsheet_tissue_select").val() },
             { 'cass time of day|CASSTIME:0000001': jQuery("#create_spreadsheet_tod_select").val() },
             { 'cass number of weeks|CASSTIME:0000005': jQuery("#create_spreadsheet_plant_age").val() },
             { 'cass_units|CASSTIME:0000000': jQuery("#create_spreadsheet_units_select").val() }
+        ];
+    }
+    if (jQuery("#create_spreadsheet_data_level").val() == 'plants' && jQuery("#create_spreadsheet_trait_list_type").val() == 'agronomic') {
+        predefcol_data = [
+            { 'cass number of weeks|CASSTIME:0000005': jQuery("#create_spreadsheet_plant_age").val() },
         ];
     }
 
