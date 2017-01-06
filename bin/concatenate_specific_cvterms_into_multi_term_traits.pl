@@ -129,9 +129,9 @@ foreach my $i (@first_parent_names) {
     foreach (@concatenated_terms) {
         my $accession_string = sprintf("%07d",$accession);
         #print STDERR $accession_string."\n";
-        #my $dbxref = $schema->resultset("General::Dbxref")->create({db_id=>$db_id, accession=>$accession_string});
-        #my $dbxref_id = $dbxref->dbxref_id();
-        #my $cvterm = $schema->resultset("Cv::Cvterm")->create({cv_id=>$cv_id, name=>$_, dbxref_id=>$dbxref_id});
+        my $dbxref = $schema->resultset("General::Dbxref")->create({db_id=>$db_id, accession=>$accession_string});
+        my $dbxref_id = $dbxref->dbxref_id();
+        my $cvterm = $schema->resultset("Cv::Cvterm")->create({cv_id=>$cv_id, name=>$_, dbxref_id=>$dbxref_id});
         $accession++;
         $count++;
     }
