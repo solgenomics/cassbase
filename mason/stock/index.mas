@@ -324,14 +324,13 @@ function jqueryStuff() {
 
   jQuery(document).ready(function() {
   
+  var cookie = jQuery.cookie("sgn_session_id");
+  var validate = encodeURIComponent('https://cassbase.org/authenticate/check/token');
+
     jQuery.ajax({
       type: 'GET',
-      url: 'https://cass.pb.ethz.ch/rest/transgenic/'+jQuery('#stock_dbxref_transgenic_accession').val()+'/details',
+      url: 'https://cass.pb.ethz.ch/rest/transgenic/'+jQuery('#stock_dbxref_transgenic_accession').val()+'/details?cookie='+cookie+'&validate='+validate,
       dataType: 'json',
-      xhrFields: {
-      withCredentials: true
-      },
-      crossDomain: true,
       beforeSend: function() {
         jQuery('#working_modal').modal("show");
       },
@@ -645,14 +644,13 @@ Remove a parent (this will only remove the link to the parent, not the parent ac
 
   jQuery(document).ready(function() {
 
+  var cookie = jQuery.cookie("sgn_session_id");
+  var validate = encodeURIComponent('https://cassbase.org/authenticate/check/token');
+
     jQuery.ajax({
       type: 'GET',
-      url: 'https://cass.pb.ethz.ch/rest/construct/'+jQuery('#stock_dbxref_construct_accession').val()+'/details',
+      url: 'https://cass.pb.ethz.ch/rest/construct/'+jQuery('#stock_dbxref_construct_accession').val()+'/details?cookie='+cookie+'&validate='+validate,
       dataType: 'json',
-      xhrFields: {
-      withCredentials: true
-      },
-      crossDomain: true,
       beforeSend: function() {
         jQuery('#working_modal').modal("show");
       },
