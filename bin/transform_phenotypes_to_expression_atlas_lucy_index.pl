@@ -34,12 +34,12 @@ use Spreadsheet::ParseExcel;
 use Statistics::Basic qw(:all);
 use Statistics::R;
 
-our ($opt_i, $opt_p, $opt_o, $opt_c, $opt_f, $opt_d);
+our ($opt_i, $opt_p, $opt_o, $opt_c, $opt_f, $opt_d, $opt_v);
 
-getopts('i:p:o:c:f:d:');
+getopts('i:p:o:c:f:d:v:');
 
-if (!$opt_i || !$opt_p || !$opt_o || !$opt_c || !$opt_f || !$opt_d) {
-    pod2usage(-verbose => 2, -message => "Must provide options -i (input file) -p (project file out) -o (lucy out file) -c (corr pre-3col out file) -f (corr out file) -d (metabolite description oufile )\n");
+if (!$opt_i || !$opt_p || !$opt_o || !$opt_c || !$opt_f || !$opt_d || !$opt_v) {
+    die "Must provide options -i (input file) -p (project file out) -o (lucy out file) -c (corr pre-3col out file) -f (corr out file) -d (metabolite description oufile -v (script_version)\n";
 }
 
 my $parser   = Spreadsheet::ParseExcel->new();
@@ -54,35 +54,82 @@ my @data_out;
 my @traits;
 for my $col ( 15 .. $col_max) {
     my $multiterm_trait = $worksheet->get_cell(0,$col)->value();
-    my @component_terms = split /\|\|/, $multiterm_trait;
-    my $chebi_term = @component_terms[0];
-    my $tissue_term = @component_terms[1];
-    my $collection_term = @component_terms[2];
-    my $age_term = @component_terms[3];
-    $tissue_term =~ s/cass //g;
-    $collection_term =~ s/cass //g;
-    $age_term =~ s/cass //g;
-    my ($tiss, $tiss_ont) = split /\|/, $tissue_term; #/#
-    my ($metabolite, $chebi_ont) = split /\|/, $chebi_term; #/#
-    my ($collection, $collection_ont) = split /\|/, $collection_term; #/#
-    my ($age, $age_ont) = split /\|/, $age_term; #/#
-    $tiss =~ s/ /_/g;
-    $tiss =~ s/\s/_/g;
-    $tiss =~ s/\(//g;
-    $tiss =~ s/\)//g;
-    $metabolite =~ s/ /_/g;
-    $metabolite =~ s/\s/_/g;
-    $metabolite =~ s/\(//g;
-    $metabolite =~ s/\)//g;
-    $collection =~ s/ /_/g;
-    $collection =~ s/\s/_/g;
-    $collection =~ s/\(//g;
-    $collection =~ s/\)//g;
-    $age =~ s/ /_/g;
-    $age =~ s/\s/_/g;
-    $age =~ s/\(//g;
-    $age =~ s/\)//g;
-    push @traits, [$metabolite, $tiss, $collection, $age];
+    my @component_terms = split /\|\|/, $multiterm_trait; #/#
+    if ($opt_v == 1){
+        my $chebi_term = @component_terms[0];
+        my $tissue_term = @component_terms[1];
+        my $collection_term = @component_terms[2];
+        my $age_term = @component_terms[3];
+        $tissue_term =~ s/cass //g;
+        $collection_term =~ s/cass //g;
+        $age_term =~ s/cass //g;
+        my ($tiss, $tiss_ont) = split /\|/, $tissue_term; #/#
+        my ($metabolite, $chebi_ont) = split /\|/, $chebi_term; #/#
+        my ($collection, $collection_ont) = split /\|/, $collection_term; #/#
+        my ($age, $age_ont) = split /\|/, $age_term; #/#
+        $tiss =~ s/ /_/g;
+        $tiss =~ s/\s/_/g;
+        $tiss =~ s/\(//g;
+        $tiss =~ s/\)//g;
+        $metabolite =~ s/ /_/g;
+        $metabolite =~ s/\s/_/g;
+        $metabolite =~ s/\(//g;
+        $metabolite =~ s/\)//g;
+        $collection =~ s/ /_/g;
+        $collection =~ s/\s/_/g;
+        $collection =~ s/\(//g;
+        $collection =~ s/\)//g;
+        $age =~ s/ /_/g;
+        $age =~ s/\s/_/g;
+        $age =~ s/\(//g;
+        $age =~ s/\)//g;
+        push @traits, [$metabolite, $tiss, $collection, $age];
+    } elsif ($opt_v == 2){
+        if (scalar(@component_terms) == 5){
+            my $chebi_term = @component_terms[0];
+            my $tissue_term = @component_terms[1];
+            my $collection_term = @component_terms[2];
+            my $age_term = @component_terms[3];
+            $tissue_term =~ s/cass //g;
+            $collection_term =~ s/cass //g;
+            $age_term =~ s/cass //g;
+            my ($tiss, $tiss_ont) = split /\|/, $tissue_term; #/#
+            my ($metabolite, $chebi_ont) = split /\|/, $chebi_term; #/#
+            my ($collection, $collection_ont) = split /\|/, $collection_term; #/#
+            my ($age, $age_ont) = split /\|/, $age_term; #/#
+            $tiss =~ s/ /_/g;
+            $tiss =~ s/\s/_/g;
+            $tiss =~ s/\(//g;
+            $tiss =~ s/\)//g;
+            $metabolite =~ s/ /_/g;
+            $metabolite =~ s/\s/_/g;
+            $metabolite =~ s/\(//g;
+            $metabolite =~ s/\)//g;
+            $collection =~ s/ /_/g;
+            $collection =~ s/\s/_/g;
+            $collection =~ s/\(//g;
+            $collection =~ s/\)//g;
+            $age =~ s/ /_/g;
+            $age =~ s/\s/_/g;
+            $age =~ s/\(//g;
+            $age =~ s/\)//g;
+            push @traits, [$metabolite."_".$tiss, $tiss, $collection, $age];
+        } elsif (scalar(@component_terms) == 2){
+            my $agronomic_term = @component_terms[0];
+            my $age_term = @component_terms[1];
+            my ($agro, $agro_ont) = split /\|/, $agronomic_term; #/#
+            my ($age, $age_ont) = split /\|/, $age_term; #/#
+            $agro =~ s/ /_/g;
+            $agro =~ s/\s/_/g;
+            $agro =~ s/\(//g;
+            $agro =~ s/\)//g;
+            $age =~ s/ /_/g;
+            $age =~ s/\s/_/g;
+            $age =~ s/\(//g;
+            $age =~ s/\)//g;
+            push @traits, [$agro, '', '', $age];
+        }
+    }
 }
 
 my %intermed;
@@ -113,39 +160,43 @@ for my $row ( 1 .. $row_max ) {
         if ($worksheet->get_cell($row,$trait_col)) {
             $value = $worksheet->get_cell($row,$trait_col)->value();
         }
-        
-        my $chebi_term = @traits[$i]->[0];
+
+        my $trait_term = @traits[$i]->[0];
         my $tissue_term = @traits[$i]->[1];
         my $collection_term = @traits[$i]->[2];
         my $age_term = @traits[$i]->[3];
 
         my $stage;
-        if (index($tissue_term, 'leaf') != -1) {
-            $stage = 'leaf';
-        } elsif (index($tissue_term, 'root') != -1) {
-            $stage = 'root';
-        } elsif (index($tissue_term, 'stem') != -1) {
-            $stage = 'stem';
-        }
-        if (!$stage) {
-            die "Tissue not leaf, root, or stem";
+        if ($opt_v == 1){
+            if (index($tissue_term, 'leaf') != -1) {
+                $stage = 'leaf';
+            } elsif (index($tissue_term, 'root') != -1) {
+                $stage = 'root';
+            } elsif (index($tissue_term, 'stem') != -1) {
+                $stage = 'stem';
+            }
+            if (!$stage) {
+                die "Tissue not leaf, root, or stem";
+            }
         }
 
-        my $temp_key = "$chebi_term, $accession_name, $tissue_term, $collection_term, $age_term";
-        #my $step2 = "$accession_name";
-        #my $corr_step = "$accession_name, $tissue_term";
+        my $temp_key = "$trait_term, $accession_name, $tissue_term, $collection_term, $age_term";
         my $step2 = "$accession_name-$collection_term-$age_term";
-        my $corr_step = "$accession_name, $tissue_term, $collection_term, $age_term";
-
-        #$accession_info_hash{$project_name}->{$accession_name}->{$stage}->{$tissue_term} = 1;
-        $accession_info_hash{$project_name}->{$step2}->{$stage}->{$tissue_term} = 1;
+        my $corr_step;
+        if ($opt_v == 1){
+            $corr_step = "$accession_name, $tissue_term, $collection_term, $age_term";
+            $accession_info_hash{$project_name}->{$step2}->{$stage}->{$tissue_term} = 1;
+        } elsif ($opt_v == 2){
+            $corr_step = "$accession_name, $collection_term, $age_term";
+            $accession_info_hash{$project_name}->{$step2} = 1;
+        }
 
         if (exists($intermed{$temp_key})) {
             my $values = $intermed{$temp_key}->[3];
             push @$values, $value;
             $intermed{$temp_key}->[3] = $values;
         } else {
-            $intermed{$temp_key} = [$chebi_term, $tissue_term, $step2, [$value], $corr_step];
+            $intermed{$temp_key} = [$trait_term, $tissue_term, $step2, [$value], $corr_step];
         }
         $corr_steps{$corr_step} = 1;
     }
@@ -169,9 +220,9 @@ foreach (sort keys %corr_steps) {
 }
 
 my %corr_out;
-my %unique_metabolites;
+my %unique_traits;
 foreach (sort keys %intermed) {
-    my $chebi_term = $intermed{$_}->[0];
+    my $trait_term = $intermed{$_}->[0];
     my $step1 = $intermed{$_}->[1];
     my $step2 = $intermed{$_}->[2];
     my $values = $intermed{$_}->[3];
@@ -188,10 +239,10 @@ foreach (sort keys %intermed) {
         push @non_empty_values_formatted, sprintf("%.2f", $_);
     }
 
-    push @data_out, [$chebi_term, $step1, $step2, $display_average, $display_stddev, \@non_empty_values_formatted];
+    push @data_out, [$trait_term, $step1, $step2, $display_average, $display_stddev, \@non_empty_values_formatted];
 
-    $corr_out{$chebi_term}->{$corr_step} = $display_average;
-    $unique_metabolites{$chebi_term}++;
+    $corr_out{$trait_term}->{$corr_step} = $display_average;
+    $unique_traits{$trait_term}++;
 }
 
 #print STDERR Dumper \@data_out;
@@ -199,7 +250,7 @@ foreach (sort keys %intermed) {
 
 open(my $fh, ">", $opt_d);
     print STDERR $opt_d."\n";
-    foreach (keys %unique_metabolites) {
+    foreach (keys %unique_traits) {
         print $fh "1\t$_\t$_\n";
     }
 close $fh;
@@ -208,17 +259,17 @@ open(my $fh, ">", $opt_o);
     print STDERR $opt_o."\n";
     foreach (@data_out) {
         my $values = $_->[5];
-        my $metabolite = $_->[0];
-        print $fh "$metabolite\t$_->[2]\t$_->[1]\t$_->[3]\t$_->[4]\t".join(',', @$values),"\n";
+        my $trait_term = $_->[0];
+        print $fh "$trait_term\t$_->[2]\t$_->[1]\t$_->[3]\t$_->[4]\t".join(',', @$values),"\n";
     }
 close $fh;
 
 open(my $fh, ">", $opt_c) || die("\nERROR:\n");
     print STDERR $opt_c."\n";
     print $fh "Metabolites\t", join("\t", @corr_steps_sorted), "\n";
-    foreach my $chebi (sort keys %corr_out) {
-        print $fh "$chebi\t";
-        my $vals = $corr_out{$chebi};
+    foreach my $trait_term (sort keys %corr_out) {
+        print $fh "$trait_term\t";
+        my $vals = $corr_out{$trait_term};
         my $step = 1;
         foreach my $corr_step (@corr_steps_sorted) {
             my $c = $vals->{$corr_step};
@@ -299,13 +350,15 @@ open (my $file_fh, ">", "$opt_p") || die ("\nERROR:\n");
 
             print $file_fh "# figure --- All info needed for a cluster of images (usually includes a stage and all its tissues). Copy this block as many times as you need (including as many tissue layer blocks as you need).\nfigure_name: $accession\ncube_stage_name: $accession\nconditions:\n# write figure metadata\n\n";
 
-            my $stage_hash = $accession_hash->{$accession};
-            foreach my $stage (keys %$stage_hash) {
-                print $file_fh "#stage layer\nlayer_name: $accession\nlayer_description:\nlayer_type: stage\nbg_color:\nlayer_image: $accession.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: 10\nimg_ordinal: 10\norgan: $stage\n# layer - end\n\n";
+            if ($opt_v == 1){
+                my $stage_hash = $accession_hash->{$accession};
+                foreach my $stage (keys %$stage_hash) {
+                    print $file_fh "#stage layer\nlayer_name: $accession\nlayer_description:\nlayer_type: stage\nbg_color:\nlayer_image: $accession.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: 10\nimg_ordinal: 10\norgan: $stage\n# layer - end\n\n";
 
-                my $tissue_hash = $stage_hash->{$stage};
-                foreach my $tissue (keys %$tissue_hash) {
-                    print $file_fh "#tissue layer\nlayer_name: $tissue\nlayer_description: $tissue\nlayer_type: tissue\nbg_color:\nlayer_image: $tissue.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: 100\nimg_ordinal: 100\norgan: $stage\n# layer - end\n\n";
+                    my $tissue_hash = $stage_hash->{$stage};
+                    foreach my $tissue (keys %$tissue_hash) {
+                        print $file_fh "#tissue layer\nlayer_name: $tissue\nlayer_description: $tissue\nlayer_type: tissue\nbg_color:\nlayer_image: $tissue.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: 100\nimg_ordinal: 100\norgan: $stage\n# layer - end\n\n";
+                    }
                 }
             }
 
