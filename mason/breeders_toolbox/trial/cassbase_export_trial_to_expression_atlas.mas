@@ -16,7 +16,7 @@ jQuery(document).ready(function() {
     jQuery("#export_cassbase_trial_to_cea").click( function () {
         new jQuery.ajax({
             type: 'GET',
-            url: "https://cea.sgn.cornell.edu/cassava_expression_atlas/cassbase_transfer/<% $trial_id %>?trial_name=<% $trial_name %>",
+            url: "http://0:3000/cassava_expression_atlas/cassbase_transfer/<% $trial_id %>?trial_name=<% $trial_name %>",
             beforeSend: function() {
                 jQuery('#working_modal').modal('show');
             },

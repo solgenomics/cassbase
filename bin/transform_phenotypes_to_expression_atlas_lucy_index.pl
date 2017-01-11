@@ -167,6 +167,9 @@ for my $row ( 1 .. $row_max ) {
         my $age_term = @traits[$i]->[3];
 
         my $stage;
+        my $temp_key;
+        my $step2;
+        my $corr_step;
         if ($opt_v == 1){
             if (index($tissue_term, 'leaf') != -1) {
                 $stage = 'leaf';
@@ -178,27 +181,35 @@ for my $row ( 1 .. $row_max ) {
             if (!$stage) {
                 die "Tissue not leaf, root, or stem";
             }
-        }
 
-        my $temp_key = "$trait_term, $accession_name, $tissue_term, $collection_term, $age_term";
-        my $step2 = "$accession_name-$collection_term-$age_term";
-        my $corr_step;
-        if ($opt_v == 1){
+            $temp_key = "$trait_term, $accession_name, $tissue_term, $collection_term, $age_term";
+            $step2 = "$accession_name-$collection_term-$age_term";
             $corr_step = "$accession_name, $tissue_term, $collection_term, $age_term";
             $accession_info_hash{$project_name}->{$step2}->{$stage}->{$tissue_term} = 1;
-        } elsif ($opt_v == 2){
-            $corr_step = "$accession_name, $collection_term, $age_term";
-            $accession_info_hash{$project_name}->{$step2} = 1;
-        }
 
-        if (exists($intermed{$temp_key})) {
-            my $values = $intermed{$temp_key}->[3];
-            push @$values, $value;
-            $intermed{$temp_key}->[3] = $values;
-        } else {
-            $intermed{$temp_key} = [$trait_term, $tissue_term, $step2, [$value], $corr_step];
+            if (exists($intermed{$temp_key})) {
+                my $values = $intermed{$temp_key}->[3];
+                push @$values, $value;
+                $intermed{$temp_key}->[3] = $values;
+            } else {
+                $intermed{$temp_key} = [$trait_term, $tissue_term, $step2, [$value], $corr_step];
+            }
+            $corr_steps{$corr_step} = 1;
+        } elsif ($opt_v == 2){
+            $temp_key = "$trait_term, $accession_name, $age_term";
+            $step2 = "$accession_name-$age_term";
+            $corr_step = "$accession_name, $age_term";
+            $accession_info_hash{$project_name}->{$step2} = 1;
+
+            if (exists($intermed{$temp_key})) {
+                my $values = $intermed{$temp_key}->[3];
+                push @$values, $value;
+                $intermed{$temp_key}->[3] = $values;
+            } else {
+                $intermed{$temp_key} = [$trait_term, '', $step2, [$value], $corr_step];
+            }
+            $corr_steps{$corr_step} = 1;
         }
-        $corr_steps{$corr_step} = 1;
     }
 
     #}
