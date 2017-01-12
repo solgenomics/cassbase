@@ -117,6 +117,7 @@ for my $col ( 15 .. $col_max) {
         } elsif (scalar(@component_terms) == 2){
             my $agronomic_term = @component_terms[0];
             my $age_term = @component_terms[1];
+            $age_term =~ s/cass //g;
             my ($agro, $agro_ont) = split /\|/, $agronomic_term; #/#
             my ($age, $age_ont) = split /\|/, $age_term; #/#
             $agro =~ s/ /_/g;
@@ -131,6 +132,9 @@ for my $col ( 15 .. $col_max) {
         }
     }
 }
+
+#print STDERR Dumper \@traits;
+#print STDERR scalar(@traits)."\n";
 
 my %intermed;
 my %corr_steps;
@@ -151,8 +155,7 @@ for my $row ( 1 .. $row_max ) {
     };
 
     #print STDERR $accession_name."\n";
-    #if ($accession_name eq 'IITA-TMS-IBA011412'){
-    
+
     for( my $i=0; $i<scalar(@traits); $i++) {
         my $trait_col = $i + 15;
         #print STDERR "$row $trait_col\n";
@@ -199,20 +202,19 @@ for my $row ( 1 .. $row_max ) {
             $temp_key = "$trait_term, $accession_name, $age_term";
             $step2 = "$accession_name-$age_term";
             $corr_step = "$accession_name, $age_term";
-            $accession_info_hash{$project_name}->{$step2} = 1;
+            $accession_info_hash{$project_name}->{$step2}->{'plant'}->{'plant'} = 1;
 
             if (exists($intermed{$temp_key})) {
                 my $values = $intermed{$temp_key}->[3];
                 push @$values, $value;
                 $intermed{$temp_key}->[3] = $values;
             } else {
-                $intermed{$temp_key} = [$trait_term, '', $step2, [$value], $corr_step];
+                $intermed{$temp_key} = [$trait_term, 'plant', $step2, [$value], $corr_step];
             }
             $corr_steps{$corr_step} = 1;
         }
     }
 
-    #}
 
 }
 #print STDERR Dumper \%intermed;
@@ -361,7 +363,7 @@ open (my $file_fh, ">", "$opt_p") || die ("\nERROR:\n");
 
             print $file_fh "# figure --- All info needed for a cluster of images (usually includes a stage and all its tissues). Copy this block as many times as you need (including as many tissue layer blocks as you need).\nfigure_name: $accession\ncube_stage_name: $accession\nconditions:\n# write figure metadata\n\n";
 
-            if ($opt_v == 1){
+            #if ($opt_v == 1){
                 my $stage_hash = $accession_hash->{$accession};
                 foreach my $stage (keys %$stage_hash) {
                     print $file_fh "#stage layer\nlayer_name: $accession\nlayer_description:\nlayer_type: stage\nbg_color:\nlayer_image: $accession.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: 10\nimg_ordinal: 10\norgan: $stage\n# layer - end\n\n";
@@ -371,7 +373,7 @@ open (my $file_fh, ">", "$opt_p") || die ("\nERROR:\n");
                         print $file_fh "#tissue layer\nlayer_name: $tissue\nlayer_description: $tissue\nlayer_type: tissue\nbg_color:\nlayer_image: $tissue.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: 100\nimg_ordinal: 100\norgan: $stage\n# layer - end\n\n";
                     }
                 }
-            }
+            #}
 
             print $file_fh "# figure - end\n\n";
         }
