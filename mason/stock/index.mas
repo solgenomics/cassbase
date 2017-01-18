@@ -143,7 +143,8 @@ my $direct_phenotypes = $stockref->{direct_phenotypes} || undef;
 
 # get all phenotypes of subjects
 my $members_phenotypes = $stockref->{members_phenotypes};
-my $p_download_link = qq|<a href = "/stock/$stock_id/phenotypes">[Download phenotypes]</a>| if ( (keys %$direct_phenotypes) || ( keys %$members_phenotypes) );
+#my $p_download_link = qq|<a href = "/stock/$stock_id/phenotypes">[Download phenotypes]</a>| if ( (keys %$direct_phenotypes) || ( keys %$members_phenotypes) );
+my $p_download_link = '<a target="_blank" href = "/breeders/trials/phenotype/download?format=csv&timestamp=1&dataLevel=all&'.$type_name.'_list=['.$stock_id.']&search_type=complete">[Download phenotypes]</a>';
 my $direct_genotypes = $stockref->{direct_genotypes};
 my $g_download_link = qq|<a href =  "/stock/$stock_id/genotypes">Download genotypes</a>| if (keys %$direct_genotypes) ;
 ############################
@@ -417,17 +418,6 @@ function jqueryStuff() {
 </&>
 
 
-<&| /page/info_section.mas, title => "Experimental data" , collapsible=> 1, is_subsection => 0 &>
-      <& /stock/stockprops.mas, stock_id=>$stock_id, props=> $stockprops, subset=> $experiment  &>
-</&>
-
-% if($is_owner) {
-<&| /page/info_section.mas, title=>"Stock history", collapsible=>1, collapsed=>1 &>
-
-</&>
-
-
-% }
 
 <%perl>
  my $collapsible = 0; 
@@ -447,6 +437,7 @@ Remove a parent (this will only remove the link to the parent, not the parent ac
   <div id="remove_parent_list">[loading parent list...]</div>
 </div>
 
+% if ($type_name eq 'accession'){
 
 <&| /page/info_section.mas, title=>"Pedigree" , collapsible=> $collapsible, collapsed=>0, subtitle=>"[$add_parent_link] [$remove_parent_link]" &>
   <& /pedigree/stock_pedigree.mas, stock_id => $stock_id, has_pedigree => $has_pedigree &>
@@ -467,6 +458,7 @@ Remove a parent (this will only remove the link to the parent, not the parent ac
 
 <& /pedigree/stock_pedigree_string.mas, stock_id => $stock_id &>
 
+% }
 
 % if ($type) {
 <&| /page/info_section.mas, title=>"Related stocks" , collapsible=>1, collapsed=>0 &>
@@ -554,7 +546,7 @@ Remove a parent (this will only remove the link to the parent, not the parent ac
 <div id="stock_trials_info_popup">
   <table id="stock_trials_info_table" >
     <thead>
-    <tr><th>Trait</th><th>Average</th><th>Std dev</th></tr>
+    <tr><th>Trait</th><th>Average</th><th>Std dev</th><th>Count</th></tr>
     </thead>
   </table>
 </div>
@@ -568,7 +560,8 @@ Remove a parent (this will only remove the link to the parent, not the parent ac
 
 </&>
 
-<&| /page/info_section.mas, title => "Traits assayed" &>
+<& /stock/download_stock_phenotypes_dialog.mas, stock_id => $stock_id, stock_name => $uniquename, stock_type => $type_name &>
+<&| /page/info_section.mas, title => "Traits assayed", collapsible=>1, collapsed=>1, hide_if_empty=>1, subtitle=>"[<a id='stock_download_phenotypes_button'>Download Data</a>]" &>
 
   <& /stock/traits.mas, stock_id => $stock_id &>
 
@@ -592,11 +585,13 @@ Remove a parent (this will only remove the link to the parent, not the parent ac
 % }
 </&>
 
+if ($type_name eq 'accession'){
 
 <&| /page/info_section.mas, title=>"Accession JBrowse", collapsible => 1 , collapsed => 0 &>
 <p id="jbrowse_check">[loading...]</p>
 </&>
 
+% }
 
 <script>
   jQuery(document).ready(function() { 
