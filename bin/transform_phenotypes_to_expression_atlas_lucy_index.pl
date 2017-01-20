@@ -34,12 +34,12 @@ use Spreadsheet::ParseExcel;
 use Statistics::Basic qw(:all);
 use Statistics::R;
 
-our ($opt_i, $opt_p, $opt_o, $opt_c, $opt_f, $opt_d, $opt_v);
+our ($opt_i, $opt_p, $opt_o, $opt_c, $opt_f, $opt_d, $opt_v, $opt_n);
 
-getopts('i:p:o:c:f:d:v:');
+getopts('i:p:o:c:f:d:v:n:');
 
-if (!$opt_i || !$opt_p || !$opt_o || !$opt_c || !$opt_f || !$opt_d || !$opt_v) {
-    die "Must provide options -i (input file) -p (project file out) -o (lucy out file) -c (corr pre-3col out file) -f (corr out file) -d (metabolite description oufile -v (script_version)\n";
+if (!$opt_i || !$opt_p || !$opt_o || !$opt_c || !$opt_f || !$opt_d || !$opt_v || !$opt_n) {
+    die "Must provide options -i (input file) -p (project file out) -o (lucy out file) -c (corr pre-3col out file) -f (corr out file) -d (metabolite description oufile -v (script_version) -n (project name) \n";
 }
 
 my $parser   = Spreadsheet::ParseExcel->new();
@@ -140,10 +140,11 @@ my %intermed;
 my %corr_steps;
 my %project_info;
 my %accession_info_hash;
+my $project_name = $opt_n;
 for my $row ( 1 .. $row_max ) {
 
     my $accession_name = $worksheet->get_cell($row,7)->value();
-    my $project_name = $worksheet->get_cell($row,2)->value();
+    #my $project_name = $worksheet->get_cell($row,2)->value();
     my $project_design = $worksheet->get_cell($row,3)->value();
     my $project_location = $worksheet->get_cell($row,5)->value();
     my $project_year = $worksheet->get_cell($row,0)->value();
@@ -182,7 +183,8 @@ for my $row ( 1 .. $row_max ) {
                 $stage = 'stem';
             }
             if (!$stage) {
-                die "Tissue not leaf, root, or stem";
+                print STDERR "Tissue not leaf, root, or stem";
+                next;
             }
 
             $temp_key = "$trait_term, $accession_name, $tissue_term, $collection_term, $age_term";
