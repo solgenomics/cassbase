@@ -14,10 +14,11 @@ database_name=$8
 database_user=$9
 database_password=${10}
 directory_name=${11} #cass_index_<Project_name>
+export_type=${12} #1 or 2
 
 wget --no-check-certificate --output-document=${processing_file_dir}/phenotype_download.xls "${host_address}/brapi/v1/studies/${trial_id}/table?format=xls&observationLevel=plant"
 
-perl ${root_dir}/cassbase/bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i ${processing_file_dir}/phenotype_download.xls -o ${processing_file_dir}/lucy.tsv -c ${processing_file_dir}/pre_corr.tsv -f ${processing_file_dir}/corr.tsv -p ${processing_file_dir}/project.txt -d ${processing_file_dir}/desc.tsv -v 2
+perl ${root_dir}/cassbase/bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i ${processing_file_dir}/phenotype_download.xls -o ${processing_file_dir}/lucy.tsv -c ${processing_file_dir}/pre_corr.tsv -f ${processing_file_dir}/corr.tsv -p ${processing_file_dir}/project.txt -d ${processing_file_dir}/desc.tsv -v ${export_type}
 
 if ${clear_old_database}; then
 PGPASSWORD=${database_password} dropdb -U ${database_user} -h ${database_host} ${database_name}
