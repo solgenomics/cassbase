@@ -585,7 +585,7 @@ Remove a parent (this will only remove the link to the parent, not the parent ac
 % }
 </&>
 
-if ($type_name eq 'accession'){
+% if ($type_name eq 'accession'){
 
 <&| /page/info_section.mas, title=>"Accession JBrowse", collapsible => 1 , collapsed => 0 &>
 <p id="jbrowse_check">[loading...]</p>
