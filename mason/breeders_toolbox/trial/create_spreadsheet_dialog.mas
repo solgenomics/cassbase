@@ -98,6 +98,13 @@ $trial_name => undef
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label"><small>Institutes: </small></label>
+                        <div class="col-sm-7" >
+                            <div id="create_spreadsheet_institutes_div">
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -232,7 +239,31 @@ jQuery(document).ready(function() {
             alert('An error occurred getting CASS units ontology select.');
         }
     });
-    
+
+    new jQuery.ajax({
+        type: 'POST',
+        url: '/ajax/html/select/ontology_children',
+        dataType: "json",
+        data: {
+            'parent_node_cvterm': 'cass_institutes|CASSINST:0000000',
+            'rel_cvterm': 'is_a',
+            'rel_cv': 'relationship',
+            'selectbox_name': 'create_spreadsheet_institutes_select_name',
+            'selectbox_id': 'create_spreadsheet_institutes_select',
+        },
+        success: function (response) {
+            if (response.error) {
+                alert(response.error);
+            } else {
+                jQuery('#create_spreadsheet_institutes_div').html(response.select);
+            }
+        },
+        error: function () {
+            jQuery('#working_modal').modal("hide");
+            alert('An error occurred getting CASS institutes ontology select.');
+        }
+    });
+
   });
   
   jQuery(document).on("change", '#create_spreadsheet_tissue_select', function() {
@@ -274,6 +305,7 @@ jQuery(document).ready(function() {
         jQuery("#create_spreadsheet_tod_select").val('');
         jQuery("#create_spreadsheet_plant_age").val('');
         jQuery("#create_spreadsheet_units_select").val('');
+        jQuery("#create_spreadsheet_institutes_select").val('');
         jQuery('#create_spreadsheet_plant_options').hide();
       }
   });
@@ -298,7 +330,8 @@ function create_phenotype_spreadsheet() {
             { 'cass_tissue|CASSTISS:0000000': jQuery("#create_spreadsheet_tissue_select").val() },
             { 'cass time of day|CASSTIME:0000001': jQuery("#create_spreadsheet_tod_select").val() },
             { 'cass number of weeks|CASSTIME:0000005': jQuery("#create_spreadsheet_plant_age").val() },
-            { 'cass_units|CASSTIME:0000000': jQuery("#create_spreadsheet_units_select").val() }
+            { 'cass_units|CASSTIME:0000000': jQuery("#create_spreadsheet_units_select").val() },
+            { 'cass_institutes|CASSINST:0000000': jQuery("#create_spreadsheet_institutes_select").val() }
         ];
     }
     if (jQuery("#create_spreadsheet_data_level").val() == 'plants' && jQuery("#create_spreadsheet_trait_list_type").val() == 'agronomic') {
