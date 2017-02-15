@@ -37,13 +37,11 @@ use Data::Dumper;
 use SGN::Model::Cvterm;
 use Try::Tiny;
 
-our ($opt_H, $opt_D, $opt_i, $opt_d, $opt_c);
-getopts('H:D:i:d:c:');
+our ($opt_H, $opt_D);
+getopts('H:D:');
 
-
-
-if (!$opt_D || !$opt_H || !$opt_i || !$opt_d || !$opt_c) {
-  die("Exiting: options missing\nRequires: -D -H -i -d -c");
+if (!$opt_D || !$opt_H) {
+  die("Exiting: options missing\nRequires: -D -H\n");
 }
 
 my $dbh = CXGN::DB::InsertDBH
@@ -56,24 +54,21 @@ my $dbh = CXGN::DB::InsertDBH
 
 my $schema = Bio::Chado::Schema->connect(  sub { $dbh->get_actual_dbh() } );
 
+my $cv = $schema->resultset("Cv::Cv")->find({name=>'postcomposed_terms'});
+my $cv_id = $cv->cv_id();
+
+my $db = $schema->resultset("General::Db")->find({name=>'CASSFT'});
+my $db_id = $db->db_id();
+
 my %all_cvterms;
-my $q = "SELECT cvterm.cvterm_id, cvterm.name from cvterm join cv using(cv_id) where cv.name='postcomposed_terms';";
+my $q = "SELECT cvterm.cvterm_id, cvterm.name from cvterm where cv_id=$cv_id;";
 my $h = $dbh->prepare($q);
 $h->execute();
 while( my ($cvterm_id, $cvterm) = $h->fetchrow_array() ){
-    $all_cvterms{$cvterm} = $cvterm_id;
+    if (index($cvterm, 'Manes') == -1) {
+        $all_cvterms{$cvterm} = $cvterm_id;
+    }
 }
-
-#my %phenotyped_cvterms;
-#my $q = "SELECT cvterm_id, name from cvterm join phenotype on (cvterm_id=cvalue_id);";
-#my $h = $dbh->prepare($q);
-#$h->execute();
-#while( my ($cvterm_id, $cvterm) = $h->fetchrow_array() ){
-#    my @term_array = split(/\|\|/, $cvterm);
-#    if ( (scalar(@term_array) == 5 || scalar(@term_array) == 2) && index($term_array[0], 'Manes') == -1) {
-#        $phenotyped_cvterms{$cvterm_id} = $cvterm;
-#    }
-#}
 
 foreach (keys %all_cvterms){
     my $cvterm_id = $all_cvterms{$_};
@@ -97,14 +92,8 @@ my @additional_institutes = (
     'BTI|CASSINST:0000007'
 );
 
-my $cv = $schema->resultset("Cv::Cv")->find({name=>'postcomposed_terms'});
-my $cv_id = $cv->cv_id();
-
-my $db = $schema->resultset("General::Db")->find({name=>'CASSFT'});
-my $db_id = $db->db_id();
-
-my $q = "SELECT accession FROM dbxref WHERE db_id=$db_id ORDER BY dbxref_id DESC LIMIT 1;";
-my $h = $dbh->prepare($q);
+$q = "SELECT accession FROM dbxref WHERE db_id=$db_id ORDER BY dbxref_id DESC LIMIT 1;";
+$h = $dbh->prepare($q);
 $h->execute();
 my ($last_accession) = $h->fetchrow_array();
 my $accession = $last_accession + 1;
