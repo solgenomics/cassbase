@@ -78,17 +78,17 @@ for my $col ( 15 .. $col_max) {
         my $unit_term;
         my $final_term;
         if (scalar(@component_terms) == 6){
-            $chebi_term = @component_terms[0];
-            $tissue_term = @component_terms[1];
-            $collection_term = @component_terms[2];
-            $age_term = @component_terms[3];
-            $unit_term = @component_terms[4];
-            $final_term = @component_terms[5];
+            $chebi_term = $component_terms[0];
+            $tissue_term = $component_terms[1];
+            $collection_term = $component_terms[2];
+            $age_term = $component_terms[3];
+            $unit_term = $component_terms[4];
+            $final_term = $component_terms[5];
         }
         if (scalar(@component_terms) == 3){
-            $chebi_term = @component_terms[0];
-            $age_term = @component_terms[1];
-            $final_term = @component_terms[2];
+            $chebi_term = $component_terms[0];
+            $age_term = $component_terms[1];
+            $final_term = $component_terms[2];
         }
         my $i=rindex($final_term, /\|/); #/#
         my $institute_term=substr($final_term,0,$i);
@@ -118,11 +118,16 @@ for my $col ( 15 .. $col_max) {
         $age =~ s/\)//g;
         push @traits, [$metabolite, $tiss, $collection, $age];
     } elsif ($opt_v == 2){
-        if (scalar(@component_terms) == 5){
-            my $chebi_term = @component_terms[0];
-            my $tissue_term = @component_terms[1];
-            my $collection_term = @component_terms[2];
-            my $age_term = @component_terms[3];
+        if (scalar(@component_terms) == 6){
+            my $chebi_term = $component_terms[0];
+            my $tissue_term = $component_terms[1];
+            my $collection_term = $component_terms[2];
+            my $age_term = $component_terms[3];
+            my $unit_term = $component_terms[4];
+            my $final_term = $component_terms[5];
+            my $i=rindex($final_term, /\|/); #/#
+            my $institute_term=substr($final_term,0,$i);
+
             $tissue_term =~ s/cass //g;
             $collection_term =~ s/cass //g;
             $age_term =~ s/cass //g;
@@ -147,9 +152,13 @@ for my $col ( 15 .. $col_max) {
             $age =~ s/\(//g;
             $age =~ s/\)//g;
             push @traits, [$metabolite."_".$tiss, $tiss, $collection, $age];
-        } elsif (scalar(@component_terms) == 2){
-            my $agronomic_term = @component_terms[0];
-            my $age_term = @component_terms[1];
+        } elsif (scalar(@component_terms) == 3){
+            my $agronomic_term = $component_terms[0];
+            my $age_term = $component_terms[1];
+            my $final_term = $component_terms[2];
+            my $i=rindex($final_term, /\|/); #/#
+            my $institute_term=substr($final_term,0,$i);
+
             $age_term =~ s/cass //g;
             my ($agro, $agro_ont) = split /\|/, $agronomic_term; #/#
             my ($age, $age_ont) = split /\|/, $age_term; #/#
