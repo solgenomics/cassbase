@@ -172,6 +172,61 @@ for my $col ( 15 .. $col_max) {
             $age =~ s/\)//g;
             push @traits, [$agro, '', '', $age];
         }
+    } elsif ($opt_v == 3){
+        if (scalar(@component_terms) == 6){
+            my $chebi_term = $component_terms[0];
+            my $tissue_term = $component_terms[1];
+            my $collection_term = $component_terms[2];
+            my $age_term = $component_terms[3];
+            my $unit_term = $component_terms[4];
+            my $final_term = $component_terms[5];
+            my $i=rindex($final_term, /\|/); #/#
+            my $institute_term=substr($final_term,0,$i);
+
+            $tissue_term =~ s/cass //g;
+            $collection_term =~ s/cass //g;
+            $age_term =~ s/cass //g;
+            my ($tiss, $tiss_ont) = split /\|/, $tissue_term; #/#
+            my ($metabolite, $chebi_ont) = split /\|/, $chebi_term; #/#
+            my ($collection, $collection_ont) = split /\|/, $collection_term; #/#
+            my ($age, $age_ont) = split /\|/, $age_term; #/#
+            $tiss =~ s/ /_/g;
+            $tiss =~ s/\s/_/g;
+            $tiss =~ s/\(//g;
+            $tiss =~ s/\)//g;
+            $metabolite =~ s/ /_/g;
+            $metabolite =~ s/\s/_/g;
+            $metabolite =~ s/\(//g;
+            $metabolite =~ s/\)//g;
+            $collection =~ s/ /_/g;
+            $collection =~ s/\s/_/g;
+            $collection =~ s/\(//g;
+            $collection =~ s/\)//g;
+            $age =~ s/ /_/g;
+            $age =~ s/\s/_/g;
+            $age =~ s/\(//g;
+            $age =~ s/\)//g;
+            push @traits, [$metabolite."_".$tiss, $tiss, $collection, ''];
+        } elsif (scalar(@component_terms) == 3){
+            my $agronomic_term = $component_terms[0];
+            my $age_term = $component_terms[1];
+            my $final_term = $component_terms[2];
+            my $i=rindex($final_term, /\|/); #/#
+            my $institute_term=substr($final_term,0,$i);
+
+            $age_term =~ s/cass //g;
+            my ($agro, $agro_ont) = split /\|/, $agronomic_term; #/#
+            my ($age, $age_ont) = split /\|/, $age_term; #/#
+            $agro =~ s/ /_/g;
+            $agro =~ s/\s/_/g;
+            $agro =~ s/\(//g;
+            $agro =~ s/\)//g;
+            $age =~ s/ /_/g;
+            $age =~ s/\s/_/g;
+            $age =~ s/\(//g;
+            $age =~ s/\)//g;
+            push @traits, [$agro, '', '', ''];
+        }
     }
 }
 
@@ -253,6 +308,20 @@ while ( my $row = <$fh> ){
             $temp_key = "$trait_term, $accession_name, $age_term";
             $step2 = "$accession_name-$age_term";
             $corr_step = "$accession_name, $age_term";
+            $accession_info_hash{$project_name}->{$step2}->{'plant'}->{'plant'} = 1;
+
+            if (exists($intermed{$temp_key})) {
+                my $values = $intermed{$temp_key}->[3];
+                push @$values, $value;
+                $intermed{$temp_key}->[3] = $values;
+            } else {
+                $intermed{$temp_key} = [$trait_term, 'plant', $step2, [$value], $corr_step];
+            }
+            $corr_steps{$corr_step} = 1;
+        } elsif ($opt_v == 3){
+            $temp_key = "$trait_term, $accession_name";
+            $step2 = "$accession_name";
+            $corr_step = "$accession_name";
             $accession_info_hash{$project_name}->{$step2}->{'plant'}->{'plant'} = 1;
 
             if (exists($intermed{$temp_key})) {
