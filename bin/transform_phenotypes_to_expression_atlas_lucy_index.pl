@@ -33,6 +33,7 @@ use Pod::Usage;
 use Spreadsheet::ParseExcel;
 use Statistics::Basic qw(:all);
 use Statistics::R;
+use Text::CSV;
 
 our ($opt_i, $opt_p, $opt_o, $opt_c, $opt_f, $opt_d, $opt_v, $opt_n);
 
@@ -42,24 +43,56 @@ if (!$opt_i || !$opt_p || !$opt_o || !$opt_c || !$opt_f || !$opt_d || !$opt_v ||
     die "Must provide options -i (input file) -p (project file out) -o (lucy out file) -c (corr pre-3col out file) -f (corr out file) -d (metabolite description oufile -v (script_version) -n (project name) \n";
 }
 
-my $parser   = Spreadsheet::ParseExcel->new();
-my $excel_obj = $parser->parse($opt_i);
+my $csv = Text::CSV->new({ sep_char => ',' });
 
-my $worksheet = ( $excel_obj->worksheets() )[0]; #support only one worksheet
-my ( $row_min, $row_max ) = $worksheet->row_range();
-my ( $col_min, $col_max ) = $worksheet->col_range();
+open(my $fh, '<', $opt_i)
+    or die "Could not open file '$opt_i' $!";
+
+my $trait_row = <$fh>;
+my @columns;
+if ($csv->parse($trait_row)) {
+    @columns = $csv->fields();
+} else {
+    die "Could Not Parse Line: $trait_row\n";
+}
+my $col_max = scalar(@columns)-1;
+
+#my $parser   = Spreadsheet::ParseExcel->new();
+#my $excel_obj = $parser->parse($opt_i);
+
+#my $worksheet = ( $excel_obj->worksheets() )[0]; #support only one worksheet
+#my ( $row_min, $row_max ) = $worksheet->row_range();
+#my ( $col_min, $col_max ) = $worksheet->col_range();
 
 my @data_out;
 
 my @traits;
 for my $col ( 15 .. $col_max) {
-    my $multiterm_trait = $worksheet->get_cell(0,$col)->value();
+    my $multiterm_trait = $columns[$col];
     my @component_terms = split /\|\|/, $multiterm_trait; #/#
     if ($opt_v == 1){
-        my $chebi_term = @component_terms[0];
-        my $tissue_term = @component_terms[1];
-        my $collection_term = @component_terms[2];
-        my $age_term = @component_terms[3];
+        my $chebi_term;
+        my $tissue_term;
+        my $collection_term;
+        my $age_term;
+        my $unit_term;
+        my $final_term;
+        if (scalar(@component_terms) == 6){
+            $chebi_term = @component_terms[0];
+            $tissue_term = @component_terms[1];
+            $collection_term = @component_terms[2];
+            $age_term = @component_terms[3];
+            $unit_term = @component_terms[4];
+            $final_term = @component_terms[5];
+        }
+        if (scalar(@component_terms) == 3){
+            $chebi_term = @component_terms[0];
+            $age_term = @component_terms[1];
+            $final_term = @component_terms[2];
+        }
+        my $i=rindex($final_term, /\|/); #/#
+        my $institute_term=substr($final_term,0,$i);
+
         $tissue_term =~ s/cass //g;
         $collection_term =~ s/cass //g;
         $age_term =~ s/cass //g;
@@ -141,13 +174,20 @@ my %corr_steps;
 my %project_info;
 my %accession_info_hash;
 my $project_name = $opt_n;
-for my $row ( 1 .. $row_max ) {
 
-    my $accession_name = $worksheet->get_cell($row,7)->value();
-    #my $project_name = $worksheet->get_cell($row,2)->value();
-    my $project_design = $worksheet->get_cell($row,3)->value();
-    my $project_location = $worksheet->get_cell($row,5)->value();
-    my $project_year = $worksheet->get_cell($row,0)->value();
+while ( my $row = <$fh> ){
+    my @columns;
+    if ($csv->parse($row)) {
+        @columns = $csv->fields();
+    } else {
+        die "Could not parse line $row\n";
+    }
+    
+    my $accession_name = $columns[7];
+    #my $project_name = $columns[2];
+    my $project_design = $columns[3];
+    my $project_location = $columns[5];
+    my $project_year = $columns[0];
     
     $project_info{$project_name} = {
         design => $project_design,
@@ -161,14 +201,13 @@ for my $row ( 1 .. $row_max ) {
         my $trait_col = $i + 15;
         #print STDERR "$row $trait_col\n";
         my $value = '';
-        if ($worksheet->get_cell($row,$trait_col)) {
-            $value = $worksheet->get_cell($row,$trait_col)->value();
+        if ($columns[$trait_col]) {
+            $value = $columns[$trait_col];
         }
-
-        my $trait_term = @traits[$i]->[0];
-        my $tissue_term = @traits[$i]->[1];
-        my $collection_term = @traits[$i]->[2];
-        my $age_term = @traits[$i]->[3];
+        my $trait_term = $traits[$i]->[0];
+        my $tissue_term = $traits[$i]->[1];
+        my $collection_term = $traits[$i]->[2];
+        my $age_term = $traits[$i]->[3];
 
         my $stage;
         my $temp_key;
@@ -183,7 +222,8 @@ for my $row ( 1 .. $row_max ) {
                 $stage = 'stem';
             }
             if (!$stage) {
-                print STDERR "Tissue not leaf, root, or stem";
+                print STDERR Dumper $traits[$i];
+                print STDERR "Tissue not leaf, root, or stem\n";
                 next;
             }
 
@@ -217,7 +257,6 @@ for my $row ( 1 .. $row_max ) {
         }
     }
 
-
 }
 #print STDERR Dumper \%intermed;
 #print STDERR Dumper keys %intermed;
@@ -244,6 +283,7 @@ foreach (sort keys %intermed) {
     my $corr_step = $intermed{$_}->[4];
 
     my @non_empty_values = grep($_ ne "", @$values);
+    #print STDERR Dumper \@non_empty_values;
     my $average = mean(\@non_empty_values);
     my $stddev = stddev(\@non_empty_values);
 
