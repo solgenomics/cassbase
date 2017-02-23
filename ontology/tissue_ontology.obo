@@ -62,14 +62,14 @@ is_a: CASSTISS:0000002
 [Term]
 id: CASSTISS:0000008
 name: cass lower stem
-synonym: "LwStm" EXACT
+synonym: "LwrStm" EXACT
 def: "" []
 is_a: CASSTISS:0000002
 
 [Term]
 id: CASSTISS:0000009
 name: cass lower stem whole
-synonym: "LwStmWhl" EXACT
+synonym: "LwrStmWhl" EXACT
 def: "" []
 is_a: CASSTISS:0000008
 
