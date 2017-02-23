@@ -3,7 +3,7 @@
   <ul class="dropdown-menu">
     <li><a href="http://cea.sgn.cornell.edu">Expression Atlas</a></li>
     <li><a href="/barcode">Barcode Tools</a></li>
-    <li><a href="/solgs/search">Genomic Selection</a></li>
+    <!--li><a href="/solgs/search">Genomic Selection</a></li-->
     <li><a href="/pca/analysis">Population Structure</a></li>
     
     <li role="separator" class="divider"></li>
@@ -13,6 +13,7 @@
     <li role="separator" class="divider"></li>
     <li class="dropdown-header">Other</li>
     <li><a href="/tools/onto/">Ontology Browser</a></li>
+    <li><a href="/tools/documents/">Document Browser</a></li>
     
   </ul>
 </li>
