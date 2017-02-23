@@ -1,0 +1,41 @@
+format-version: 1.0
+data-version: 1
+date: 05:24:2016 03:00
+saved-by: cass
+default-namespace: cass_units_ontology
+remark: none
+ontology: cass_units
+
+[Term]
+id: CASSUNIT:0000000
+name: cass_unit_terms
+
+[Term]
+id: CASSUNIT:0000001
+name: ng/gDW
+def: "" []
+is_a: CASSUNIT:0000000
+
+[Term]
+id: CASSUNIT:0000002
+name: ug/gDW
+def: "" []
+is_a: CASSUNIT:0000000
+
+[Term]
+id: CASSUNIT:0000003
+name: mg/gDW
+def: "" []
+is_a: CASSUNIT:0000000
+
+[Term]
+id: CASSUNIT:0000004
+name: nmol
+def: "" []
+is_a: CASSUNIT:0000000
+
+[Term]
+id: CASSUNIT:0000005
+name: TPM
+def: "Transcripts Per Kilobase Million" []
+is_a: CASSUNIT:0000000

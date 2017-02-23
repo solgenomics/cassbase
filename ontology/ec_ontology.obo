@@ -1,0 +1,137 @@
+format-version: 1.0
+data-version: 1
+date: 05:24:2016 03:00
+saved-by: cass
+default-namespace: ec_ontology
+remark: none
+ontology: ec
+
+[Term]
+id: EC:0000000
+name: ec_terms
+
+[Term]
+id: EC:4.1.1.39
+name: RubisCo
+def: "Ribulose-Bisphosphate Carboxylase. Hepes extraction buffer, stop assay, GPOX/GDH (based on glycerol-3P-cycling assay, B11)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:5.3.1.1
+name: TPI
+def: "Triose Phosphate Isomerase. Hepes extraction buffer, direct assay (based on glycerol-3P-cycling assay, A05)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:2.4.1.14
+name: SPS
+def: "Sucrose-Phosphate Synthase. Hepes extraction buffer, stop assay, GPOX/GDH  (based on glycerol-3P-cycling assay. B05)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:3.1.3.11
+name: FBP
+def: "Fructose-1,6-bisphosphate Phosphatase. Hepes extraction buffer, stop assay, G6PDH/PMS (based on NADP-cycling assay, C01)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:2.7.7.9
+name: UGPase
+def: "UDP-Glucose pyrophosphorylase. Hepes extraction buffer, stop assay, GPOX/GDH  (based on glycerol-3P-cycling assay, B07)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:3.2.1.26
+name: Acid Invertase
+def: "beta-Fructofuranosidase. Hepes extraction buffer, stop assays, fluorimetric determination (F01)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:2.7.1.11
+name: ATP-Phosphofructokinase
+def: "6-Phosphofructokinase. Hepes extraction buffer, stop assay, GPOX/GDH  (based on glycerol-3P-cycling assay, B10)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:2.2.1.1
+name: Transketolase
+def: "Transketolase. Hepes extraction buffer, stop assay, GPOX/GDH  (based on glycerol-3P-cycling assay, B06)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:2.7.7.27
+name: AGPase
+def: "Glucose-1-Phosphate Adenylyltransferase. Hepes extraction buffer, stop assay, GPOX/GDH  (based on glycerol-3P-cycling assay, B02)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:5.3.1.9
+name: PGI
+def: "Phosphoglucose Isomerase. Hepes extraction buffer, direct assay (based on glycerol-3P-cycling assay, A02)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:5.4.2.2
+name: PGM
+def: "Phosphoglucomutase. Hepes extraction buffer, direct assay (based on glycerol-3P-cycling assay, A06)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:4.1.1.31
+name: PEPC
+def: "Phosphoenolpyruvate Carboxylase. Hepes extraction buffer, stop assays, ADH/PES (based on NAD-cycling assay, D04)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:1.1.1.37
+name: Malate DH (NAD)
+def: "Malate Dehydrogenase. Hepes extraction buffer, direct assay (based on glycerol-3P-cycling assay, A07)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:1.4.1.4
+name: GluDH (NADP)
+def: "Glutamate Dehydrogenase. Hepes extraction buffer, stop assay, G6PDH/PMS (based on NADP-cycling assay, C07)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:1.1.1.49
+name: G6PDH (NADP)
+def: "Glucose-6-Phosphate 1-Dehydrogenase. Hepes extraction buffer, stop assay, G6PDH/PMS (based on NADP-cycling assay, C02)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:1.1.1.42
+name: Isocitrate DH (NADP)
+def: "Isocitrate Dehydrogenase. Hepes extraction buffer, stop assay, G6PDH/PMS (based on NADP-cycling assay, C04)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:1.7.1.1
+name: Nitrate reductase (NADH)
+def: "Nitrate Reductase. Hepes extraction buffer, stop assays, UV/Visible determination (based on NAD-cycling assay, E02)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:1.4.1.2
+name: Glutamate Dehydrogenase (NAD)
+def: "Glutamate Dehydrogenase. Hepes extraction buffer, stop assay, ADH/PES  (based on NADP-cycling assay, D02)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:2.6.1.1
+name: Aspartate Aminotransferase
+def: "Aspartate Transaminase. Hepes extraction buffer, stop assay, ADH/PES  (based on NADP-cycling assay, D06)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:1.1.1.25
+name: Shikimate DH (NADH)
+def: "Shikimate Dehydrogenase. Hepes extraction buffer, stop assay, G6PDH/PMS (based on NADP-cycling assay, C05)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:2.6.1.2
+name: Alanine Aminotransferase
+def: "A pyridoxal-phosphate protein." []
+is_a: EC:0000000

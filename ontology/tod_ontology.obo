@@ -1,0 +1,365 @@
+format-version: 1.0
+data-version: 1
+date: 05:23:2016 03:00
+saved-by: cass
+default-namespace: cass_time_ontology
+remark: none
+ontology: cass_time
+
+[Term]
+id: CASSTIME:0000000
+name: cass_time_terms
+
+[Term]
+id: CASSTIME:0000001
+name: cass time of day
+def: "Categorical day periods." []
+is_a: CASSTIME:0000000
+
+[Term]
+id: CASSTIME:0000002
+name: cass end of night
+def: "Half an hour before sunrise." []
+is_a: CASSTIME:0000001
+
+[Term]
+id: CASSTIME:0000003
+name: cass end of day
+def: "Late afternoon daylight." []
+is_a: CASSTIME:0000001
+
+[Term]
+id: CASSTIME:0000004
+name: cass mid day
+def: "Between 11:00 in the morning and 14:00 in the afternoon." []
+is_a: CASSTIME:0000001
+
+[Term]
+id: CASSTIME:0000005
+name: cass number of weeks
+def: "Number of weeks." []
+is_a: CASSTIME:0000000
+
+[Term]
+id: CASSTIME:0000006
+name: cass week 1
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000007
+name: cass week 2
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000008
+name: cass week 3
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000009
+name: cass week 4
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000010
+name: cass week 5
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000011
+name: cass week 6
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000012
+name: cass week 7
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000013
+name: cass week 8
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000014
+name: cass week 9
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000015
+name: cass week 10
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000016
+name: cass week 11
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000017
+name: cass week 12
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000018
+name: cass week 13
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000019
+name: cass week 14
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000020
+name: cass week 15
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000021
+name: cass week 16
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000022
+name: cass week 17
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000023
+name: cass week 18
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000024
+name: cass week 19
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000025
+name: cass week 20
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000026
+name: cass week 21
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000027
+name: cass week 22
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000028
+name: cass week 23
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000029
+name: cass week 24
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000030
+name: cass week 25
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000031
+name: cass week 26
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000032
+name: cass week 27
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000033
+name: cass week 28
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000034
+name: cass week 29
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000035
+name: cass week 30
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000036
+name: cass week 31
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000037
+name: cass week 32
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000038
+name: cass week 33
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000039
+name: cass week 34
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000040
+name: cass week 35
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000041
+name: cass week 36
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000042
+name: cass week 37
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000043
+name: cass week 38
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000044
+name: cass week 39
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000045
+name: cass week 40
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000046
+name: cass week 41
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000047
+name: cass week 42
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000048
+name: cass week 43
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000049
+name: cass week 44
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000050
+name: cass week 45
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000051
+name: cass week 46
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000052
+name: cass week 47
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000053
+name: cass week 48
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000054
+name: cass week 49
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000055
+name: cass week 50
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000056
+name: cass week 51
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000057
+name: cass week 52
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000058
+name: cass week 53
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000059
+name: cass week 54
+def: "" []
+is_a: CASSTIME:0000005

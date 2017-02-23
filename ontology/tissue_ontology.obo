@@ -1,0 +1,89 @@
+format-version: 1.0
+data-version: 1
+date: 05:24:2016 03:00
+saved-by: cass
+default-namespace: cass_tissue_ontology
+remark: none
+ontology: cass_tissue
+
+[Term]
+id: CASSTISS:0000000
+name: cass_tissues
+
+[Term]
+id: CASSTISS:0000001
+name: cass leaf
+def: "" []
+is_a: CASSTISS:0000000
+
+[Term]
+id: CASSTISS:0000002
+name: cass stem
+def: "" []
+is_a: CASSTISS:0000000
+
+[Term]
+id: CASSTISS:0000003
+name: cass root
+def: "" []
+is_a: CASSTISS:0000000
+
+[Term]
+id: CASSTISS:0000004
+name: cass sink leaf
+def: "" []
+is_a: CASSTISS:0000001
+
+[Term]
+id: CASSTISS:0000005
+name: cass source leaf
+def: "" []
+is_a: CASSTISS:0000001
+
+[Term]
+id: CASSTISS:0000006
+name: cass lower leaf
+def: "" []
+is_a: CASSTISS:0000001
+
+[Term]
+id: CASSTISS:0000007
+name: cass upper stem
+def: "Green and not woody." []
+is_a: CASSTISS:0000002
+
+[Term]
+id: CASSTISS:0000008
+name: cass lower stem
+def: "" []
+is_a: CASSTISS:0000002
+
+[Term]
+id: CASSTISS:0000009
+name: cass lower stem whole
+def: "" []
+is_a: CASSTISS:0000008
+
+[Term]
+id: CASSTISS:0000010
+name: cass lower stem bark
+def: "" []
+is_a: CASSTISS:0000008
+
+[Term]
+id: CASSTISS:0000011
+name: cass fibrous root
+def: "" []
+is_a: CASSTISS:0000003
+
+[Term]
+id: CASSTISS:0000012
+name: cass pre-storage root
+def: "Potential storage root." []
+is_a: CASSTISS:0000003
+
+[Term]
+id: CASSTISS:0000013
+name: cass storage root
+def: "" []
+is_a: CASSTISS:0000003
