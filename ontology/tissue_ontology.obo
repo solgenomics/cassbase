@@ -13,77 +13,90 @@ name: cass_tissues
 [Term]
 id: CASSTISS:0000001
 name: cass leaf
+synonym: "Lf" EXACT
 def: "" []
 is_a: CASSTISS:0000000
 
 [Term]
 id: CASSTISS:0000002
 name: cass stem
+synonym: "Stm" EXACT
 def: "" []
 is_a: CASSTISS:0000000
 
 [Term]
 id: CASSTISS:0000003
 name: cass root
+synonym: "Rt" EXACT
 def: "" []
 is_a: CASSTISS:0000000
 
 [Term]
 id: CASSTISS:0000004
 name: cass sink leaf
+synonym: "SnkLf" EXACT
 def: "" []
 is_a: CASSTISS:0000001
 
 [Term]
 id: CASSTISS:0000005
 name: cass source leaf
+synonym: "SrcLf" EXACT
 def: "" []
 is_a: CASSTISS:0000001
 
 [Term]
 id: CASSTISS:0000006
 name: cass lower leaf
+synonym: "LwrLf" EXACT
 def: "" []
 is_a: CASSTISS:0000001
 
 [Term]
 id: CASSTISS:0000007
 name: cass upper stem
+synonym: "UpStm" EXACT
 def: "Green and not woody." []
 is_a: CASSTISS:0000002
 
 [Term]
 id: CASSTISS:0000008
 name: cass lower stem
+synonym: "LwStm" EXACT
 def: "" []
 is_a: CASSTISS:0000002
 
 [Term]
 id: CASSTISS:0000009
 name: cass lower stem whole
+synonym: "LwStmWhl" EXACT
 def: "" []
 is_a: CASSTISS:0000008
 
 [Term]
 id: CASSTISS:0000010
 name: cass lower stem bark
+synonym: "LwStmBrk" EXACT
 def: "" []
 is_a: CASSTISS:0000008
 
 [Term]
 id: CASSTISS:0000011
 name: cass fibrous root
+synonym: "FbrRt" EXACT
 def: "" []
 is_a: CASSTISS:0000003
 
 [Term]
 id: CASSTISS:0000012
 name: cass pre-storage root
+synonym: "PreStrRt" EXACT
 def: "Potential storage root." []
 is_a: CASSTISS:0000003
 
 [Term]
 id: CASSTISS:0000013
 name: cass storage root
+synonym: "StrRt" EXACT
 def: "" []
 is_a: CASSTISS:0000003
