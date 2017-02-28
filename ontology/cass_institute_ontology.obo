@@ -1,0 +1,53 @@
+format-version: 1.0
+data-version: 1
+date: 05:24:2016 03:00
+saved-by: cass
+default-namespace: cass_institute_ontology
+remark: none
+ontology: cass_institutes
+
+[Term]
+id: CASSINST:0000000
+name: cass_institute_terms
+
+[Term]
+id: CASSINST:0000001
+name: ER
+def: "Erlangen" []
+is_a: CASSINST:0000000
+
+[Term]
+id: CASSINST:0000002
+name: KL
+def: "Kaiserslautern" []
+is_a: CASSINST:0000000
+
+[Term]
+id: CASSINST:0000003
+name: GO_AF
+def: "Golm Alisdair Fernie" []
+is_a: CASSINST:0000000
+
+[Term]
+id: CASSINST:0000004
+name: GO_MS
+def: "Golm Mark Stitt" []
+is_a: CASSINST:0000000
+
+[Term]
+id: CASSINST:0000005
+name: GO_AS
+def: "Golm Armin Schlereth" []
+is_a: CASSINST:0000000
+
+[Term]
+id: CASSINST:0000006
+name: IITA
+def: "IITA" []
+is_a: CASSINST:0000000
+
+[Term]
+id: CASSINST:0000007
+name: BTI
+def: "BTI" []
+is_a: CASSINST:0000000
