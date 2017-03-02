@@ -172,7 +172,7 @@ for my $col ( 15 .. $col_max) {
             $age =~ s/\)//g;
             push @traits, [$agro, '', '', $age];
         }
-    } elsif ($opt_v == 3){
+    } elsif ($opt_v == 3 || $opt_v == 4){
         if (scalar(@component_terms) == 6){
             my $chebi_term = $component_terms[0];
             my $tissue_term = $component_terms[1];
@@ -206,7 +206,7 @@ for my $col ( 15 .. $col_max) {
             $age =~ s/\s/_/g;
             $age =~ s/\(//g;
             $age =~ s/\)//g;
-            push @traits, [$metabolite."_".$tiss, $tiss, $collection, ''];
+            push @traits, [$metabolite."_".$tiss, $tiss, $collection, $age];
         } elsif (scalar(@component_terms) == 3){
             my $agronomic_term = $component_terms[0];
             my $age_term = $component_terms[1];
@@ -225,7 +225,7 @@ for my $col ( 15 .. $col_max) {
             $age =~ s/\s/_/g;
             $age =~ s/\(//g;
             $age =~ s/\)//g;
-            push @traits, [$agro, '', '', ''];
+            push @traits, [$agro, '', '', $age];
         }
     }
 }
@@ -319,6 +319,26 @@ while ( my $row = <$fh> ){
             }
             $corr_steps{$corr_step} = 1;
         } elsif ($opt_v == 3){
+            if ($age_term ne 'week_16'){
+                next;
+            }
+            $temp_key = "$trait_term, $accession_name";
+            $step2 = "$accession_name";
+            $corr_step = "$accession_name";
+            $accession_info_hash{$project_name}->{$step2}->{'plant'}->{'plant'} = 1;
+
+            if (exists($intermed{$temp_key})) {
+                my $values = $intermed{$temp_key}->[3];
+                push @$values, $value;
+                $intermed{$temp_key}->[3] = $values;
+            } else {
+                $intermed{$temp_key} = [$trait_term, 'plant', $step2, [$value], $corr_step];
+            }
+            $corr_steps{$corr_step} = 1;
+        } elsif ($opt_v == 4){
+            if ($age_term ne 'week_52'){
+                next;
+            }
             $temp_key = "$trait_term, $accession_name";
             $step2 = "$accession_name";
             $corr_step = "$accession_name";
