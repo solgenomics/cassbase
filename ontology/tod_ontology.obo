@@ -420,3 +420,114 @@ name: cass week 54
 synonym: "Wk54" EXACT
 def: "" []
 is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000060
+name: cass months
+def: "Months." []
+is_a: CASSTIME:0000000
+
+[Term]
+id: CASSTIME:0000061
+name: cass month 1
+synonym: "Mo1" EXACT
+def: "" []
+is_a: CASSTIME:0000060
+
+[Term]
+id: CASSTIME:0000061
+name: cass month 1
+synonym: "Mo1" EXACT
+def: "" []
+is_a: CASSTIME:0000060
+
+[Term]
+id: CASSTIME:0000061
+name: cass month 1
+synonym: "Mo1" EXACT
+def: "" []
+is_a: CASSTIME:0000060
+
+[Term]
+id: CASSTIME:0000061
+name: cass month 1
+synonym: "Mo1" EXACT
+def: "" []
+is_a: CASSTIME:0000060
+
+[Term]
+id: CASSTIME:0000062
+name: cass month 2
+synonym: "Mo2" EXACT
+def: "" []
+is_a: CASSTIME:0000060
+
+[Term]
+id: CASSTIME:0000063
+name: cass month 3
+synonym: "Mo3" EXACT
+def: "" []
+is_a: CASSTIME:0000060
+
+[Term]
+id: CASSTIME:0000064
+name: cass month 4
+synonym: "Mo4" EXACT
+def: "" []
+is_a: CASSTIME:0000060
+
+[Term]
+id: CASSTIME:0000065
+name: cass month 5
+synonym: "Mo5" EXACT
+def: "" []
+is_a: CASSTIME:0000060
+
+[Term]
+id: CASSTIME:0000066
+name: cass month 6
+synonym: "Mo6" EXACT
+def: "" []
+is_a: CASSTIME:0000060
+
+[Term]
+id: CASSTIME:0000067
+name: cass month 7
+synonym: "Mo7" EXACT
+def: "" []
+is_a: CASSTIME:0000060
+
+[Term]
+id: CASSTIME:0000068
+name: cass month 8
+synonym: "Mo8" EXACT
+def: "" []
+is_a: CASSTIME:0000060
+
+[Term]
+id: CASSTIME:0000069
+name: cass month 9
+synonym: "Mo9" EXACT
+def: "" []
+is_a: CASSTIME:0000060
+
+[Term]
+id: CASSTIME:0000070
+name: cass month 10
+synonym: "Mo10" EXACT
+def: "" []
+is_a: CASSTIME:0000060
+
+[Term]
+id: CASSTIME:0000071
+name: cass month 11
+synonym: "Mo11" EXACT
+def: "" []
+is_a: CASSTIME:0000060
+
+[Term]
+id: CASSTIME:0000072
+name: cass month 12
+synonym: "Mo12" EXACT
+def: "" []
+is_a: CASSTIME:0000060
