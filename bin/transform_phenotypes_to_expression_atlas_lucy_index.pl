@@ -336,7 +336,7 @@ while ( my $row = <$fh> ){
             }
             $corr_steps{$corr_step} = 1;
         } elsif ($opt_v == 4){
-            if ($age_term ne 'week_52'){
+            if ($age_term eq 'week_16' && ($trait_term eq 'fresh_root_weight_per_plant' || $trait_term eq 'fresh_shoot_weight_per_plant' || $trait_term eq 'fresh_total_weight_per_plant' || $trait_term eq 'harvest_index')){
                 next;
             }
             $temp_key = "$trait_term, $accession_name";

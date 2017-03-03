@@ -33,8 +33,8 @@ $trial_name
                         <select class="form-control" id="cassbase_cea_export_type">
                             <option value="1">3 Dimensions are: Metabolites, Accessions + Plant Age + Sampling Time of Day, Tissues</option>
                             <option value="2">2 Dimensions are: Metabolites + Tissues and Agronomic Traits, Accessions + Plant Age</option>
-                            <option value="3">2 Dimensions are: Metabolites + Tissues and Agronomic Traits, Accessions + Week 16</option>
-                            <option value="4">2 Dimensions are: Metabolites + Tissues and Agronomic Traits, Accessions + Week 52</option>
+                            <option value="3">2 Dimensions are: Metabolites + Tissues (Week 16) and Agronomic Traits (Week 16), Accessions</option>
+                            <option value="4">2 Dimensions are: Metabolites + Tissues (Week 16) and Agronomic Traits (Week 52), Accessions</option>
                         </select>
                     </div>
                 </div>
