@@ -172,7 +172,7 @@ for my $col ( 15 .. $col_max) {
             $age =~ s/\)//g;
             push @traits, [$agro, '', '', $age];
         }
-    } elsif ($opt_v == 3 || $opt_v == 4){
+    } elsif ($opt_v == 3 || $opt_v == 4 || $opt_v == 5){
         if (scalar(@component_terms) == 6){
             my $chebi_term = $component_terms[0];
             my $tissue_term = $component_terms[1];
@@ -337,6 +337,23 @@ while ( my $row = <$fh> ){
             $corr_steps{$corr_step} = 1;
         } elsif ($opt_v == 4){
             if ($age_term eq 'week_16' && ($trait_term eq 'fresh_root_weight_per_plant' || $trait_term eq 'fresh_shoot_weight_per_plant' || $trait_term eq 'fresh_total_weight_per_plant' || $trait_term eq 'harvest_index')){
+                next;
+            }
+            $temp_key = "$trait_term, $accession_name";
+            $step2 = "$accession_name";
+            $corr_step = "$accession_name";
+            $accession_info_hash{$project_name}->{$step2}->{'plant'}->{'plant'} = 1;
+
+            if (exists($intermed{$temp_key})) {
+                my $values = $intermed{$temp_key}->[3];
+                push @$values, $value;
+                $intermed{$temp_key}->[3] = $values;
+            } else {
+                $intermed{$temp_key} = [$trait_term, 'plant', $step2, [$value], $corr_step];
+            }
+            $corr_steps{$corr_step} = 1;
+        } elsif ($opt_v == 5){
+            if (($age_term eq 'week_16' && ($trait_term eq 'fresh_root_weight_per_plant' || $trait_term eq 'fresh_shoot_weight_per_plant' || $trait_term eq 'fresh_total_weight_per_plant' || $trait_term eq 'harvest_index')) || $accession_name eq 'TMEB419'){
                 next;
             }
             $temp_key = "$trait_term, $accession_name";

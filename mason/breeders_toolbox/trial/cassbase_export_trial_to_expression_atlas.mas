@@ -35,6 +35,7 @@ $trial_name
                             <option value="2">2 Dimensions are: Metabolites + Tissues and Agronomic Traits, Accessions + Plant Age</option>
                             <option value="3">2 Dimensions are: Metabolites + Tissues (Week 16) and Agronomic Traits (Week 16), Accessions</option>
                             <option value="4">2 Dimensions are: Metabolites + Tissues (Week 16) and Agronomic Traits (Week 52), Accessions</option>
+                            <option value="5">2 Dimensions are: Metabolites + Tissues (Week 16) and Agronomic Traits (Week 52), Accessions (EXCLUDING TMEB419)</option>
                         </select>
                     </div>
                 </div>
