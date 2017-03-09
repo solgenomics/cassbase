@@ -523,7 +523,7 @@ open (my $file_fh, ">", "$opt_p") || die ("\nERROR:\n");
             #if ($opt_v == 1){
                 my $stage_hash = $accession_hash->{$accession};
                 foreach my $stage (keys %$stage_hash) {
-                    print $file_fh "#stage layer\nlayer_name: $accession\nlayer_description:\nlayer_type: stage\nbg_color:\nlayer_image: $accession.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: 10\nimg_ordinal: 10\norgan: $stage\n# layer - end\n\n";
+                    print $file_fh "#stage layer\nlayer_name: $accession\nlayer_description:\nlayer_type: stage\nbg_color:\nlayer_image: plant_background.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: 10\nimg_ordinal: 10\norgan: $stage\n# layer - end\n\n";
 
                     my $tissue_hash = $stage_hash->{$stage};
                     foreach my $tissue (keys %$tissue_hash) {
