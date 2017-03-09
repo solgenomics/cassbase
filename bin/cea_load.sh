@@ -6,16 +6,19 @@
 host_address=$1 #http://0:3000
 trial_id=$2 #1613
 root_dir=$3 #/home/vagrant/cxgn
-processing_file_dir=$4 #/home/vagrant/cxgn/cassbase/bin
-clear_old_database=$5 #true or false
-clear_old_index_files=$6 #true or false
-database_host=$7
-database_name=$8
-database_user=$9
-database_password=${10}
-directory_name=${11} #cass_index_<Project_name>
-export_type=${12} #1 or 2
-project_name=${13} #<Project_name>
+correlation_index_dir=$4 #/home/vagrant/cxgn/indexed_files/correlation_indexes
+expression_index_dir=$5 #/home/vagrant/cxgn/indexed_files/expression_indexes
+description_index_dir=$6 #/home/vagrant/cxgn/indexed_files/loci_and_description_index
+processing_file_dir=$7 #/home/vagrant/cxgn/cassbase/bin
+clear_old_database=$8 #true or false
+clear_old_index_files=$9 #true or false
+database_host=${10}
+database_name=${11}
+database_user=${12}
+database_password=${13}
+directory_name=${14} #cass_index_<Project_name>
+export_type=${15} #1 or 2
+project_name=${16} #<Project_name>
 
 wget --no-check-certificate --output-document=${processing_file_dir}/phenotype_download.csv "${host_address}/brapi/v1/studies/${trial_id}/table?format=csv&observationLevel=plant"
 
@@ -29,19 +32,19 @@ PGPASSWORD=${database_password} createdb -U ${database_user} -h ${database_host}
 PGPASSWORD=${database_password} psql -U ${database_user} -d ${database_name} -h ${database_host} -a -f ${root_dir}/Tea/import_project/create_tea_schema.sql
 fi
 
-mkdir ${root_dir}/indexed_files/correlation_indexes/${directory_name}
-mkdir ${root_dir}/indexed_files/expression_indexes/${directory_name}
-mkdir ${root_dir}/indexed_files/loci_and_description_index/${directory_name}
+mkdir ${correlation_index_dir}/${directory_name}
+mkdir ${expression_index_dir}/${directory_name}
+mkdir ${description_index_dir}/${directory_name}
 
 if ${clear_old_index_files}; then
-rm -R ${root_dir}/indexed_files/correlation_indexes/${directory_name}/*
-rm -R ${root_dir}/indexed_files/expression_indexes/${directory_name}/*
-rm -R ${root_dir}/indexed_files/loci_and_description_index/${directory_name}/*
+rm -R ${correlation_index_dir}/${directory_name}/*
+rm -R ${expression_index_dir}/${directory_name}/*
+rm -R ${description_index_dir}/${directory_name}/*
 fi
 
 perl ${root_dir}/Tea/import_project/TEA_import_project_metadata_treatments.pl -d ${database_name} -H ${database_host} -u ${database_user} -p ${database_password} -t ${processing_file_dir}/project.txt -n
 
-perl ${root_dir}/Tea/import_project/index_correlation_file.pl ${processing_file_dir}/corr.tsv ${root_dir}/indexed_files/correlation_indexes/${directory_name}/
-perl ${root_dir}/Tea/import_project/index_expression_file.pl ${processing_file_dir}/lucy.tsv ${root_dir}/indexed_files/expression_indexes/${directory_name}/
-perl ${root_dir}/Tea/import_project/index_description_file.pl ${processing_file_dir}/desc.tsv ${root_dir}/indexed_files/loci_and_description_index/${directory_name}/
+perl ${root_dir}/Tea/import_project/index_correlation_file.pl ${processing_file_dir}/corr.tsv ${correlation_index_dir}/${directory_name}/
+perl ${root_dir}/Tea/import_project/index_expression_file.pl ${processing_file_dir}/lucy.tsv ${expression_index_dir}/${directory_name}/
+perl ${root_dir}/Tea/import_project/index_description_file.pl ${processing_file_dir}/desc.tsv ${description_index_dir}/${directory_name}/
 
