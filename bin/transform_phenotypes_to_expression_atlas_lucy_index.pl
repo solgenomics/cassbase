@@ -100,6 +100,7 @@ for my $col ( 15 .. $col_max) {
         my ($metabolite, $chebi_ont) = split /\|/, $chebi_term; #/#
         my ($collection, $collection_ont) = split /\|/, $collection_term; #/#
         my ($age, $age_ont) = split /\|/, $age_term; #/#
+        my ($unit, $unit_ont) = split /\|/, $unit_term; #/#
         my ($institute, $inst_ont) = split /\|/, $institute_term; #/#
         $tiss =~ s/ /_/g;
         $tiss =~ s/\s/_/g;
@@ -121,7 +122,11 @@ for my $col ( 15 .. $col_max) {
         $institute =~ s/\s/_/g;
         $institute =~ s/\(//g;
         $institute =~ s/\)//g;
-        push @traits, [$metabolite."_".$institute, $tiss, $collection, $age];
+        $unit =~ s/ /_/g;
+        $unit =~ s/\s/_/g;
+        $unit =~ s/\(//g;
+        $unit =~ s/\)//g;
+        push @traits, [$metabolite."_".$institute, $tiss, $collection, $age, $unit];
     } elsif ($opt_v == 2){
         if (scalar(@component_terms) == 6){
             my $chebi_term = $component_terms[0];
@@ -140,6 +145,7 @@ for my $col ( 15 .. $col_max) {
             my ($metabolite, $chebi_ont) = split /\|/, $chebi_term; #/#
             my ($collection, $collection_ont) = split /\|/, $collection_term; #/#
             my ($age, $age_ont) = split /\|/, $age_term; #/#
+            my ($unit, $unit_ont) = split /\|/, $unit_term; #/#
             my ($institute, $inst_ont) = split /\|/, $institute_term; #/#
             $tiss =~ s/ /_/g;
             $tiss =~ s/\s/_/g;
@@ -161,7 +167,11 @@ for my $col ( 15 .. $col_max) {
             $institute =~ s/\s/_/g;
             $institute =~ s/\(//g;
             $institute =~ s/\)//g;
-            push @traits, [$metabolite."_".$tiss."_".$institute, $tiss, $collection, $age];
+            $unit =~ s/ /_/g;
+            $unit =~ s/\s/_/g;
+            $unit =~ s/\(//g;
+            $unit =~ s/\)//g;
+            push @traits, [$metabolite."_".$tiss."_".$institute, $tiss, $collection, $age, $unit];
         } elsif (scalar(@component_terms) == 3){
             my $agronomic_term = $component_terms[0];
             my $age_term = $component_terms[1];
@@ -185,7 +195,7 @@ for my $col ( 15 .. $col_max) {
             $institute =~ s/\s/_/g;
             $institute =~ s/\(//g;
             $institute =~ s/\)//g;
-            push @traits, [$agro."_".$institute, '', '', $age];
+            push @traits, [$agro."_".$institute, '', '', $age, ''];
         }
     } elsif ($opt_v == 3 || $opt_v == 4 || $opt_v == 5){
         if (scalar(@component_terms) == 6){
@@ -205,6 +215,7 @@ for my $col ( 15 .. $col_max) {
             my ($metabolite, $chebi_ont) = split /\|/, $chebi_term; #/#
             my ($collection, $collection_ont) = split /\|/, $collection_term; #/#
             my ($age, $age_ont) = split /\|/, $age_term; #/#
+            my ($unit, $unit_ont) = split /\|/, $unit_term; #/#
             my ($institute, $inst_ont) = split /\|/, $institute_term; #/#
             $tiss =~ s/ /_/g;
             $tiss =~ s/\s/_/g;
@@ -226,7 +237,11 @@ for my $col ( 15 .. $col_max) {
             $institute =~ s/\s/_/g;
             $institute =~ s/\(//g;
             $institute =~ s/\)//g;
-            push @traits, [$metabolite."_".$tiss."_".$institute, $tiss, $collection, $age];
+            $unit =~ s/ /_/g;
+            $unit =~ s/\s/_/g;
+            $unit =~ s/\(//g;
+            $unit =~ s/\)//g;
+            push @traits, [$metabolite."_".$tiss."_".$institute, $tiss, $collection, $age, $unit];
         } elsif (scalar(@component_terms) == 3){
             my $agronomic_term = $component_terms[0];
             my $age_term = $component_terms[1];
@@ -250,7 +265,7 @@ for my $col ( 15 .. $col_max) {
             $institute =~ s/\s/_/g;
             $institute =~ s/\(//g;
             $institute =~ s/\)//g;
-            push @traits, [$agro."_".$institute, '', '', $age];
+            push @traits, [$agro."_".$institute, '', '', $age, ''];
         }
     }
 }
@@ -297,6 +312,15 @@ while ( my $row = <$fh> ){
         my $tissue_term = $traits[$i]->[1];
         my $collection_term = $traits[$i]->[2];
         my $age_term = $traits[$i]->[3];
+        my $unit_term = $traits[$i]->[4];
+
+        #Normalize mg/g and ng/g to ug/g
+        if ($value && $unit_term eq 'mg/gDW'){
+            $value = $value * 1000;
+        }
+        if ($value && $unit_term eq 'ng/gDW'){
+            $value = $value / 1000;
+        }
 
         my $stage;
         my $temp_key;
