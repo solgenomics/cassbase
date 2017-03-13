@@ -100,6 +100,7 @@ for my $col ( 15 .. $col_max) {
         my ($metabolite, $chebi_ont) = split /\|/, $chebi_term; #/#
         my ($collection, $collection_ont) = split /\|/, $collection_term; #/#
         my ($age, $age_ont) = split /\|/, $age_term; #/#
+        my ($institute, $inst_ont) = split /\|/, $institute_term; #/#
         $tiss =~ s/ /_/g;
         $tiss =~ s/\s/_/g;
         $tiss =~ s/\(//g;
@@ -116,7 +117,11 @@ for my $col ( 15 .. $col_max) {
         $age =~ s/\s/_/g;
         $age =~ s/\(//g;
         $age =~ s/\)//g;
-        push @traits, [$metabolite, $tiss, $collection, $age];
+        $institute =~ s/ /_/g;
+        $institute =~ s/\s/_/g;
+        $institute =~ s/\(//g;
+        $institute =~ s/\)//g;
+        push @traits, [$metabolite."_".$institute, $tiss, $collection, $age];
     } elsif ($opt_v == 2){
         if (scalar(@component_terms) == 6){
             my $chebi_term = $component_terms[0];
@@ -135,6 +140,7 @@ for my $col ( 15 .. $col_max) {
             my ($metabolite, $chebi_ont) = split /\|/, $chebi_term; #/#
             my ($collection, $collection_ont) = split /\|/, $collection_term; #/#
             my ($age, $age_ont) = split /\|/, $age_term; #/#
+            my ($institute, $inst_ont) = split /\|/, $institute_term; #/#
             $tiss =~ s/ /_/g;
             $tiss =~ s/\s/_/g;
             $tiss =~ s/\(//g;
@@ -151,7 +157,11 @@ for my $col ( 15 .. $col_max) {
             $age =~ s/\s/_/g;
             $age =~ s/\(//g;
             $age =~ s/\)//g;
-            push @traits, [$metabolite."_".$tiss, $tiss, $collection, $age];
+            $institute =~ s/ /_/g;
+            $institute =~ s/\s/_/g;
+            $institute =~ s/\(//g;
+            $institute =~ s/\)//g;
+            push @traits, [$metabolite."_".$tiss."_".$institute, $tiss, $collection, $age];
         } elsif (scalar(@component_terms) == 3){
             my $agronomic_term = $component_terms[0];
             my $age_term = $component_terms[1];
@@ -162,6 +172,7 @@ for my $col ( 15 .. $col_max) {
             $age_term =~ s/cass //g;
             my ($agro, $agro_ont) = split /\|/, $agronomic_term; #/#
             my ($age, $age_ont) = split /\|/, $age_term; #/#
+            my ($institute, $inst_ont) = split /\|/, $institute_term; #/#
             $agro =~ s/ /_/g;
             $agro =~ s/\s/_/g;
             $agro =~ s/\(//g;
@@ -170,7 +181,11 @@ for my $col ( 15 .. $col_max) {
             $age =~ s/\s/_/g;
             $age =~ s/\(//g;
             $age =~ s/\)//g;
-            push @traits, [$agro, '', '', $age];
+            $institute =~ s/ /_/g;
+            $institute =~ s/\s/_/g;
+            $institute =~ s/\(//g;
+            $institute =~ s/\)//g;
+            push @traits, [$agro."_".$institute, '', '', $age];
         }
     } elsif ($opt_v == 3 || $opt_v == 4 || $opt_v == 5){
         if (scalar(@component_terms) == 6){
@@ -190,6 +205,7 @@ for my $col ( 15 .. $col_max) {
             my ($metabolite, $chebi_ont) = split /\|/, $chebi_term; #/#
             my ($collection, $collection_ont) = split /\|/, $collection_term; #/#
             my ($age, $age_ont) = split /\|/, $age_term; #/#
+            my ($institute, $inst_ont) = split /\|/, $institute_term; #/#
             $tiss =~ s/ /_/g;
             $tiss =~ s/\s/_/g;
             $tiss =~ s/\(//g;
@@ -206,7 +222,11 @@ for my $col ( 15 .. $col_max) {
             $age =~ s/\s/_/g;
             $age =~ s/\(//g;
             $age =~ s/\)//g;
-            push @traits, [$metabolite."_".$tiss, $tiss, $collection, $age];
+            $institute =~ s/ /_/g;
+            $institute =~ s/\s/_/g;
+            $institute =~ s/\(//g;
+            $institute =~ s/\)//g;
+            push @traits, [$metabolite."_".$tiss."_".$institute, $tiss, $collection, $age];
         } elsif (scalar(@component_terms) == 3){
             my $agronomic_term = $component_terms[0];
             my $age_term = $component_terms[1];
@@ -217,6 +237,7 @@ for my $col ( 15 .. $col_max) {
             $age_term =~ s/cass //g;
             my ($agro, $agro_ont) = split /\|/, $agronomic_term; #/#
             my ($age, $age_ont) = split /\|/, $age_term; #/#
+            my ($institute, $inst_ont) = split /\|/, $institute_term; #/#
             $agro =~ s/ /_/g;
             $agro =~ s/\s/_/g;
             $agro =~ s/\(//g;
@@ -225,7 +246,11 @@ for my $col ( 15 .. $col_max) {
             $age =~ s/\s/_/g;
             $age =~ s/\(//g;
             $age =~ s/\)//g;
-            push @traits, [$agro, '', '', $age];
+            $institute =~ s/ /_/g;
+            $institute =~ s/\s/_/g;
+            $institute =~ s/\(//g;
+            $institute =~ s/\)//g;
+            push @traits, [$agro."_".$institute, '', '', $age];
         }
     }
 }
