@@ -8,12 +8,18 @@ transform_phenotypes_to_expression_atlas_lucy_index.pl
 
     transform_phenotypes_to_expression_atlas_lucy_index.pl  -i [infile]
     
-    perl bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i /home/vagrant/Downloads/cass_phenotype.xls -o /home/vagrant/cxgn/cassbase/bin/lucy.tsv -c /home/vagrant/cxgn/cassbase/bin/pre_corr.tsv -f /home/vagrant/cxgn/cassbase/bin/corr.tsv -p /home/vagrant/cxgn/cassbase/bin/project.txt -d /home/vagrant/cxgn/cassbase/bin/desc.tsv
+    perl bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i /home/vagrant/Downloads/cass_phenotype.csv -o /home/vagrant/cxgn/cassbase/bin/lucy.tsv -c /home/vagrant/cxgn/cassbase/bin/pre_corr.tsv -f /home/vagrant/cxgn/cassbase/bin/corr.tsv -p /home/vagrant/cxgn/cassbase/bin/project.txt -d /home/vagrant/cxgn/cassbase/bin/desc.tsv -v 1 -n project_name
 
 =head1 COMMAND-LINE OPTIONS
   ARGUMENTS
- -i phenotype file downloaded directly from website
- use absolute paths for output files
+ -i phenotype csv file downloaded directly from website
+ -o output lucy.tsv file that can be indexed using TEA script
+ -c output pre-correlation file. This is the file fed into the R script below.
+ -f output correlation.tsv file that can be indexed using TEA script
+ -p output project.txt file that can be loaded into database using TEA script
+ -d output description file that can be indexed by TEA script
+ -v version number for how to group variables (e.g. grouping traits with tissues). currently 1 to 5
+ -n project name
 
 =head1 DESCRIPTION
 
