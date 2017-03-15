@@ -6,7 +6,9 @@ construct_cyc_file.pl
 
 =head1 SYNOPSIS
 
-    construct_cyc_file.pl  -i [gene gff infile] -a [annotation infile] -o [outfile_prefix]
+	awk '$3 == "mRNA" {print $1 "\t" $3 "\t" $4 "\t" $5 "\t" $7 "\t" $9}' mesculenta_305_v6.1.gene_exons.gff3 > mesculenta_305_v6.1_mRNA.txt
+
+    construct_cyc_file.pl  -i [infile created from gff above] -a [annotation infile] -o [outfile_prefix]
 	
 	perl construct_cyc_file.pl -i ~/Downloads/Mesculenta/v6.1/annotation/Mesculenta_305_v6.1_mRNA.txt -a ~/Downloads/Mesculenta/v6.1/annotation/Mesculenta_305_v6.1.annotation_info.txt -o cyc_file
 
@@ -141,7 +143,7 @@ while (my $row = <$fh>) {
 foreach my $chr (keys %chrs){
 
 	open(my $fh, '>', $opt_o."_".$chr.".tsv")
-    	or die "Could not open file '$opt_a' $!";
+    	or die "Could not open file $!";
 
 	foreach my $chrline (@out_array){
 		if (exists($chrline->{$chr})){
