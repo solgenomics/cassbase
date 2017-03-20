@@ -70,20 +70,45 @@ my $header = <$fh>;
 while (my $row = <$fh>) {
 	my @columns = split '\t', $row;
 	#pacId	locusName	transcriptName	peptideName	Pfam	Panther	KOG	KEGG/ec	KO	GO	Best-hit-arabi-name	arabi-symbol	arabi-defline
-	my $pacid = $columns[0];#
-	my $gene_name = $columns[1];#
-	my $transname = $columns[2];#
+	my $pacid_col = $columns[0];#
+	my @pacid_terms = split ',',$pacid_col;
+	if (scalar(@pacid_terms)>1){
+		die "More than one pacid term on a single line\n";
+	}
+	my $gene_name_col = $columns[1];#
+	my @gene_name_terms = split ',',$gene_name_col;
+	if (scalar(@gene_name_terms)>1){
+		die "More than one gene_name term on a single line\n";
+	}
+	my $transname_col = $columns[2];#
+	my @transname_terms = split ',',$transname_col;
+	if (scalar(@transname_terms)>1){
+		die "More than one transname term on a single line\n";
+	}
 	my $pepname = $columns[3];#
+	my @pepname_terms = split ',',$pepname;
 	my $pfam = $columns[4];#
+	my @pfam_terms = split ',',$pfam;
 	my $panther = $columns[5];#
+	my @panther_terms = split ',',$panther;
 	my $kog = $columns[6];#
+	my @kog_terms = split ',',$kog;
 	my $keggec = $columns[7];#
+	my @keggec_terms = split ',',$keggec;
 	my $ko = $columns[8];#
+	my @ko_terms = split ',',$ko;
 	my $go = $columns[9];#
+	my @go_terms = split ',', $go;
 	my $arabi_name = $columns[10];#
+	my @arabi_name_terms = split ',', $arabi_name;
 	my $arabi_sym = $columns[11];#
+	my @arabi_sym_terms = split ',', $arabi_sym;
 	my $arabi_def = $columns[12];#
 	chomp($arabi_def);
+
+	my $pacid = $pacid_terms[0];
+	my $transname = $transname_terms[0];
+	my $gene_name = $gene_name_terms[0];
 
 	my $chr = $pacid_hash{$pacid}->{chr};#
 	my $type = $pacid_hash{$pacid}->{type};
@@ -106,8 +131,9 @@ while (my $row = <$fh>) {
 	push @glines, $id_line;
 	my $name_line = "NAME\t$transname\n";
 	push @glines, $name_line;
-	my $syn_line = $pepname ? "SYNONYM\t$pepname\n" : '';
-	if ($syn_line){ push @glines, $syn_line; }
+	foreach (@pepname_terms){
+		push @glines, "SYNONYM\t$_\n"; 
+	}
 	my $start_line = "STARTBASE\t$start\n";
 	push @glines, $start_line;
 	my $end_line = "ENDBASE\t$end\n";
@@ -116,24 +142,32 @@ while (my $row = <$fh>) {
 	if ($function_line){ push @glines, $function_line; }
 	my $product_type_line = "PRODUCT-TYPE\tP\n";
 	push @glines, $product_type_line;
-	my $ec_line = $keggec ? "EC\t$keggec\n" : '';
-	if ($ec_line){ push @glines, $ec_line; }
-	my $go_line = $go ? "GO\t$go\n" : '';
-	if ($go_line){ push @glines, $go_line; }
+	foreach (@keggec_terms){
+		push @glines, "EC\t$_\n"; 
+	}
+	foreach (@go_terms){
+		push @glines, "GO\t$_\n"; 
+	}
 	my $gcomment_line1 = $gene_name ? "GENE-COMMENT\tGENENAME:$gene_name\n" : '';
 	if ($gcomment_line1){ push @glines, $gcomment_line1; }
-	my $gcomment_line2 = $pfam ? "GENE-COMMENT\tPFAM:$pfam\n" : '';
-	if ($gcomment_line2){ push @glines, $gcomment_line2; }
-	my $gcomment_line3 = $panther ? "GENE-COMMENT\tPANTHER:$panther\n" : '';
-	if ($gcomment_line3){ push @glines, $gcomment_line3; }
-	my $gcomment_line4 = $kog ? "GENE-COMMENT\tKOG:$kog\n" : '';
-	if ($gcomment_line4){ push @glines, $gcomment_line4; }
-	my $gcomment_line5 = $ko ? "GENE-COMMENT\tKO:$ko\n" : '';
-	if ($gcomment_line5){ push @glines, $gcomment_line5; }
-	my $fcomment_line1 = $arabi_name ? "FUNCTION-COMMENT\tARABINAME:$arabi_name\n" : '';
-	if ($fcomment_line1){ push @glines, $fcomment_line1; }
-	my $fcomment_line2 = $arabi_sym ? "FUNCTION-COMMENT\tARABISYM:$arabi_sym\n" : '';
-	if ($fcomment_line2){ push @glines, $fcomment_line2; }
+	foreach (@pfam_terms){
+		push @glines, "GENE-COMMENT\tPFAM:$_\n"; 
+	}
+	foreach (@panther_terms){
+		push @glines, "GENE-COMMENT\tPANTHER:$_\n";
+	}
+	foreach (@kog_terms){
+		push @glines, "GENE-COMMENT\tKOG:$_\n";
+	}
+	foreach (@ko_terms){
+		push @glines, "GENE-COMMENT\tKO:$_\n";
+	}
+	foreach (@arabi_name_terms){
+		push @glines, "FUNCTION-COMMENT\tARABINAME:$_\n";
+	}
+	foreach (@arabi_sym_terms){
+		push @glines, "FUNCTION-COMMENT\tARABISYM:$_\n";
+	}
 	push @glines, "//\n";
 	push @out_array, { $chr => \@glines };
 	$chrs{$chr}++;
