@@ -141,8 +141,10 @@ while (my $row = <$fh>) {
 #print STDERR Dumper \%pacid_hash;
 
 foreach my $chr (keys %chrs){
+	my $file_name = $opt_o."_".$chr.".pf";
+	print STDERR $file_name."\n";
 
-	open(my $fh, '>', $opt_o."_".$chr.".tsv")
+	open(my $fh, '>', $file_name)
     	or die "Could not open file $!";
 
 	foreach my $chrline (@out_array){
