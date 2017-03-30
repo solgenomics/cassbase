@@ -58,7 +58,7 @@ my $brapi_json_response = <$fh>;
 my $brapi_response = decode_json $brapi_json_response;
 print STDERR Dumper $brapi_response;
 my $remote_file_path = $brapi_response->{metadata}->{datafiles}->[0];
-
+print STDERR $remote_file_path."\n";
 my $phenotype_download = $opt_t."/phenotype_download.csv";
 my $status_code = mirror($remote_file_path, $phenotype_download);
 
