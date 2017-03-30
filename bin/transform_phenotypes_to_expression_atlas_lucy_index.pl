@@ -61,6 +61,7 @@ my $remote_file_path = $brapi_response->{metadata}->{datafiles}->[0];
 print STDERR $remote_file_path."\n";
 my $phenotype_download = $opt_t."/phenotype_download.csv";
 my $status_code = mirror($remote_file_path, $phenotype_download);
+print STDERR $status_code."\n";
 
 my $csv = Text::CSV->new({ sep_char => ',' });
 
