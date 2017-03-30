@@ -42,7 +42,7 @@ rm -R ${expression_index_dir}/${directory_name}/*
 rm -R ${description_index_dir}/${directory_name}/*
 fi
 
-perl ${root_dir}/Tea/import_project/TEA_import_project_metadata_treatments.pl -d ${database_name} -H ${database_host} -u ${database_user} -p ${database_password} -t ${processing_file_dir}/project.txt -n
+perl ${root_dir}/Tea/import_project/TEA_import_project_metadata.pl -d ${database_name} -H ${database_host} -u ${database_user} -p ${database_password} -t ${processing_file_dir}/project.txt -n
 
 perl ${root_dir}/Tea/import_project/index_correlation_file.pl ${processing_file_dir}/corr.tsv ${correlation_index_dir}/${directory_name}/
 perl ${root_dir}/Tea/import_project/index_expression_file.pl ${processing_file_dir}/lucy.tsv ${expression_index_dir}/${directory_name}/
