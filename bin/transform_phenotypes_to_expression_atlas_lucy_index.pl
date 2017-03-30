@@ -40,19 +40,32 @@ use Spreadsheet::ParseExcel;
 use Statistics::Basic qw(:all);
 use Statistics::R;
 use Text::CSV;
+use JSON;
+use LWP::Simple;
 
-our ($opt_i, $opt_p, $opt_o, $opt_c, $opt_f, $opt_d, $opt_v, $opt_n);
+our ($opt_i, $opt_p, $opt_o, $opt_c, $opt_f, $opt_d, $opt_v, $opt_n, $opt_t);
 
-getopts('i:p:o:c:f:d:v:n:');
+getopts('i:p:o:c:f:d:v:n:t:');
 
-if (!$opt_i || !$opt_p || !$opt_o || !$opt_c || !$opt_f || !$opt_d || !$opt_v || !$opt_n) {
-    die "Must provide options -i (input file) -p (project file out) -o (lucy out file) -c (corr pre-3col out file) -f (corr out file) -d (metabolite description oufile -v (script_version) -n (project name) \n";
+if (!$opt_i || !$opt_p || !$opt_o || !$opt_c || !$opt_f || !$opt_d || !$opt_v || !$opt_n || !$opt_t) {
+    die "Must provide options -i (input file) -p (project file out) -o (lucy out file) -c (corr pre-3col out file) -f (corr out file) -d (metabolite description oufile -v (script_version) -n (project name) -t (temp dir)\n";
 }
-
-my $csv = Text::CSV->new({ sep_char => ',' });
 
 open(my $fh, '<', $opt_i)
     or die "Could not open file '$opt_i' $!";
+
+my $brapi_json_response = <$fh>;
+my $brapi_response = decode_json $brapi_json_response;
+print STDERR Dumper $brapi_response;
+my $remote_file_path = $brapi_response->{metadata}->{datafiles}->[0];
+
+my $phenotype_download = $opt_t."/phenotype_download.csv";
+my $status_code = mirror($remote_file_path, $phenotype_download);
+
+my $csv = Text::CSV->new({ sep_char => ',' });
+
+open(my $fh, '<', $phenotype_download)
+    or die "Could not open file '$phenotype_download' $!";
 
 my $trait_row = <$fh>;
 my @columns;

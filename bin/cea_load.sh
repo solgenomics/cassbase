@@ -20,9 +20,9 @@ directory_name=${14} #cass_index_<Project_name>
 export_type=${15} #1 or 2
 project_name=${16} #<Project_name>
 
-wget --no-check-certificate --output-document=${processing_file_dir}/phenotype_download.csv "${host_address}/brapi/v1/studies/${trial_id}/table?format=csv&observationLevel=plant"
+wget --no-check-certificate --output-document=${processing_file_dir}/brapi_response.csv "${host_address}/brapi/v1/studies/${trial_id}/table?format=csv&observationLevel=plant"
 
-perl ${root_dir}/cassbase/bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i ${processing_file_dir}/phenotype_download.csv -o ${processing_file_dir}/lucy.tsv -c ${processing_file_dir}/pre_corr.tsv -f ${processing_file_dir}/corr.tsv -p ${processing_file_dir}/project.txt -d ${processing_file_dir}/desc.tsv -v ${export_type} -n ${project_name}
+perl ${root_dir}/cassbase/bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i ${processing_file_dir}/brapi_response.csv -o ${processing_file_dir}/lucy.tsv -c ${processing_file_dir}/pre_corr.tsv -f ${processing_file_dir}/corr.tsv -p ${processing_file_dir}/project.txt -d ${processing_file_dir}/desc.tsv -v ${export_type} -n ${project_name} -t ${processing_file_dir}
 
 if ${clear_old_database}; then
 PGPASSWORD=${database_password} dropdb -U ${database_user} -h ${database_host} ${database_name}
