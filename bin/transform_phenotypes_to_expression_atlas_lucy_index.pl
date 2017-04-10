@@ -51,22 +51,23 @@ if (!$opt_i || !$opt_p || !$opt_o || !$opt_c || !$opt_f || !$opt_d || !$opt_v ||
     die "Must provide options -i (input file) -p (project file out) -o (lucy out file) -c (corr pre-3col out file) -f (corr out file) -d (metabolite description oufile -v (script_version) -n (project name) -t (temp dir)\n";
 }
 
+my $csv = Text::CSV->new({ sep_char => ',' });
+
 open(my $fh, '<', $opt_i)
     or die "Could not open file '$opt_i' $!";
 
-my $brapi_json_response = <$fh>;
-my $brapi_response = decode_json $brapi_json_response;
-print STDERR Dumper $brapi_response;
-my $remote_file_path = $brapi_response->{metadata}->{datafiles}->[0];
-print STDERR $remote_file_path."\n";
-my $phenotype_download = $opt_t."/phenotype_download.csv";
-my $status_code = mirror($remote_file_path, $phenotype_download);
-print STDERR $status_code."\n";
+#my $brapi_json_response = <$fh>;
+#my $brapi_response = decode_json $brapi_json_response;
+#print STDERR Dumper $brapi_response;
+#my $remote_file_path = $brapi_response->{metadata}->{datafiles}->[0];
+#print STDERR $remote_file_path."\n";
+#my $phenotype_download = $opt_t."/phenotype_download.csv";
+#my $status_code = mirror($remote_file_path, $phenotype_download);
+#print STDERR $status_code."\n";
 
-my $csv = Text::CSV->new({ sep_char => ',' });
 
-open(my $fh, '<', $phenotype_download)
-    or die "Could not open file '$phenotype_download' $!";
+#open(my $fh, '<', $phenotype_download)
+#    or die "Could not open file '$phenotype_download' $!";
 
 my $trait_row = <$fh>;
 my @columns;
@@ -85,7 +86,7 @@ my $col_max = scalar(@columns)-1;
 #my ( $col_min, $col_max ) = $worksheet->col_range();
 
 my @data_out;
-
+my %units_seen;
 my @traits;
 for my $col ( 15 .. $col_max) {
     my $multiterm_trait = $columns[$col];
@@ -147,6 +148,7 @@ for my $col ( 15 .. $col_max) {
         $unit =~ s/\(//g;
         $unit =~ s/\)//g;
         push @traits, [$metabolite."_".$institute, $tiss, $collection, $age, $unit];
+		$units_seen{$unit}++;
     } elsif ($opt_v == 2){
         if (scalar(@component_terms) == 6){
             my $chebi_term = $component_terms[0];
@@ -192,6 +194,7 @@ for my $col ( 15 .. $col_max) {
             $unit =~ s/\(//g;
             $unit =~ s/\)//g;
             push @traits, [$metabolite."_".$tiss."_".$institute, $tiss, $collection, $age, $unit];
+			$units_seen{$unit}++;
         } elsif (scalar(@component_terms) == 3){
             my $agronomic_term = $component_terms[0];
             my $age_term = $component_terms[1];
@@ -216,6 +219,7 @@ for my $col ( 15 .. $col_max) {
             $institute =~ s/\(//g;
             $institute =~ s/\)//g;
             push @traits, [$agro."_".$institute, '', '', $age, ''];
+			$units_seen{'various'}++;
         }
     } elsif ($opt_v == 3 || $opt_v == 4 || $opt_v == 5){
         if (scalar(@component_terms) == 6){
@@ -262,6 +266,7 @@ for my $col ( 15 .. $col_max) {
             $unit =~ s/\(//g;
             $unit =~ s/\)//g;
             push @traits, [$metabolite."_".$tiss."_".$institute, $tiss, $collection, $age, $unit];
+			$units_seen{$unit}++;
         } elsif (scalar(@component_terms) == 3){
             my $agronomic_term = $component_terms[0];
             my $age_term = $component_terms[1];
@@ -286,6 +291,7 @@ for my $col ( 15 .. $col_max) {
             $institute =~ s/\(//g;
             $institute =~ s/\)//g;
             push @traits, [$agro."_".$institute, '', '', $age, ''];
+			$units_seen{'various'}++;
         }
     }
 }
@@ -308,16 +314,15 @@ while ( my $row = <$fh> ){
     }
     
     my $accession_name = $columns[7];
-    #my $project_name = $columns[2];
+    my $trial_name = $columns[2];
     my $project_design = $columns[3];
     my $project_location = $columns[5];
     my $project_year = $columns[0];
-    
-    $project_info{$project_name} = {
-        design => $project_design,
-        location => $project_location,
-        year => $project_year
-    };
+
+	push @{$project_info{$project_name}->{designs}}, $project_design;
+	push @{$project_info{$project_name}->{locations}}, $project_location;
+	push @{$project_info{$project_name}->{years}}, $project_year;
+	push @{$project_info{$project_name}->{trial_names}}, $trial_name;
 
     #print STDERR $accession_name."\n";
 
@@ -446,9 +451,15 @@ while ( my $row = <$fh> ){
 #print STDERR Dumper keys %intermed;
 #print STDERR Dumper \%project_info;
 #print STDERR Dumper \%accession_info_hash;
+#print STDERR Dumper \%units_seen;
 
+my @units_array;
+foreach (keys %units_seen){
+	push @units_array, $_;
+}
 foreach my $project_name (keys %accession_info_hash) {
     $project_info{$project_name}->{accessions} = $accession_info_hash{$project_name};
+    $project_info{$project_name}->{units} = \@units_seen;
 }
 #print STDERR Dumper \%project_info;
 
@@ -578,11 +589,18 @@ open (my $file_fh, ">", "$opt_p") || die ("\nERROR:\n");
         my $project_name_index_dir = $project_name;
         $project_name_index_dir =~ s/ //g;
         $project_name_index_dir =~ s/\s//g;
-        my $project_year = $project_info{$project_name}->{year};
-        my $project_design = $project_info{$project_name}->{design};
-        my $project_location = $project_info{$project_name}->{location};
+        my $project_years = $project_info{$project_name}->{years};
+		my $project_years_text = join ',', @$project_years;
+        my $project_designs = $project_info{$project_name}->{designs};
+		my $project_designs_text = join ',', @$project_designs;
+        my $project_locations = $project_info{$project_name}->{locations};
+		my $project_locations_text = join ',', @$project_locations;
+        my $trial_names = $project_info{$project_name}->{trial_names};
+		my $trial_names_text = join ',', @$trial_names;
+		my $units = $project_info{$project_name}->{units};
+		my $units_text = join ',', @$units;
 
-        print $file_fh "#project\nproject_name: $project_name\nproject_contact: \nproject_description: Accessions used in Trial '$project_name', Location: '$project_location', Breeding Program: 'CASS', Project Design: '$project_design'\nexpr_unit: ug/gDW\nindex_dir_name: cass_index_$project_name_index_dir\n# project - end\n\n";
+        print $file_fh "#project\nproject_name: $project_name\nproject_contact: \nproject_description: Accessions used in Trial(s) '$trial_names_text', Location(s): '$project_locations_text', Year(s): '$project_years_text', Breeding Program: 'CASS', Project Design(s): '$project_designs_text'\nexpr_unit: $units_text\nindex_dir_name: cass_index_$project_name_index_dir\n# project - end\n\n";
 
         my $accession_hash = $project_info{$project_name}->{accessions};
         foreach my $accession (keys %$accession_hash) {
