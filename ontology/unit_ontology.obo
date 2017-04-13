@@ -39,3 +39,9 @@ id: CASSUNIT:0000005
 name: TPM
 def: "Transcripts Per Kilobase Million" []
 is_a: CASSUNIT:0000000
+
+[Term]
+id: CASSUNIT:0000006
+name: nmol / gDW min
+def: "nanomol per gram dry weight per minute" []
+is_a: CASSUNIT:0000000
