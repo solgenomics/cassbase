@@ -66,11 +66,12 @@ my $db_id = $db->db_id();
 my $cv = $schema->resultset("Cv::Cv")->find({name=>$opt_c});
 my $cv_id = $cv->cv_id();
 
-my $q = "SELECT accession FROM dbxref WHERE db_id=$db_id ORDER BY dbxref_id DESC LIMIT 1;";
-my $h = $dbh->prepare($q);
-$h->execute();
+my $accession_q = "SELECT accession from dbxref WHERE db_id=? ORDER BY accession::int DESC LIMIT 1;";
+my $h = $dbh->prepare($accession_q);
+$h->execute($db_id);
 my ($last_accession) = $h->fetchrow_array();
 my $accession = $last_accession + 1;
+print STDERR $accession."\n";
 
 my @parent_trait_names = split /,/, $opt_l;
 

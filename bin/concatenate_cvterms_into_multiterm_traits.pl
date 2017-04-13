@@ -68,12 +68,17 @@ my $dbh = CXGN::DB::InsertDBH
 
 my $schema = Bio::Chado::Schema->connect(  sub { $dbh->get_actual_dbh() } );
 
-my $db = $schema->resultset("General::Db")->create({name=>$opt_d});
+my $db = $schema->resultset("General::Db")->find_or_create({name=>$opt_d});
 my $db_id = $db->db_id();
 my $cv = $schema->resultset("Cv::Cv")->find_or_create({name=>$opt_c});
 my $cv_id = $cv->cv_id();
 
-my $accession = 0;
+my $accession_q = "SELECT accession from dbxref WHERE db_id=? ORDER BY accession::int DESC LIMIT 1;";
+my $h = $dbh->prepare($accession_q);
+$h->execute($db_id);
+my ($last_accession) = $h->fetchrow_array();
+my $accession = $last_accession + 1;
+print STDERR $accession."\n";
 
 my @parent_trait_names = split /,/, $opt_l;
 
@@ -141,7 +146,7 @@ foreach my $i (@first_parent_names) {
 		if ($found_term){
 			$exists_count++;
 		} else {
-	        my $accession_string = sprintf("%07d",$accession);
+	        my $accession_string = sprintf("%08d",$accession);
 	        my $dbxref = $schema->resultset("General::Dbxref")->create({db_id=>$db_id, accession=>$accession_string});
 	        my $dbxref_id = $dbxref->dbxref_id();
 	        my $cvterm = $schema->resultset("Cv::Cvterm")->create({cv_id=>$cv_id, name=>$_, dbxref_id=>$dbxref_id});

@@ -77,13 +77,11 @@ my $db_id = $db->db_id();
 my $cv = $schema->resultset("Cv::Cv")->find_or_create({name=>$opt_c});
 my $cv_id = $cv->cv_id();
 
-my $latest_accession_rs = $schema->resultset("General::Dbxref")->search({db_id=>$db_id},{order_by=>{-desc=>['accession']}, rows=>1});
-my $latest_accession = $latest_accession_rs->first();
-
-my $accession = 0;
-if ($latest_accession){
-    $accession = $latest_accession->accession() + 1;
-}
+my $accession_q = "SELECT accession from dbxref WHERE db_id=? ORDER BY accession::int DESC LIMIT 1;";
+my $h = $dbh->prepare($accession_q);
+$h->execute($db_id);
+my ($last_accession) = $h->fetchrow_array();
+my $accession = $last_accession + 1;
 print STDERR $accession."\n";
 
 my @parent_trait_names = split /,/, $opt_l;
