@@ -43,12 +43,12 @@ use Text::CSV;
 use JSON;
 use LWP::Simple;
 
-our ($opt_i, $opt_p, $opt_o, $opt_c, $opt_f, $opt_d, $opt_v, $opt_n, $opt_t);
+our ($opt_i, $opt_p, $opt_o, $opt_c, $opt_f, $opt_d, $opt_v, $opt_n, $opt_t, $opt_u);
 
-getopts('i:p:o:c:f:d:v:n:t:');
+getopts('i:p:o:c:f:d:v:n:t:u:');
 
-if (!$opt_i || !$opt_p || !$opt_o || !$opt_c || !$opt_f || !$opt_d || !$opt_v || !$opt_n || !$opt_t) {
-    die "Must provide options -i (input file) -p (project file out) -o (lucy out file) -c (corr pre-3col out file) -f (corr out file) -d (metabolite description oufile -v (script_version) -n (project name) -t (temp dir)\n";
+if (!$opt_i || !$opt_p || !$opt_o || !$opt_c || !$opt_f || !$opt_d || !$opt_v || !$opt_n || !$opt_t || !$opt_u) {
+    die "Must provide options -i (input file) -p (project file out) -o (lucy out file) -c (corr pre-3col out file) -f (corr out file) -d (metabolite description oufile -v (script_version) -n (project name) -t (temp dir) -u (user_name)\n";
 }
 
 my $csv = Text::CSV->new({ sep_char => ',' });
@@ -305,6 +305,11 @@ my %project_info;
 my %accession_info_hash;
 my $project_name = $opt_n;
 
+my %unique_designs;
+my %unique_locations;
+my %unique_years;
+my %unique_trial_names;
+
 while ( my $row = <$fh> ){
     my @columns;
     if ($csv->parse($row)) {
@@ -319,10 +324,22 @@ while ( my $row = <$fh> ){
     my $project_location = $columns[5];
     my $project_year = $columns[0];
 
-	push @{$project_info{$project_name}->{designs}}, $project_design;
-	push @{$project_info{$project_name}->{locations}}, $project_location;
-	push @{$project_info{$project_name}->{years}}, $project_year;
-	push @{$project_info{$project_name}->{trial_names}}, $trial_name;
+    if (!exists($unique_designs{$project_design})){
+        $unique_designs{$project_design} = 1;
+        push @{$project_info{$project_name}->{designs}}, $project_design;
+    }
+    if (!exists($unique_locations{$project_location})){
+        $unique_locations{$project_location} = 1;
+        push @{$project_info{$project_name}->{locations}}, $project_location;
+    }
+    if (!exists($unique_years{$project_year})){
+        $unique_years{$project_year} = 1;
+        push @{$project_info{$project_name}->{years}}, $project_year;
+    }
+    if (!exists($unique_trial_names{$trial_name})){
+        $unique_trial_names{$trial_name} = 1;
+        push @{$project_info{$project_name}->{trial_names}}, $trial_name;
+    }
 
     #print STDERR $accession_name."\n";
 
@@ -455,11 +472,15 @@ while ( my $row = <$fh> ){
 
 my @units_array;
 foreach (keys %units_seen){
-	push @units_array, $_;
+    if ($_){
+        if ($_ ne 'mg/gDW' && $_ ne 'ng/gDW'){ #these are converted to ug/gDW above
+            push @units_array, $_;
+        }
+    }
 }
 foreach my $project_name (keys %accession_info_hash) {
     $project_info{$project_name}->{accessions} = $accession_info_hash{$project_name};
-    $project_info{$project_name}->{units} = \@units_seen;
+    $project_info{$project_name}->{units} = \@units_array;
 }
 #print STDERR Dumper \%project_info;
 
@@ -582,6 +603,9 @@ open (my $file_fh, ">", "$opt_f") || die ("\nERROR:\n");
     }
 close $file_fh;
 
+my $stage_ordinal = 1;
+my $tissue_ordinal = 1;
+
 open (my $file_fh, ">", "$opt_p") || die ("\nERROR:\n");
     print STDERR $opt_p."\n";
     print $file_fh "#organism\norganism_species: Manihot esculenta\norganism_variety: \norganism_description: Manihot esculenta\n# organism - end\n\n";
@@ -600,7 +624,7 @@ open (my $file_fh, ">", "$opt_p") || die ("\nERROR:\n");
 		my $units = $project_info{$project_name}->{units};
 		my $units_text = join ',', @$units;
 
-        print $file_fh "#project\nproject_name: $project_name\nproject_contact: \nproject_description: Accessions used in Trial(s) '$trial_names_text', Location(s): '$project_locations_text', Year(s): '$project_years_text', Breeding Program: 'CASS', Project Design(s): '$project_designs_text'\nexpr_unit: $units_text\nindex_dir_name: cass_index_$project_name_index_dir\n# project - end\n\n";
+        print $file_fh "#project\nproject_name: $project_name\nproject_contact: $opt_u\nproject_description: Accessions used in Trial(s) '$trial_names_text', Location(s): '$project_locations_text', Year(s): '$project_years_text', Breeding Program: 'CASS', Project Design(s): '$project_designs_text'\nexpr_unit: $units_text\nindex_dir_name: cass_index_$project_name_index_dir\n# project - end\n\n";
 
         my $accession_hash = $project_info{$project_name}->{accessions};
         foreach my $accession (keys %$accession_hash) {
@@ -610,11 +634,13 @@ open (my $file_fh, ">", "$opt_p") || die ("\nERROR:\n");
             #if ($opt_v == 1){
                 my $stage_hash = $accession_hash->{$accession};
                 foreach my $stage (keys %$stage_hash) {
-                    print $file_fh "#stage layer\nlayer_name: $accession\nlayer_description:\nlayer_type: stage\nbg_color:\nlayer_image: plant_background.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: 10\nimg_ordinal: 10\norgan: $stage\n# layer - end\n\n";
+                    print $file_fh "#stage layer\nlayer_name: $accession\nlayer_description:\nlayer_type: stage\nbg_color:\nlayer_image: plant_background.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: $stage_ordinal\nimg_ordinal: $stage_ordinal\norgan: $stage\n# layer - end\n\n";
+                    $stage_ordinal++;
 
                     my $tissue_hash = $stage_hash->{$stage};
                     foreach my $tissue (keys %$tissue_hash) {
-                        print $file_fh "#tissue layer\nlayer_name: $tissue\nlayer_description: $tissue\nlayer_type: tissue\nbg_color:\nlayer_image: $tissue.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: 100\nimg_ordinal: 100\norgan: $stage\n# layer - end\n\n";
+                        print $file_fh "#tissue layer\nlayer_name: $tissue\nlayer_description: $tissue\nlayer_type: tissue\nbg_color:\nlayer_image: $tissue.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: $tissue_ordinal\nimg_ordinal: $tissue_ordinal\norgan: $stage\n# layer - end\n\n";
+                        $tissue_ordinal++;
                     }
                 }
             #}
