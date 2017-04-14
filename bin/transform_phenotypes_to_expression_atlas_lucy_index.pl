@@ -43,12 +43,12 @@ use Text::CSV;
 use JSON;
 use LWP::Simple;
 
-our ($opt_i, $opt_p, $opt_o, $opt_c, $opt_f, $opt_d, $opt_v, $opt_n, $opt_t, $opt_u);
+our ($opt_i, $opt_p, $opt_o, $opt_c, $opt_f, $opt_d, $opt_v, $opt_n, $opt_t, $opt_u, $opt_s);
 
-getopts('i:p:o:c:f:d:v:n:t:u:');
+getopts('i:p:o:c:f:d:v:n:t:u:s:');
 
-if (!$opt_i || !$opt_p || !$opt_o || !$opt_c || !$opt_f || !$opt_d || !$opt_v || !$opt_n || !$opt_t || !$opt_u) {
-    die "Must provide options -i (input file) -p (project file out) -o (lucy out file) -c (corr pre-3col out file) -f (corr out file) -d (metabolite description oufile -v (script_version) -n (project name) -t (temp dir) -u (user_name)\n";
+if (!$opt_i || !$opt_p || !$opt_o || !$opt_c || !$opt_f || !$opt_d || !$opt_v || !$opt_n || !$opt_t || !$opt_u || !$opt_s) {
+    die "Must provide options -i (input file) -p (project file out) -o (lucy out file) -c (corr pre-3col out file) -f (corr out file) -d (metabolite description oufile -v (script_version) -n (project name) -t (temp dir) -u (user_name) -s (search param description)\n";
 }
 
 my $csv = Text::CSV->new({ sep_char => ',' });
@@ -624,7 +624,7 @@ open (my $file_fh, ">", "$opt_p") || die ("\nERROR:\n");
 		my $units = $project_info{$project_name}->{units};
 		my $units_text = join ',', @$units;
 
-        print $file_fh "#project\nproject_name: $project_name\nproject_contact: $opt_u\nproject_description: Accessions used in Trial(s) '$trial_names_text', Location(s): '$project_locations_text', Year(s): '$project_years_text', Breeding Program: 'CASS', Project Design(s): '$project_designs_text'\nexpr_unit: $units_text\nindex_dir_name: cass_index_$project_name_index_dir\n# project - end\n\n";
+        print $file_fh "#project\nproject_name: $project_name\nproject_contact: $opt_u\nproject_description: $opt_s Returned Dataset Includes ( Trial(s) '$trial_names_text', Location(s): '$project_locations_text', Year(s): '$project_years_text', Breeding Program: 'CASS', Project Design(s): '$project_designs_text' )\nexpr_unit: $units_text\nindex_dir_name: cass_index_$project_name_index_dir\n# project - end\n\n";
 
         my $accession_hash = $project_info{$project_name}->{accessions};
         foreach my $accession (keys %$accession_hash) {
