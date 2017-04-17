@@ -10,12 +10,6 @@ $show_accept_dialog => undef
 <br/><br/>
 </center>
 
-<div class="panel panel-success">
-	<div class="panel-heading">SSL Certificate Browser Issue</div>
-	<div class="panel-body">
-		Please first make sure your browser has access to <a href="https://cass.pb.ethz.ch/">https://cass.pb.ethz.ch/</a> by clicking on the link.<br/><br/>This site uses scripts to access https://cass.pb.ethz.ch/ and therefore your browser must be able to accept requests from there in order for this site to function properly.
-	</div>
-</div>
 
 <div class="container-fluid">
   <center>
