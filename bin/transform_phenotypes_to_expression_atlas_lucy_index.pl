@@ -573,25 +573,23 @@ open (my $file_fh, "<", "$opt_f") || die ("\nERROR: the file $opt_f could not be
 
     my %pairs;
     my @final_out;
+    my $c = 1;
     while (my $line = <$file_fh>) {
         chomp($line);
         my @line = split("\t",$line);
 
-        for (my $n = 1; $n < @gene_header; $n++) {
+        for (my $n = 1; $n < $c; $n++) {
             $line[0] =~ s/\"//g;
             $gene_header[$n] =~ s/\"//g;
 
             my $hash_key = $line[0]."_".$gene_header[$n];
-            my $hash_key2 = $gene_header[$n]."_".$line[0];
 
-            if ($line[$n] >= 0.10 && $line[0] ne $gene_header[$n]) {
-                if (!$pairs{$hash_key}) {
-                    push @final_out, "$line[0]\t$gene_header[$n]\t".sprintf("%.2f",$line[$n]);
-                    $pairs{$hash_key} = 1;
-                    $pairs{$hash_key2} = 1;
-                }
+            if ($line[$n] >= 0.80 && $line[0] ne $gene_header[$n]) {
+                push @final_out, "$line[0]\t$gene_header[$n]\t".sprintf("%.2f",$line[$n]);
             }
         }
+        $c++;
+        #print STDERR $c."\n";
     }
 close $file_fh;
 
