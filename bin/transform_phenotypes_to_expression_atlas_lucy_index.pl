@@ -584,7 +584,7 @@ open (my $file_fh, "<", "$opt_f") || die ("\nERROR: the file $opt_f could not be
 
             my $hash_key = $line[0]."_".$gene_header[$n];
 
-            if ($line[$n] >= 0.80 && $line[0] ne $gene_header[$n]) {
+            if ($line[$n] >= 0.50 && $line[0] ne $gene_header[$n]) {
                 push @final_out, "$line[0]\t$gene_header[$n]\t".sprintf("%.2f",$line[$n]);
             }
         }
