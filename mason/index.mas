@@ -18,3 +18,34 @@ $show_accept_dialog => undef
 </div>
 
 
+<div class="container">
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">News</div>
+            <div class="panel-body">
+                <ul>
+                <li><a href="/tools/expression_atlas/">Expression Atlas correlation tool can now be used for user defined data sets</a></li>
+                <li><a href="/expression_viewer/input">RNA seq data from Andreas and Frank are available in the Expression Atlas</a></li>
+                <li><a href="">Mesculenta PathwayTools Cyc available at http://ptools-cassbase.sgn.cornell.edu</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Features</div>
+            <div class="panel-body">
+                <ul>
+                <li><a href="/search/trials">Search Trials</a></li>
+                <li><a href="/search/stocks">Search Accessions, Transgenics, and Constructs From ETH DB</a></li>
+                <li><a href="/breeders/phenotyping">Upload and Manage Your Phenotyping Data</a></li>
+                <li><a href="/tools/expression_atlas/">Browse and Import Datasets into Expression Atlas</a></li>
+                <li><a href="/tools/documents/">Browse Mesculenta v6 Gene Annotations</a></li>
+                <li><a href="/tools/onto/">Browse CHEBI, Cassava Trait Ontology, and More</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
