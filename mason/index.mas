@@ -55,7 +55,7 @@ $show_accept_dialog => undef
             <div class="panel-body">
                 <ul>
                 <li><a href="/stock/5/view">IITA-TMS-IBA30572</a></li>
-                <li><a href="/stock/713/view">IITA-TMS-IBA980002/a></li>
+                <li><a href="/stock/713/view">IITA-TMS-IBA980002</a></li>
                 <li><a href="/stock/723/view">IITA-TMS-IBA980581</a></li>
                 <li><a href="/stock/1281/view">IITA-TMS-IBA011412</a></li>
                 <li><a href="/stock/39671/view">TMEB419</a></li>
