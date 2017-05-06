@@ -48,4 +48,21 @@ $show_accept_dialog => undef
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Genotypes</div>
+            <div class="panel-body">
+                <ul>
+                <li><a href="/stock/5/view">IITA-TMS-IBA30572</a></li>
+                <li><a href="/stock/713/view">IITA-TMS-IBA980002/a></li>
+                <li><a href="/stock/723/view">IITA-TMS-IBA980581</a></li>
+                <li><a href="/stock/1281/view">IITA-TMS-IBA011412</a></li>
+                <li><a href="/stock/39671/view">TMEB419</a></li>
+                <li><a href="/stock/39679/view">TMEB693</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
