@@ -54,8 +54,8 @@ $trial_name => undef
                     <label class="col-sm-5 control-label "><small>Trait list type: </small></label>
                     <div class="col-sm-7" >
                         <select class="form-control" id="create_spreadsheet_trait_list_type">
-                            <option value="metabolic">Metabolic</option>
-                            <option value="agronomic">Agronomic</option>
+                            <option value="metabolic">Metabolic Terms</option>
+                            <option value="agronomic">Agronomic and Quality Terms</option>
                         </select>
                     </div>
                 </div>
@@ -74,6 +74,13 @@ $trial_name => undef
                         </div>
                     </div>
                 </div>
+				<div class="form-group">
+					<label class="col-sm-5 control-label"><small>Institutes: </small></label>
+					<div class="col-sm-7" >
+						<div id="create_spreadsheet_institutes_div">
+						</div>
+					</div>
+				</div>
 
                 <div id="create_spreadsheet_plant_metabolite">
 
@@ -95,13 +102,6 @@ $trial_name => undef
                         <label class="col-sm-5 control-label"><small>Units: </small></label>
                         <div class="col-sm-7" >
                             <div id="create_spreadsheet_units_div">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-5 control-label"><small>Institutes: </small></label>
-                        <div class="col-sm-7" >
-                            <div id="create_spreadsheet_institutes_div">
                             </div>
                         </div>
                     </div>

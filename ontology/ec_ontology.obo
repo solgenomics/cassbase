@@ -135,3 +135,15 @@ id: EC:2.6.1.2
 name: Alanine Aminotransferase
 def: "A pyridoxal-phosphate protein." []
 is_a: EC:0000000
+
+[Term]
+id: EC:1.2.1.12
+name: glyceraldehyde-3-phosphate dehydrogenase
+def: "glyceraldehyde-3-phosphate dehydrogenase (phosphorylating)" []
+is_a: EC:0000000
+
+[Term]
+id: EC:2.7.1.40
+name: pyruvate kinase
+def: "pyruvate kinase" []
+is_a: EC:0000000

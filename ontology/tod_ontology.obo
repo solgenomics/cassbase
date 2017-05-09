@@ -531,3 +531,429 @@ name: cass month 12
 synonym: "Mo12" EXACT
 def: "" []
 is_a: CASSTIME:0000060
+
+[Term]
+id: CASSTIME:0000073
+name: cass number of days
+def: "Number of days." []
+is_a: CASSTIME:0000000
+
+[Term]
+id: CASSTIME:0000074
+name: cass day 1
+synonym: "day1" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000075
+name: cass day 2
+synonym: "day2" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000076
+name: cass day 3
+synonym: "day3" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000077
+name: cass day 4
+synonym: "day4" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000078
+name: cass day 5
+synonym: "day5" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000079
+name: cass day 6
+synonym: "day6" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000080
+name: cass day 7
+synonym: "day7" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000081
+name: cass day 8
+synonym: "day8" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000082
+name: cass day 9
+synonym: "day9" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000083
+name: cass day 10
+synonym: "day10" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000084
+name: cass day 11
+synonym: "day11" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000085
+name: cass day 12
+synonym: "day12" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000086
+name: cass day 13
+synonym: "day13" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000087
+name: cass day 14
+synonym: "day14" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000088
+name: cass day 15
+synonym: "day15" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000089
+name: cass day 16
+synonym: "day16" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000090
+name: cass day 17
+synonym: "day17" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000091
+name: cass day 18
+synonym: "day18" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000092
+name: cass day 19
+synonym: "day19" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000093
+name: cass day 20
+synonym: "day20" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000094
+name: cass day 21
+synonym: "day21" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000095
+name: cass day 22
+synonym: "day22" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000096
+name: cass day 23
+synonym: "day23" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000097
+name: cass day 24
+synonym: "day24" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000098
+name: cass day 25
+synonym: "day25" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000099
+name: cass day 26
+synonym: "day26" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000100
+name: cass day 27
+synonym: "day27" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000101
+name: cass day 28
+synonym: "day28" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000102
+name: cass day 29
+synonym: "day29" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000103
+name: cass day 30
+synonym: "day30" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000104
+name: cass day 31
+synonym: "day31" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000105
+name: cass day 32
+synonym: "day32" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000106
+name: cass day 33
+synonym: "day33" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000107
+name: cass day 34
+synonym: "day34" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000108
+name: cass day 35
+synonym: "day35" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000109
+name: cass day 36
+synonym: "day36" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000110
+name: cass day 37
+synonym: "day37" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000111
+name: cass day 38
+synonym: "day38" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000112
+name: cass day 39
+synonym: "day39" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000113
+name: cass day 40
+synonym: "day40" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000114
+name: cass day 41
+synonym: "day41" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000115
+name: cass day 42
+synonym: "day42" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000116
+name: cass day 43
+synonym: "day43" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000117
+name: cass day 44
+synonym: "day44" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000118
+name: cass day 45
+synonym: "day45" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000119
+name: cass day 46
+synonym: "day46" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000120
+name: cass day 47
+synonym: "day47" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000121
+name: cass day 48
+synonym: "day48" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000122
+name: cass day 49
+synonym: "day49" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000123
+name: cass day 50
+synonym: "day50" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000124
+name: cass day 51
+synonym: "day51" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000125
+name: cass day 52
+synonym: "day52" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000126
+name: cass day 53
+synonym: "day53" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000127
+name: cass day 54
+synonym: "day54" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000128
+name: cass day 55
+synonym: "day55" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000129
+name: cass day 56
+synonym: "day56" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000130
+name: cass day 57
+synonym: "day57" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000131
+name: cass day 58
+synonym: "day58" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000132
+name: cass day 59
+synonym: "day59" EXACT
+def: "" []
+is_a: CASSTIME:0000073
+
+[Term]
+id: CASSTIME:0000133
+name: cass day 60
+synonym: "day60" EXACT
+def: "" []
+is_a: CASSTIME:0000073

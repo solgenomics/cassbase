@@ -7,7 +7,7 @@ concatenate_cvterms_into_multi_term_traits.pl
 
     this script is very specific to cassbase ontologies, but could possibly be generalized through more sophisticated recursion.
 
-    perl concatenate_cvterms_into_multiterm_traits.pl -H localhost -D fixture2 -l 'chebi_compounds|CHEBI:00000[OR]ec_terms|EC:0000000,cass_tissues|CASSTISS:0000000,cass time of day|CASSTIME:0000001,cass number of weeks|CASSTIME:0000005,cass_units|CASSUNIT:0000000' -d CASSFT -c postcomposed_terms
+    perl concatenate_cvterms_into_multiterm_traits.pl -H localhost -D fixture2 -l 'chebi_compounds|CHEBI:00000[OR]ec_terms|EC:0000000,cass_tissues|CASSTISS:0000000,cass time of day|CASSTIME:0000001,cass number of weeks|CASSTIME:0000005,cass_units|CASSUNIT:0000000,cass_institutes|CASSINST:0000000' -d CASSFT -c postcomposed_terms
 
 =head1 COMMAND-LINE OPTIONS
 
@@ -68,12 +68,17 @@ my $dbh = CXGN::DB::InsertDBH
 
 my $schema = Bio::Chado::Schema->connect(  sub { $dbh->get_actual_dbh() } );
 
-my $db = $schema->resultset("General::Db")->create({name=>$opt_d});
+my $db = $schema->resultset("General::Db")->find_or_create({name=>$opt_d});
 my $db_id = $db->db_id();
 my $cv = $schema->resultset("Cv::Cv")->find_or_create({name=>$opt_c});
 my $cv_id = $cv->cv_id();
 
-my $accession = 0;
+my $accession_q = "SELECT accession from dbxref WHERE db_id=? ORDER BY accession::int DESC LIMIT 1;";
+my $h = $dbh->prepare($accession_q);
+$h->execute($db_id);
+my ($last_accession) = $h->fetchrow_array();
+my $accession = $last_accession + 1;
+print STDERR $accession."\n";
 
 my @parent_trait_names = split /,/, $opt_l;
 
@@ -102,6 +107,7 @@ foreach my $i (@first_parent_names) {
     print Dumper \@children_array;
 
     my $count = 0;
+    my $exists_count = 0;
     my @concatenated_terms;
     my $first_term = $children_array[0];
     foreach my $a (@$first_term) {
@@ -113,14 +119,18 @@ foreach my $i (@first_parent_names) {
             foreach my $c (@$third_term) {
                 my $c_concat_term = $b_concat_term.'||'.$c;
                 my $fourth_term = $children_array[3];
-                foreach my $d (@$fourth_term) {
-                    my $d_concat_term = $c_concat_term.'||'.$d;
-                    my $fifth_term = $children_array[4];
-                    foreach my $e (@$fifth_term) {
-                        my $e_concat_term = $d_concat_term.'||'.$e;
-                        push @concatenated_terms, $e_concat_term;
-                    }
-                }
+				foreach my $d (@$fourth_term) {
+					my $d_concat_term = $c_concat_term.'||'.$d;
+					my $fifth_term = $children_array[4];
+	                foreach my $e (@$fifth_term) {
+	                    my $e_concat_term = $d_concat_term.'||'.$e;
+	                    my $sixth_term = $children_array[5];
+	                    foreach my $f (@$sixth_term) {
+	                        my $f_concat_term = $e_concat_term.'||'.$f;
+	                        push @concatenated_terms, $f_concat_term;
+	                    }
+	                }
+				}
             }
         }
     }
@@ -128,18 +138,24 @@ foreach my $i (@first_parent_names) {
 
 
     #print Dumper \@concatenated_terms;
-    print scalar(@{$children_array[0]}) * scalar(@{$children_array[1]}) * scalar(@{$children_array[2]}) * scalar(@{$children_array[3]}) * scalar(@{$children_array[4]})."\n";
+    print scalar(@{$children_array[0]}) * scalar(@{$children_array[1]}) * scalar(@{$children_array[2]}) * scalar(@{$children_array[3]}) * scalar(@{$children_array[4]}) * scalar(@{$children_array[5]})."\n";
     print scalar(@concatenated_terms)."\n";
 
     foreach (@concatenated_terms) {
-        my $accession_string = sprintf("%07d",$accession);
-        my $dbxref = $schema->resultset("General::Dbxref")->create({db_id=>$db_id, accession=>$accession_string});
-        my $dbxref_id = $dbxref->dbxref_id();
-        my $cvterm = $schema->resultset("Cv::Cvterm")->create({cv_id=>$cv_id, name=>$_, dbxref_id=>$dbxref_id});
-        $accession++;
-        $count++;
+		my $found_term = $schema->resultset("Cv::Cvterm")->find({name=>$_});
+		if ($found_term){
+			$exists_count++;
+		} else {
+	        my $accession_string = sprintf("%08d",$accession);
+	        my $dbxref = $schema->resultset("General::Dbxref")->create({db_id=>$db_id, accession=>$accession_string});
+	        my $dbxref_id = $dbxref->dbxref_id();
+	        my $cvterm = $schema->resultset("Cv::Cvterm")->create({cv_id=>$cv_id, name=>$_, dbxref_id=>$dbxref_id});
+	        $accession++;
+	        $count++;
+		}
     }
 
+    print STDERR "$exists_count terms already in database.\n";
     print STDERR "Added $count new terms.\n";
 }
 

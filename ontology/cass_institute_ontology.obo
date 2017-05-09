@@ -51,3 +51,9 @@ id: CASSINST:0000007
 name: BTI
 def: "BTI" []
 is_a: CASSINST:0000000
+
+[Term]
+id: CASSINST:0000008
+name: ETH
+def: "ETH" []
+is_a: CASSINST:0000000

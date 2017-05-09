@@ -8,12 +8,18 @@ transform_phenotypes_to_expression_atlas_lucy_index.pl
 
     transform_phenotypes_to_expression_atlas_lucy_index.pl  -i [infile]
     
-    perl bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i /home/vagrant/Downloads/cass_phenotype.xls -o /home/vagrant/cxgn/cassbase/bin/lucy.tsv -c /home/vagrant/cxgn/cassbase/bin/pre_corr.tsv -f /home/vagrant/cxgn/cassbase/bin/corr.tsv -p /home/vagrant/cxgn/cassbase/bin/project.txt -d /home/vagrant/cxgn/cassbase/bin/desc.tsv
+    perl bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i /home/vagrant/Downloads/cass_phenotype.csv -o /home/vagrant/cxgn/cassbase/bin/lucy.tsv -c /home/vagrant/cxgn/cassbase/bin/pre_corr.tsv -f /home/vagrant/cxgn/cassbase/bin/corr.tsv -p /home/vagrant/cxgn/cassbase/bin/project.txt -d /home/vagrant/cxgn/cassbase/bin/desc.tsv -v 1 -n project_name
 
 =head1 COMMAND-LINE OPTIONS
   ARGUMENTS
- -i phenotype file downloaded directly from website
- use absolute paths for output files
+ -i phenotype csv file downloaded directly from website
+ -o output lucy.tsv file that can be indexed using TEA script
+ -c output pre-correlation file. This is the file fed into the R script below.
+ -f output correlation.tsv file that can be indexed using TEA script
+ -p output project.txt file that can be loaded into database using TEA script
+ -d output description file that can be indexed by TEA script
+ -v version number for how to group variables (e.g. grouping traits with tissues). currently 1 to 5
+ -n project name
 
 =head1 DESCRIPTION
 
@@ -34,19 +40,34 @@ use Spreadsheet::ParseExcel;
 use Statistics::Basic qw(:all);
 use Statistics::R;
 use Text::CSV;
+use JSON;
+use LWP::Simple;
 
-our ($opt_i, $opt_p, $opt_o, $opt_c, $opt_f, $opt_d, $opt_v, $opt_n);
+our ($opt_i, $opt_p, $opt_o, $opt_c, $opt_f, $opt_d, $opt_v, $opt_n, $opt_t, $opt_u, $opt_s);
 
-getopts('i:p:o:c:f:d:v:n:');
+getopts('i:p:o:c:f:d:v:n:t:u:s:');
 
-if (!$opt_i || !$opt_p || !$opt_o || !$opt_c || !$opt_f || !$opt_d || !$opt_v || !$opt_n) {
-    die "Must provide options -i (input file) -p (project file out) -o (lucy out file) -c (corr pre-3col out file) -f (corr out file) -d (metabolite description oufile -v (script_version) -n (project name) \n";
+if (!$opt_i || !$opt_p || !$opt_o || !$opt_c || !$opt_f || !$opt_d || !$opt_v || !$opt_n || !$opt_t || !$opt_u || !$opt_s) {
+    die "Must provide options -i (input file) -p (project file out) -o (lucy out file) -c (corr pre-3col out file) -f (corr out file) -d (metabolite description oufile -v (script_version) -n (project name) -t (temp dir) -u (user_name) -s (search param description)\n";
 }
 
 my $csv = Text::CSV->new({ sep_char => ',' });
 
 open(my $fh, '<', $opt_i)
     or die "Could not open file '$opt_i' $!";
+
+#my $brapi_json_response = <$fh>;
+#my $brapi_response = decode_json $brapi_json_response;
+#print STDERR Dumper $brapi_response;
+#my $remote_file_path = $brapi_response->{metadata}->{datafiles}->[0];
+#print STDERR $remote_file_path."\n";
+#my $phenotype_download = $opt_t."/phenotype_download.csv";
+#my $status_code = mirror($remote_file_path, $phenotype_download);
+#print STDERR $status_code."\n";
+
+
+#open(my $fh, '<', $phenotype_download)
+#    or die "Could not open file '$phenotype_download' $!";
 
 my $trait_row = <$fh>;
 my @columns;
@@ -65,7 +86,7 @@ my $col_max = scalar(@columns)-1;
 #my ( $col_min, $col_max ) = $worksheet->col_range();
 
 my @data_out;
-
+my %units_seen;
 my @traits;
 for my $col ( 15 .. $col_max) {
     my $multiterm_trait = $columns[$col];
@@ -100,6 +121,8 @@ for my $col ( 15 .. $col_max) {
         my ($metabolite, $chebi_ont) = split /\|/, $chebi_term; #/#
         my ($collection, $collection_ont) = split /\|/, $collection_term; #/#
         my ($age, $age_ont) = split /\|/, $age_term; #/#
+        my ($unit, $unit_ont) = split /\|/, $unit_term; #/#
+        my ($institute, $inst_ont) = split /\|/, $institute_term; #/#
         $tiss =~ s/ /_/g;
         $tiss =~ s/\s/_/g;
         $tiss =~ s/\(//g;
@@ -116,7 +139,16 @@ for my $col ( 15 .. $col_max) {
         $age =~ s/\s/_/g;
         $age =~ s/\(//g;
         $age =~ s/\)//g;
-        push @traits, [$metabolite, $tiss, $collection, $age];
+        $institute =~ s/ /_/g;
+        $institute =~ s/\s/_/g;
+        $institute =~ s/\(//g;
+        $institute =~ s/\)//g;
+        $unit =~ s/ /_/g;
+        $unit =~ s/\s/_/g;
+        $unit =~ s/\(//g;
+        $unit =~ s/\)//g;
+        push @traits, [$metabolite."_".$institute, $tiss, $collection, $age, $unit];
+		$units_seen{$unit}++;
     } elsif ($opt_v == 2){
         if (scalar(@component_terms) == 6){
             my $chebi_term = $component_terms[0];
@@ -135,6 +167,8 @@ for my $col ( 15 .. $col_max) {
             my ($metabolite, $chebi_ont) = split /\|/, $chebi_term; #/#
             my ($collection, $collection_ont) = split /\|/, $collection_term; #/#
             my ($age, $age_ont) = split /\|/, $age_term; #/#
+            my ($unit, $unit_ont) = split /\|/, $unit_term; #/#
+            my ($institute, $inst_ont) = split /\|/, $institute_term; #/#
             $tiss =~ s/ /_/g;
             $tiss =~ s/\s/_/g;
             $tiss =~ s/\(//g;
@@ -151,7 +185,16 @@ for my $col ( 15 .. $col_max) {
             $age =~ s/\s/_/g;
             $age =~ s/\(//g;
             $age =~ s/\)//g;
-            push @traits, [$metabolite."_".$tiss, $tiss, $collection, $age];
+            $institute =~ s/ /_/g;
+            $institute =~ s/\s/_/g;
+            $institute =~ s/\(//g;
+            $institute =~ s/\)//g;
+            $unit =~ s/ /_/g;
+            $unit =~ s/\s/_/g;
+            $unit =~ s/\(//g;
+            $unit =~ s/\)//g;
+            push @traits, [$metabolite."_".$tiss."_".$institute, $tiss, $collection, $age, $unit];
+			$units_seen{$unit}++;
         } elsif (scalar(@component_terms) == 3){
             my $agronomic_term = $component_terms[0];
             my $age_term = $component_terms[1];
@@ -162,6 +205,7 @@ for my $col ( 15 .. $col_max) {
             $age_term =~ s/cass //g;
             my ($agro, $agro_ont) = split /\|/, $agronomic_term; #/#
             my ($age, $age_ont) = split /\|/, $age_term; #/#
+            my ($institute, $inst_ont) = split /\|/, $institute_term; #/#
             $agro =~ s/ /_/g;
             $agro =~ s/\s/_/g;
             $agro =~ s/\(//g;
@@ -170,9 +214,14 @@ for my $col ( 15 .. $col_max) {
             $age =~ s/\s/_/g;
             $age =~ s/\(//g;
             $age =~ s/\)//g;
-            push @traits, [$agro, '', '', $age];
+            $institute =~ s/ /_/g;
+            $institute =~ s/\s/_/g;
+            $institute =~ s/\(//g;
+            $institute =~ s/\)//g;
+            push @traits, [$agro."_".$institute, '', '', $age, ''];
+			$units_seen{'various'}++;
         }
-    } elsif ($opt_v == 3 || $opt_v == 4){
+    } elsif ($opt_v == 3 || $opt_v == 4 || $opt_v == 5){
         if (scalar(@component_terms) == 6){
             my $chebi_term = $component_terms[0];
             my $tissue_term = $component_terms[1];
@@ -190,6 +239,8 @@ for my $col ( 15 .. $col_max) {
             my ($metabolite, $chebi_ont) = split /\|/, $chebi_term; #/#
             my ($collection, $collection_ont) = split /\|/, $collection_term; #/#
             my ($age, $age_ont) = split /\|/, $age_term; #/#
+            my ($unit, $unit_ont) = split /\|/, $unit_term; #/#
+            my ($institute, $inst_ont) = split /\|/, $institute_term; #/#
             $tiss =~ s/ /_/g;
             $tiss =~ s/\s/_/g;
             $tiss =~ s/\(//g;
@@ -206,7 +257,16 @@ for my $col ( 15 .. $col_max) {
             $age =~ s/\s/_/g;
             $age =~ s/\(//g;
             $age =~ s/\)//g;
-            push @traits, [$metabolite."_".$tiss, $tiss, $collection, $age];
+            $institute =~ s/ /_/g;
+            $institute =~ s/\s/_/g;
+            $institute =~ s/\(//g;
+            $institute =~ s/\)//g;
+            $unit =~ s/ /_/g;
+            $unit =~ s/\s/_/g;
+            $unit =~ s/\(//g;
+            $unit =~ s/\)//g;
+            push @traits, [$metabolite."_".$tiss."_".$institute, $tiss, $collection, $age, $unit];
+			$units_seen{$unit}++;
         } elsif (scalar(@component_terms) == 3){
             my $agronomic_term = $component_terms[0];
             my $age_term = $component_terms[1];
@@ -217,6 +277,7 @@ for my $col ( 15 .. $col_max) {
             $age_term =~ s/cass //g;
             my ($agro, $agro_ont) = split /\|/, $agronomic_term; #/#
             my ($age, $age_ont) = split /\|/, $age_term; #/#
+            my ($institute, $inst_ont) = split /\|/, $institute_term; #/#
             $agro =~ s/ /_/g;
             $agro =~ s/\s/_/g;
             $agro =~ s/\(//g;
@@ -225,7 +286,12 @@ for my $col ( 15 .. $col_max) {
             $age =~ s/\s/_/g;
             $age =~ s/\(//g;
             $age =~ s/\)//g;
-            push @traits, [$agro, '', '', $age];
+            $institute =~ s/ /_/g;
+            $institute =~ s/\s/_/g;
+            $institute =~ s/\(//g;
+            $institute =~ s/\)//g;
+            push @traits, [$agro."_".$institute, '', '', $age, ''];
+			$units_seen{'various'}++;
         }
     }
 }
@@ -239,6 +305,11 @@ my %project_info;
 my %accession_info_hash;
 my $project_name = $opt_n;
 
+my %unique_designs;
+my %unique_locations;
+my %unique_years;
+my %unique_trial_names;
+
 while ( my $row = <$fh> ){
     my @columns;
     if ($csv->parse($row)) {
@@ -248,16 +319,27 @@ while ( my $row = <$fh> ){
     }
     
     my $accession_name = $columns[7];
-    #my $project_name = $columns[2];
+    my $trial_name = $columns[2];
     my $project_design = $columns[3];
     my $project_location = $columns[5];
     my $project_year = $columns[0];
-    
-    $project_info{$project_name} = {
-        design => $project_design,
-        location => $project_location,
-        year => $project_year
-    };
+
+    if (!exists($unique_designs{$project_design})){
+        $unique_designs{$project_design} = 1;
+        push @{$project_info{$project_name}->{designs}}, $project_design;
+    }
+    if (!exists($unique_locations{$project_location})){
+        $unique_locations{$project_location} = 1;
+        push @{$project_info{$project_name}->{locations}}, $project_location;
+    }
+    if (!exists($unique_years{$project_year})){
+        $unique_years{$project_year} = 1;
+        push @{$project_info{$project_name}->{years}}, $project_year;
+    }
+    if (!exists($unique_trial_names{$trial_name})){
+        $unique_trial_names{$trial_name} = 1;
+        push @{$project_info{$project_name}->{trial_names}}, $trial_name;
+    }
 
     #print STDERR $accession_name."\n";
 
@@ -272,6 +354,15 @@ while ( my $row = <$fh> ){
         my $tissue_term = $traits[$i]->[1];
         my $collection_term = $traits[$i]->[2];
         my $age_term = $traits[$i]->[3];
+        my $unit_term = $traits[$i]->[4];
+
+        #Normalize mg/g and ng/g to ug/g
+        if ($value && $unit_term eq 'mg/gDW'){
+            $value = $value * 1000;
+        }
+        if ($value && $unit_term eq 'ng/gDW'){
+            $value = $value / 1000;
+        }
 
         my $stage;
         my $temp_key;
@@ -336,7 +427,24 @@ while ( my $row = <$fh> ){
             }
             $corr_steps{$corr_step} = 1;
         } elsif ($opt_v == 4){
-            if ($age_term ne 'week_52'){
+            if ($age_term eq 'week_16' && ($trait_term eq 'fresh_root_weight_per_plant' || $trait_term eq 'fresh_shoot_weight_per_plant' || $trait_term eq 'fresh_total_weight_per_plant' || $trait_term eq 'harvest_index')){
+                next;
+            }
+            $temp_key = "$trait_term, $accession_name";
+            $step2 = "$accession_name";
+            $corr_step = "$accession_name";
+            $accession_info_hash{$project_name}->{$step2}->{'plant'}->{'plant'} = 1;
+
+            if (exists($intermed{$temp_key})) {
+                my $values = $intermed{$temp_key}->[3];
+                push @$values, $value;
+                $intermed{$temp_key}->[3] = $values;
+            } else {
+                $intermed{$temp_key} = [$trait_term, 'plant', $step2, [$value], $corr_step];
+            }
+            $corr_steps{$corr_step} = 1;
+        } elsif ($opt_v == 5){
+            if (($age_term eq 'week_16' && ($trait_term eq 'fresh_root_weight_per_plant' || $trait_term eq 'fresh_shoot_weight_per_plant' || $trait_term eq 'fresh_total_weight_per_plant' || $trait_term eq 'harvest_index')) || $accession_name eq 'TMEB419'){
                 next;
             }
             $temp_key = "$trait_term, $accession_name";
@@ -360,9 +468,19 @@ while ( my $row = <$fh> ){
 #print STDERR Dumper keys %intermed;
 #print STDERR Dumper \%project_info;
 #print STDERR Dumper \%accession_info_hash;
+#print STDERR Dumper \%units_seen;
 
+my @units_array;
+foreach (keys %units_seen){
+    if ($_){
+        if ($_ ne 'mg/gDW' && $_ ne 'ng/gDW'){ #these are converted to ug/gDW above
+            push @units_array, $_;
+        }
+    }
+}
 foreach my $project_name (keys %accession_info_hash) {
     $project_info{$project_name}->{accessions} = $accession_info_hash{$project_name};
+    $project_info{$project_name}->{units} = \@units_array;
 }
 #print STDERR Dumper \%project_info;
 
@@ -455,25 +573,23 @@ open (my $file_fh, "<", "$opt_f") || die ("\nERROR: the file $opt_f could not be
 
     my %pairs;
     my @final_out;
+    my $c = 1;
     while (my $line = <$file_fh>) {
         chomp($line);
         my @line = split("\t",$line);
 
-        for (my $n = 1; $n < @gene_header; $n++) {
+        for (my $n = 1; $n < $c; $n++) {
             $line[0] =~ s/\"//g;
             $gene_header[$n] =~ s/\"//g;
 
             my $hash_key = $line[0]."_".$gene_header[$n];
-            my $hash_key2 = $gene_header[$n]."_".$line[0];
 
-            if ($line[$n] >= 0.10 && $line[0] ne $gene_header[$n]) {
-                if (!$pairs{$hash_key}) {
-                    push @final_out, "$line[0]\t$gene_header[$n]\t".sprintf("%.2f",$line[$n]);
-                    $pairs{$hash_key} = 1;
-                    $pairs{$hash_key2} = 1;
-                }
+            if ($line[$n] >= 0.50 && $line[0] ne $gene_header[$n]) {
+                push @final_out, "$line[0]\t$gene_header[$n]\t".sprintf("%.2f",$line[$n]);
             }
         }
+        $c++;
+        #print STDERR $c."\n";
     }
 close $file_fh;
 
@@ -485,6 +601,9 @@ open (my $file_fh, ">", "$opt_f") || die ("\nERROR:\n");
     }
 close $file_fh;
 
+my $stage_ordinal = 1;
+my $tissue_ordinal = 1;
+
 open (my $file_fh, ">", "$opt_p") || die ("\nERROR:\n");
     print STDERR $opt_p."\n";
     print $file_fh "#organism\norganism_species: Manihot esculenta\norganism_variety: \norganism_description: Manihot esculenta\n# organism - end\n\n";
@@ -492,11 +611,18 @@ open (my $file_fh, ">", "$opt_p") || die ("\nERROR:\n");
         my $project_name_index_dir = $project_name;
         $project_name_index_dir =~ s/ //g;
         $project_name_index_dir =~ s/\s//g;
-        my $project_year = $project_info{$project_name}->{year};
-        my $project_design = $project_info{$project_name}->{design};
-        my $project_location = $project_info{$project_name}->{location};
+        my $project_years = $project_info{$project_name}->{years};
+		my $project_years_text = join ',', @$project_years;
+        my $project_designs = $project_info{$project_name}->{designs};
+		my $project_designs_text = join ',', @$project_designs;
+        my $project_locations = $project_info{$project_name}->{locations};
+		my $project_locations_text = join ',', @$project_locations;
+        my $trial_names = $project_info{$project_name}->{trial_names};
+		my $trial_names_text = join ',', @$trial_names;
+		my $units = $project_info{$project_name}->{units};
+		my $units_text = join ',', @$units;
 
-        print $file_fh "#project\nproject_name: $project_name\nproject_contact: \nproject_description: Accessions used in Trial '$project_name', Location: '$project_location', Breeding Program: 'CASS', Project Design: '$project_design'\nexpr_unit: ug/gDW\nindex_dir_name: cass_index_$project_name_index_dir\n# project - end\n\n";
+        print $file_fh "#project\nproject_name: $project_name\nproject_contact: $opt_u\nproject_description: $opt_s Returned Dataset Includes ( Trial(s) '$trial_names_text', Location(s): '$project_locations_text', Year(s): '$project_years_text', Breeding Program: 'CASS', Project Design(s): '$project_designs_text' )\nexpr_unit: $units_text\nindex_dir_name: cass_index_$project_name_index_dir\n# project - end\n\n";
 
         my $accession_hash = $project_info{$project_name}->{accessions};
         foreach my $accession (keys %$accession_hash) {
@@ -506,11 +632,13 @@ open (my $file_fh, ">", "$opt_p") || die ("\nERROR:\n");
             #if ($opt_v == 1){
                 my $stage_hash = $accession_hash->{$accession};
                 foreach my $stage (keys %$stage_hash) {
-                    print $file_fh "#stage layer\nlayer_name: $accession\nlayer_description:\nlayer_type: stage\nbg_color:\nlayer_image: $accession.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: 10\nimg_ordinal: 10\norgan: $stage\n# layer - end\n\n";
+                    print $file_fh "#stage layer\nlayer_name: $accession\nlayer_description:\nlayer_type: stage\nbg_color:\nlayer_image: plant_background.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: $stage_ordinal\nimg_ordinal: $stage_ordinal\norgan: $stage\n# layer - end\n\n";
+                    $stage_ordinal++;
 
                     my $tissue_hash = $stage_hash->{$stage};
                     foreach my $tissue (keys %$tissue_hash) {
-                        print $file_fh "#tissue layer\nlayer_name: $tissue\nlayer_description: $tissue\nlayer_type: tissue\nbg_color:\nlayer_image: $tissue.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: 100\nimg_ordinal: 100\norgan: $stage\n# layer - end\n\n";
+                        print $file_fh "#tissue layer\nlayer_name: $tissue\nlayer_description: $tissue\nlayer_type: tissue\nbg_color:\nlayer_image: $tissue.png\nimage_width: 250\nimage_height: 500\ncube_ordinal: $tissue_ordinal\nimg_ordinal: $tissue_ordinal\norgan: $stage\n# layer - end\n\n";
+                        $tissue_ordinal++;
                     }
                 }
             #}
