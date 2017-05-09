@@ -5,15 +5,15 @@
     <li><a href="/barcode">Barcode Tools</a></li>
     <!--li><a href="/solgs/search">Genomic Selection</a></li-->
     <li><a href="/pca/analysis">Population Structure</a></li>
-    
+
     <li role="separator" class="divider"></li>
     <li class="dropdown-header">Sequence Analysis</li>
     <li><a class="footer" href="http://www.phytozome.net/search.php?show=blast">BLAST</a></li>
-    
+
     <li role="separator" class="divider"></li>
     <li class="dropdown-header">Other</li>
     <li><a href="/tools/onto/">Ontology Browser</a></li>
     <li><a href="/tools/documents/">Document Browser</a></li>
-    
+    <li><a href="/tools/compose">Compose a New Trait</a></li>
   </ul>
 </li>
