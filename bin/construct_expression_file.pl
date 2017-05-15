@@ -116,7 +116,7 @@ while (my $row = <$fh>) {
 		die "missing info\n";
 	}
 
-	$annotation_hash{$transname} = {chr=>$chr, type=> $type, start=>$start, end=>$end, strand=>$strand, pac_id=>$pac_id, gene_name=>$gene_name, pep_name=>$pepname, pfam=>$pfam, panther=>$panther, kog=>$kog, keggec=>$keggec, ko=>$ko, go=>$go, arabi_name=>$arabi_name, arabi_sym=>$arabi_sym, arabi_def=>$arabi_def};
+	$annotation_hash{$transname} = {chr=>$chr, type=> $type, start=>$start, end=>$end, strand=>$strand, pac_id=>$pacid, gene_name=>$gene_name, pep_name=>$pepname, pfam=>$pfam, panther=>$panther, kog=>$kog, keggec=>$keggec, ko=>$ko, go=>$go, arabi_name=>$arabi_name, arabi_sym=>$arabi_sym, arabi_def=>$arabi_def};
 }
 #print STDERR Dumper \%pacid_hash;
 
