@@ -66,6 +66,20 @@ $phenotype_files => undef
             </div>
         </div>
     </div>
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">RNA Seq Data</div>
+            <div class="panel-body">
+                <ul>
+                <li><a href="/stock/5/view">Frank's RNAseq Samples Information</a></li>
+                <li><a href="/stock/5/view">Frank's RNAseq Expression Values</a></li>
+                <li><a href="/stock/713/view">Andreas' RNAseq Samples Information</a></li>
+                <li><a href="/stock/713/view">Andreas' RNAseq Expression Values </a></li>
+                <li><a href="/stock/713/view">Andreas' RNAseq Expression Values (BTI Pipeline)</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
 
