@@ -8,15 +8,16 @@ construct_expression_file.pl
 
 	awk '$3 == "mRNA" {print $1 "\t" $3 "\t" $4 "\t" $5 "\t" $7 "\t" $9}' mesculenta_305_v6.1.gene_exons.gff3 > mesculenta_305_v6.1_mRNA.txt
 
-    construct_expression_file.pl  -i [infile created from stringtie_combine_counts_gene.pl combined_pheno.csv] -a [annotation infile] -o [outfile_prefix]
+    construct_expression_file.pl  -i [infile created from stringtie_combine_counts_gene.pl combined_pheno.csv] -g [infile created from awk command above] -a [annotation infile] -o [outfile_prefix]
 	
-	perl construct_expression_file.pl -i /data2/Mueller/Nicolas/andreas_2017/stringtie_tpm/combined_pheno.csv -a /data2/Mueller/Nicolas/andreas_2017/Mesculenta_305_v6.1.annotation_info.txt -o expression_file
+	perl construct_expression_file.pl -i /data2/Mueller/Nicolas/andreas_2017/stringtie_tpm/combined_pheno.csv -g /data2/Mueller/Nicolas/andreas_2017/Mesculenta_305_v6.1_mRNA.txt -a /data2/Mueller/Nicolas/andreas_2017/Mesculenta_305_v6.1.annotation_info.txt -o expression_file
 
 =head1 COMMAND-LINE OPTIONS
   ARGUMENTS
- -i input gff file
+ -i input expression value file
+ -g input gff file
  -a input annotation file
- -o output cyc file prefix. will create a file for each chr
+ -o output expression file
 
 =head1 DESCRIPTION
 
@@ -35,18 +36,19 @@ use Carp qw /croak/ ;
 use Pod::Usage;
 use Statistics::Basic qw(:all);
 use Statistics::R;
+use Text::CSV;
 
-our ($opt_i, $opt_a, $opt_o);
+our ($opt_i, $opt_g, $opt_a, $opt_o);
 
-getopts('i:a:o:');
+getopts('i:g:a:o:');
 
-if (!$opt_i || !$opt_a || !$opt_o){
-	die "Must give -i, -a, -o\n";
+if (!$opt_i || !$opt_g || !$opt_a || !$opt_o){
+	die "Must give -i, -g, -a, -o\n";
 }
 
 my %pacid_hash;
-open(my $fh, '<', $opt_i)
-    or die "Could not open file '$opt_i' $!";
+open(my $fh, '<', $opt_g)
+    or die "Could not open file '$opt_g' $!";
 
 while (my $row = <$fh>) {
 	my @columns = split '\t', $row;
@@ -61,8 +63,7 @@ while (my $row = <$fh>) {
 }
 #print STDERR Dumper \%pacid_hash;
 
-my @out_array;
-my %chrs;
+my %annotation_hash;
 open(my $fh, '<', $opt_a)
     or die "Could not open file '$opt_a' $!";
 
@@ -86,23 +87,14 @@ while (my $row = <$fh>) {
 		die "More than one transname term on a single line\n";
 	}
 	my $pepname = $columns[3];#
-	my @pepname_terms = split ',',$pepname;
 	my $pfam = $columns[4];#
-	my @pfam_terms = split ',',$pfam;
 	my $panther = $columns[5];#
-	my @panther_terms = split ',',$panther;
 	my $kog = $columns[6];#
-	my @kog_terms = split ',',$kog;
 	my $keggec = $columns[7];#
-	my @keggec_terms = split ',',$keggec;
 	my $ko = $columns[8];#
-	my @ko_terms = split ',',$ko;
 	my $go = $columns[9];#
-	my @go_terms = split ',', $go;
 	my $arabi_name = $columns[10];#
-	my @arabi_name_terms = split ',', $arabi_name;
 	my $arabi_sym = $columns[11];#
-	my @arabi_sym_terms = split ',', $arabi_sym;
 	my $arabi_def = $columns[12];#
 	chomp($arabi_def);
 
@@ -124,72 +116,77 @@ while (my $row = <$fh>) {
 		die "missing info\n";
 	}
 
-	my @glines;
-
-	#ID,NAME,SYNONYM,STARTBASE,ENDBASE,GENE-COMMENT,FUNCTION,PRODUCT-TYPE,EC,FUNCTION-COMMENT,DBLINK,GO,INTRON
-	my $id_line = "ID\t$transname\n";
-	push @glines, $id_line;
-	my $name_line = "NAME\t$transname\n";
-	push @glines, $name_line;
-	foreach (@pepname_terms){
-		push @glines, "SYNONYM\t$_\n"; 
-	}
-	my $start_line = "STARTBASE\t$start\n";
-	push @glines, $start_line;
-	my $end_line = "ENDBASE\t$end\n";
-	push @glines, $end_line;
-	my $function_line = $arabi_def ? "FUNCTION\t$arabi_def\n" : '';
-	if ($function_line){ push @glines, $function_line; }
-	my $product_type_line = "PRODUCT-TYPE\tP\n";
-	push @glines, $product_type_line;
-	foreach (@keggec_terms){
-		push @glines, "EC\t$_\n"; 
-	}
-	foreach (@go_terms){
-		push @glines, "GO\t$_\n"; 
-	}
-	my $gcomment_line1 = $gene_name ? "GENE-COMMENT\tGENENAME:$gene_name\n" : '';
-	if ($gcomment_line1){ push @glines, $gcomment_line1; }
-	foreach (@pfam_terms){
-		push @glines, "GENE-COMMENT\tPFAM:$_\n"; 
-	}
-	foreach (@panther_terms){
-		push @glines, "GENE-COMMENT\tPANTHER:$_\n";
-	}
-	foreach (@kog_terms){
-		push @glines, "GENE-COMMENT\tKOG:$_\n";
-	}
-	foreach (@ko_terms){
-		push @glines, "GENE-COMMENT\tKO:$_\n";
-	}
-	foreach (@arabi_name_terms){
-		push @glines, "FUNCTION-COMMENT\tARABINAME:$_\n";
-	}
-	foreach (@arabi_sym_terms){
-		push @glines, "FUNCTION-COMMENT\tARABISYM:$_\n";
-	}
-	push @glines, "//\n";
-	push @out_array, { $chr => \@glines };
-	$chrs{$chr}++;
+	$annotation_hash{$transname} = {chr=>$chr, type=> $type, start=>$start, end=>$end, strand=>$strand, pac_id=>$pac_id, gene_name=>$gene_name, pep_name=>$pepname, pfam=>$pfam, panther=>$panther, kog=>$kog, keggec=>$keggec, ko=>$ko, go=>$go, arabi_name=>$arabi_name, arabi_sym=>$arabi_sym, arabi_def=>$arabi_def};
 }
 #print STDERR Dumper \%pacid_hash;
 
-foreach my $chr (keys %chrs){
-	my $file_name = $opt_o."_".$chr.".pf";
-	print STDERR $file_name."\n";
+my $csv = Text::CSV->new({ sep_char => ',' });
 
-	open(my $fh, '>', $file_name)
-    	or die "Could not open file $!";
+open(my $fh, '<', $opt_i)
+    or die "Could not open file '$opt_i' $!";
 
-	foreach my $chrline (@out_array){
-		if (exists($chrline->{$chr})){
-			my $lines = $chrline->{$chr};
-			foreach (@$lines){
-				print $fh $_;
-			}
-		}
-	}
+my $header_row = <$fh>;
+my @columns;
+if ($csv->parse($header_row)) {
+    @columns = $csv->fields();
+} else {
+    die "Could not parse header.\n";
+}
+my $num_cols = scalar(@columns);
 
+my @traits;
+my $num_col_before = 15;
+for my $col_num ($num_col_before .. $num_cols-1) {
+    my $trait = $columns[$col_num];
+    push @traits, $trait;
+}
+
+my %gene_sample_hash;
+while ( my $row = <$fh> ){
+    my @columns;
+    if ($csv->parse($row)) {
+        @columns = $csv->fields();
+    } else {
+        die "Could not parse row $row.\n";
+    }
+    my $i = 0;
+    for my $col_num ($num_col_before .. $num_cols-1) {
+        my $trait = $traits[$i];
+        my @trait_parts = split '||', $trait;
+        my @transname_parts = split '|', $trait_parts[0];
+        my $transname = $transname_parts[0];
+        my $sample = $transname_parts[1].'||'.$transname_parts[2].'||'.$transname_parts[3].'||'.$transname_parts[4].'||'.$transname_parts[5];
+        $i++;
+        my $val = $columns[$col_num];
+        $gene_sample_hash{$transname}->{$sample} = $val;
+    }
+}
+
+my @out_array;
+my @out_header = ('TranscriptName', 'Chromosome', 'Start', 'End', 'Type', 'Strand', 'PacID', 'GeneName', 'PepName', 'PFam', 'Panther', 'KOG', 'KEGGEC', 'KO', 'GO', 'ArabiName', 'ArabiSym', 'ArabiDef');
+foreach my $transname (keys %gene_sample_hash) {
+    my $sh = $gene_sample_hash{$transname};
+    foreach my $s (sort keys %$sh) {
+        push @out_header, $s;
+    }
+}
+push @out_array, \@out_header;
+
+foreach my $transname (keys %gene_sample_hash) {
+    my @outline = ($transname, $annotation_hash{$transname}->{chr}, $annotation_hash{$transname}->{start}, $annotation_hash{$transname}->{end}, $annotation_hash{$transname}->{type}, $annotation_hash{$transname}->{strand}, $annotation_hash{$transname}->{pac_id}, $annotation_hash{$transname}->{gene_name}, $annotation_hash{$transname}->{pep_name}, $annotation_hash{$transname}->{pfam}, $annotation_hash{$transname}->{panther}, $annotation_hash{$transname}->{kog}, $annotation_hash{$transname}->{keggec}, $annotation_hash{$transname}->{ko}, $annotation_hash{$transname}->{go}, $annotation_hash{$transname}->{arabi_name}, $annotation_hash{$transname}->{arabi_sym}, $annotation_hash{$transname}->{arabi_def});
+    my $sh = $gene_sample_hash{$transname};
+    foreach my $s (sort keys %$sh) {
+        push @outline, $sh->{$s};
+    }
+    push @out_array, \@outline;
+}
+
+open(my $fh, '>', $opt_o)
+    or die "Could not open file '$opt_o' $!";
+
+foreach (@out_array){
+    print $fh split "\t", @$_;
+    print $fh "\n";
 }
 
 print STDERR "Script complete!\n";
