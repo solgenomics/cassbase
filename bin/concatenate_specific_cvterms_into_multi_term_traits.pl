@@ -7,7 +7,7 @@ concatenate_specific_cvterms_into_multi_term_traits.pl
 
     this script is very specific to cassbase ontologies, but could possibly be generalized through more sophisticated recursion.
 
-    perl concatenate_specific_cvterms_into_multi_term_traits.pl -H localhost -D fixture2 -l 'harvest index|CO:0000015[OR]fresh root weight per plant|CO:0000304[OR]fresh shoot weight per plant|CO:0000307[OR]fresh total weight per plant|CO:0000310,cass number of weeks|CASSTIME:0000005' -d CASSFT -c postcomposed_terms
+    perl concatenate_specific_cvterms_into_multi_term_traits.pl -H localhost -D fixture2 -l 'harvest index|CO:0000015[OR]fresh root weight per plant|CO:0000304[OR]fresh shoot weight per plant|CO:0000307[OR]fresh total weight per plant|CO:0000310,cass number of weeks|CASSTIME:0000005,cass_institutes|CASSINST:0000000' -d CASSFT -c postcomposed_terms
 
 =head1 COMMAND-LINE OPTIONS
 
