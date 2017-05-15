@@ -185,7 +185,7 @@ open(my $fh, '>', $opt_o)
     or die "Could not open file '$opt_o' $!";
 
 foreach (@out_array){
-    print $fh split "\t", @$_;
+    print $fh join "\t", @$_;
     print $fh "\n";
 }
 
