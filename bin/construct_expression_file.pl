@@ -116,9 +116,9 @@ while (my $row = <$fh>) {
 		die "missing info\n";
 	}
 
-	$annotation_hash{$transname} = {chr=>$chr, type=> $type, start=>$start, end=>$end, strand=>$strand, pac_id=>$pacid, gene_name=>$gene_name, pep_name=>$pepname, pfam=>$pfam, panther=>$panther, kog=>$kog, keggec=>$keggec, ko=>$ko, go=>$go, arabi_name=>$arabi_name, arabi_sym=>$arabi_sym, arabi_def=>$arabi_def};
+	$annotation_hash{$transname.".v6.1"} = {chr=>$chr, type=> $type, start=>$start, end=>$end, strand=>$strand, pac_id=>$pacid, gene_name=>$gene_name, pep_name=>$pepname, pfam=>$pfam, panther=>$panther, kog=>$kog, keggec=>$keggec, ko=>$ko, go=>$go, arabi_name=>$arabi_name, arabi_sym=>$arabi_sym, arabi_def=>$arabi_def};
 }
-#print STDERR Dumper \%pacid_hash;
+#print STDERR Dumper \%annotation_hash;
 
 my $csv = Text::CSV->new({ sep_char => ',' });
 
@@ -140,6 +140,7 @@ for my $col_num ($num_col_before .. $num_cols-1) {
     my $trait = $columns[$col_num];
     push @traits, $trait;
 }
+#print STDERR Dumper \@traits;
 
 my %gene_sample_hash;
 while ( my $row = <$fh> ){
@@ -150,29 +151,42 @@ while ( my $row = <$fh> ){
         die "Could not parse row $row.\n";
     }
     my $i = 0;
+    my $sample_name = $columns[11];
+    my $accession = $columns[7];
     for my $col_num ($num_col_before .. $num_cols-1) {
         my $trait = $traits[$i];
-        my @trait_parts = split '||', $trait;
-        my @transname_parts = split '|', $trait_parts[0];
+	#print STDERR Dumper $trait;
+        my @trait_parts = split /\|\|/, $trait;
+	#print STDERR Dumper \@trait_parts;
+        my @transname_parts = split /\|/, $trait_parts[0];
         my $transname = $transname_parts[0];
-        my $sample = $transname_parts[1].'||'.$transname_parts[2].'||'.$transname_parts[3].'||'.$transname_parts[4].'||'.$transname_parts[5];
+        my $sample = $sample_name.'||'.$accession.'||'.$trait_parts[1].'||'.$trait_parts[2].'||'.$trait_parts[3].'||'.$trait_parts[4].'||'.$trait_parts[5];
         $i++;
         my $val = $columns[$col_num];
         $gene_sample_hash{$transname}->{$sample} = $val;
     }
 }
+#print STDERR Dumper \%gene_sample_hash;
 
 my @out_array;
 my @out_header = ('TranscriptName', 'Chromosome', 'Start', 'End', 'Type', 'Strand', 'PacID', 'GeneName', 'PepName', 'PFam', 'Panther', 'KOG', 'KEGGEC', 'KO', 'GO', 'ArabiName', 'ArabiSym', 'ArabiDef');
+
+my %unique_samples;
 foreach my $transname (keys %gene_sample_hash) {
     my $sh = $gene_sample_hash{$transname};
     foreach my $s (sort keys %$sh) {
-        push @out_header, $s;
+        $unique_samples{$s}++;
     }
+}
+print STDERR Dumper \%unique_samples;
+foreach (sort keys %unique_samples){
+    push @out_header, $_;
 }
 push @out_array, \@out_header;
 
-foreach my $transname (keys %gene_sample_hash) {
+foreach my $transname (sort keys %gene_sample_hash) {
+    #print STDERR Dumper $transname;
+    #print STDERR Dumper $annotation_hash{$transname};
     my @outline = ($transname, $annotation_hash{$transname}->{chr}, $annotation_hash{$transname}->{start}, $annotation_hash{$transname}->{end}, $annotation_hash{$transname}->{type}, $annotation_hash{$transname}->{strand}, $annotation_hash{$transname}->{pac_id}, $annotation_hash{$transname}->{gene_name}, $annotation_hash{$transname}->{pep_name}, $annotation_hash{$transname}->{pfam}, $annotation_hash{$transname}->{panther}, $annotation_hash{$transname}->{kog}, $annotation_hash{$transname}->{keggec}, $annotation_hash{$transname}->{ko}, $annotation_hash{$transname}->{go}, $annotation_hash{$transname}->{arabi_name}, $annotation_hash{$transname}->{arabi_sym}, $annotation_hash{$transname}->{arabi_def});
     my $sh = $gene_sample_hash{$transname};
     foreach my $s (sort keys %$sh) {
