@@ -10,7 +10,9 @@ construct_expression_file.pl
 
     construct_expression_file.pl  -i [infile created from stringtie_combine_counts_gene.pl combined_pheno.csv] -g [infile created from awk command above] -a [annotation infile] -o [outfile_prefix]
 	
-	perl construct_expression_file.pl -i /data2/Mueller/Nicolas/andreas_2017/stringtie_tpm/combined_pheno.csv -g /data2/Mueller/Nicolas/andreas_2017/Mesculenta_305_v6.1_mRNA.txt -a /data2/Mueller/Nicolas/andreas_2017/Mesculenta_305_v6.1.annotation_info.txt -o expression_file
+	perl construct_expression_file.pl -i /data2/Mueller/Nicolas/andreas_2017/stringtie_tpm/combined_pheno.csv -g /data2/Mueller/Nicolas/andreas_2017/mesculenta_305_v6.1_mRNA.txt -a /data2/Mueller/Nicolas/andreas_2017/Mesculenta_305_v6.1.annotation_info.txt -o expression_file
+
+    perl construct_expression_file.pl -i ~/test_combined.csv -g /data2/Mueller/Nicolas/andreas_2017/mesculenta_305_v6.1_mRNA.txt -a /data2/Mueller/Nicolas/andreas_2017/Mesculenta_305_v6.1.annotation_info.txt -o expression_file
 
 =head1 COMMAND-LINE OPTIONS
   ARGUMENTS
