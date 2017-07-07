@@ -422,6 +422,188 @@ def: "" []
 is_a: CASSTIME:0000005
 
 [Term]
+id: CASSTIME:0000134
+name: cass week 55
+synonym: "Wk55" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000135
+name: cass week 56
+synonym: "Wk56" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000136
+name: cass week 57
+synonym: "Wk57" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000137
+name: cass week 58
+synonym: "Wk58" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000138
+name: cass week 59
+synonym: "Wk59" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000139
+name: cass week 60
+synonym: "Wk60" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000140
+name: cass week 61
+synonym: "Wk61" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000141
+name: cass week 62
+synonym: "Wk62" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000142
+name: cass week 63
+synonym: "Wk63" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000143
+name: cass week 64
+synonym: "Wk64" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000144
+name: cass week 65
+synonym: "Wk65" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000145
+name: cass week 66
+synonym: "Wk66" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000146
+name: cass week 67
+synonym: "Wk67" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000147
+name: cass week 68
+synonym: "Wk68" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000148
+name: cass week 69
+synonym: "Wk69" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000149
+name: cass week 70
+synonym: "Wk70" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000150
+name: cass week 71
+synonym: "Wk71" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000151
+name: cass week 72
+synonym: "Wk72" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000152
+name: cass week 73
+synonym: "Wk73" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000153
+name: cass week 74
+synonym: "Wk74" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000154
+name: cass week 75
+synonym: "Wk75" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000155
+name: cass week 76
+synonym: "Wk76" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000156
+name: cass week 77
+synonym: "Wk77" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000157
+name: cass week 78
+synonym: "Wk78" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000158
+name: cass week 79
+synonym: "Wk79" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
+id: CASSTIME:0000159
+name: cass week 80
+synonym: "Wk80" EXACT
+def: "" []
+is_a: CASSTIME:0000005
+
+[Term]
 id: CASSTIME:0000060
 name: cass months
 def: "Months." []
