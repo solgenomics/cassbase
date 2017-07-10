@@ -71,11 +71,11 @@ $phenotype_files => undef
             <div class="panel-heading">RNA Seq Data</div>
             <div class="panel-body">
                 <ul>
-                <li><a href="ftp://solgenomics.net/cass/Ludewig-Cassava-RNAs_base.xlsx.gpg">Frank's RNAseq Samples Information</a></li>
-                <li><a href="ftp://solgenomics.net/cass/frank_expression_file.gpg">Frank's RNAseq Expression Values</a></li>
-                <li><a href="ftp://solgenomics.net/cass/SampleDescription.txt.gpg">Andreas' RNAseq Samples Information</a></li>
-                <li><a href="ftp://solgenomics.net/cass/RootBulkingExpression.txt.gpg">Andreas' RNAseq Expression Values </a></li>
-                <li><a href="ftp://solgenomics.net/cass/expression_file.gpg">Andreas' RNAseq Expression Values (BTI Pipeline)</a></li>
+                <li><a href="ftp://cassbase.org/RNAseq/Frank_RNA_Samples.xlsx">Frank's RNAseq Samples Information</a></li>
+                <li><a href="ftp://cassbase.org/RNAseq/Frank_RNA_expression_file.txt">Frank's RNAseq Expression Values</a></li>
+                <li><a href="ftp://cassbase.org/RNAseq/Andreas_RNA_SampleDescription.txt">Andreas' RNAseq Samples Information</a></li>
+                <li><a href="ftp://cassbase.org/RNAseq/Andreas_RNA_RootBulkingExpression.txt">Andreas' RNAseq Expression Values </a></li>
+                <!--li><a href="ftp://cassbase.org/RNAseq/Andreas_RNA_BTI_expression_file.txt">Andreas' RNAseq Expression Values (BTI Pipeline)</a></li-->
                 </ul>
                 <ul>
                 <li><a href="https://cassbase.org/expression_viewer/input">Expression Viewer (Select one of the two available RNA Projects)</a></li>
