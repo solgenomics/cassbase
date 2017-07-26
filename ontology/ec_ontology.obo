@@ -147,3 +147,27 @@ id: EC:2.7.1.40
 name: pyruvate kinase
 def: "pyruvate kinase" []
 is_a: EC:0000000
+
+[Term]
+id: EC:2.7.1.1.f
+name: Hexokinase (fructose)
+def: "Hexokinase" []
+is_a: EC:0000000
+
+[Term]
+id: EC:2.7.1.1.g
+name: Hexokinase (glucose)
+def: "Hexokinase" []
+is_a: EC:0000000
+
+[Term]
+id: EC:2.4.1.13
+name: Sucrose Synthase
+def: "Sucrose Synthase" []
+is_a: EC:0000000
+
+[Term]
+id: EC:4.1.2.13
+name: Fructose-bisphosphate Aldolase
+def: "Fructose-bisphosphate Aldolase" []
+is_a: EC:0000000
