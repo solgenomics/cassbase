@@ -38,6 +38,13 @@ $trial_name => undef
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3 control-label">Treatment: </label>
+                    <div class="col-sm-9" >
+                        <div id="create_spreadsheet_treatment">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-3 control-label">Data Level: </label>
                     <div class="col-sm-9" >
                         <select class="form-control" id="create_spreadsheet_data_level">
@@ -142,6 +149,7 @@ jQuery(document).ready(function() {
     jQuery('#create_spreadsheet_dialog').modal("show");
     var list = new CXGN.List();
     jQuery("#trait_list_spreadsheet").html(list.listSelect("trait_list_spreadsheet", [ 'traits' ]));
+    show_spreadsheet_treatments();
     
     new jQuery.ajax({
         type: 'POST',
@@ -271,6 +279,10 @@ jQuery(document).ready(function() {
 
   });
   
+  jQuery(document).on('change', '#html_select_trial_for_create_spreadsheet', function() {
+    show_spreadsheet_treatments();
+  });
+  
   jQuery(document).on("change", '#create_spreadsheet_tissue_select', function() {
     var val = jQuery('#create_spreadsheet_tissue_select option:selected').text();
     if (val == 'cass leaf|CASSTISS:0000001' || val == 'cass root|CASSTISS:0000003' || val == 'cass stem|CASSTISS:0000002') {
@@ -322,6 +334,10 @@ jQuery(document).ready(function() {
 
 });
 
+function show_spreadsheet_treatments(){
+    var selected_trial_id = parseInt(jQuery("#html_select_trial_for_create_spreadsheet").val());
+    get_select_box('treatments', 'create_spreadsheet_treatment', { 'name':'html_select_treatment_create_spreadsheet', 'id':'html_select_treatment_create_spreadsheet', 'trial_id':selected_trial_id, 'empty':1 });
+}
 
 function create_phenotype_spreadsheet() {
     var list = new CXGN.List();
@@ -356,6 +372,7 @@ function create_phenotype_spreadsheet() {
             'data_level': jQuery("#create_spreadsheet_data_level").val(),
             'sample_number': jQuery("#create_spreadsheet_sample_number").val(),
             'predefined_columns' : JSON.stringify( predefcol_data ),
+            'treatment_project_id': jQuery("#html_select_treatment_create_spreadsheet").val(),
         },
         beforeSend: function() {
             jQuery('#working_modal').modal("show");
