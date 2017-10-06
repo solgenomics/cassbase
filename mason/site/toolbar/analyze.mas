@@ -6,7 +6,7 @@
     <li><a href="/barcode">Barcode Tools</a></li>
     <!--li><a href="/solgs/search">Genomic Selection</a></li-->
     <li><a href="/pca/analysis">Population Structure</a></li>
-
+    <li><a href="/tools/trial/comparison/list">Compare Trials</a></li>
     <li role="separator" class="divider"></li>
     <li class="dropdown-header">Sequence Analysis</li>
     <li><a class="footer" href="http://www.phytozome.net/search.php?show=blast">BLAST</a></li>
