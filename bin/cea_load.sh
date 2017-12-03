@@ -19,15 +19,21 @@ database_name=${13}
 database_user=${14}
 database_password=${15}
 directory_name=${16} #cass_index_<Project_name>
-export_type=${17} #1 or 2
+export_type=${17} #1,2,3,4,5 are plant level for CASS metabolites. 6 is plot level for row/column are agro traits.
 project_name=${18} #<Project_name>
 sgn_session_id=${19}
 user_name=${20}
 search_params_description=${21}
 
-wget --no-check-certificate --output-document=${processing_file_dir}/phenotype_download.csv "${host_address}/breeders/trials/phenotype/download?trial_list=${trial_ids}&format=csv&timestamp=0&trait_list=${trait_ids}&accession_list=${accession_ids}&dataLevel=plant&search_type=complete&sgn_session_id=${sgn_session_id}&has_header=0"
+if [ "$export_type" == "6" ]; then
+    wget --no-check-certificate --output-document=${processing_file_dir}/phenotype_download.csv "${host_address}/breeders/trials/phenotype/download?trial_list=${trial_ids}&format=csv&timestamp=0&trait_list=${trait_ids}&accession_list=${accession_ids}&dataLevel=plot&search_type=complete&sgn_session_id=${sgn_session_id}&has_header=0&include_row_and_column_numbers=1"
 
-perl ${root_dir}/cassbase/bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i ${processing_file_dir}/phenotype_download.csv -o ${processing_file_dir}/lucy.tsv -c ${processing_file_dir}/pre_corr.tsv -f ${processing_file_dir}/corr.tsv -p ${processing_file_dir}/project.txt -d ${processing_file_dir}/desc.tsv -v ${export_type} -n ${project_name} -t ${processing_file_dir} -u ${user_name} -s ${search_params_description}
+    perl ${root_dir}/bea/bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i ${processing_file_dir}/phenotype_download.csv -o ${processing_file_dir}/lucy.tsv -c ${processing_file_dir}/pre_corr.tsv -f ${processing_file_dir}/corr.tsv -p ${processing_file_dir}/project.txt -d ${processing_file_dir}/desc.tsv -v ${export_type} -n ${project_name} -t ${processing_file_dir} -u ${user_name} -s ${search_params_description}
+else
+    wget --no-check-certificate --output-document=${processing_file_dir}/phenotype_download.csv "${host_address}/breeders/trials/phenotype/download?trial_list=${trial_ids}&format=csv&timestamp=0&trait_list=${trait_ids}&accession_list=${accession_ids}&dataLevel=plant&search_type=complete&sgn_session_id=${sgn_session_id}&has_header=0"
+
+    perl ${root_dir}/cassbase/bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i ${processing_file_dir}/phenotype_download.csv -o ${processing_file_dir}/lucy.tsv -c ${processing_file_dir}/pre_corr.tsv -f ${processing_file_dir}/corr.tsv -p ${processing_file_dir}/project.txt -d ${processing_file_dir}/desc.tsv -v ${export_type} -n ${project_name} -t ${processing_file_dir} -u ${user_name} -s ${search_params_description}
+fi
 
 if ${clear_old_database}; then
 PGPASSWORD=${database_password} dropdb -U ${database_user} -h ${database_host} ${database_name}
