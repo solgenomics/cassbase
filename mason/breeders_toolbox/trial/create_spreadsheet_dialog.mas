@@ -49,11 +49,6 @@ $trial_name => undef
                     </div>
                 </div>
  
-<&| /page/info_section.mas, title=>"OPTIONAL: Associate Phenotypes To Specific Management Factor In A Trial",  collapsible => 1, collapsed => 0 &>
-                <div id="create_spreadsheet_treatment_options">
-                </div>
-</&>
-
             <div id="create_spreadsheet_plant_options" style="display:none">
                 <hr>
 
@@ -198,10 +193,6 @@ jQuery(document).ready(function() {
     var list = new CXGN.List();
     jQuery("#trait_list_spreadsheet").html(list.listSelect("trait_list_spreadsheet", [ 'traits' ]));
 
-%  if($trial_id){
-    show_spreadsheet_treatments();
-%  }
-
     new jQuery.ajax({
         type: 'POST',
         url: '/ajax/html/select/ontology_children',
@@ -330,9 +321,6 @@ jQuery(document).ready(function() {
 
   });
   
-  jQuery(document).on('change', '#html_select_trial_for_create_spreadsheet', function() {
-    show_spreadsheet_treatments();
-  });
   
   jQuery(document).on("change", '#create_spreadsheet_tissue_select', function() {
     var val = jQuery('#create_spreadsheet_tissue_select option:selected').text();
@@ -385,30 +373,6 @@ jQuery(document).ready(function() {
 
 });
 
-function show_spreadsheet_treatments(){
-%  if ($trial_id){
-    var selected_trial_ids = [<% $trial_id %>];
-    var selected_trial_names = ["<% $trial_name %>"];
-%  } else {
-    var selected_trial_ids = jQuery("#html_select_trial_for_create_spreadsheet").val();
-    var selected_trial_names = [];
-    jQuery("#html_select_trial_for_create_spreadsheet").find('option:selected').each(function(){
-        selected_trial_names.push(jQuery(this).text());
-    });
-%  }
-
-    console.log(selected_trial_ids);
-    console.log(selected_trial_names);
-    var html = '';
-    for (var i=0; i<selected_trial_ids.length; i++){
-        html = html + '<div class="form-group"><label class="col-sm-6 control-label">Management Factor For '+selected_trial_names[i]+': </label><div class="col-sm-6" ><div id="create_spreadsheet_treatment_'+selected_trial_ids[i]+'"></div></div></div>';
-    }
-    jQuery('#create_spreadsheet_treatment_options').html(html);
-    for (var i=0; i<selected_trial_ids.length; i++){
-        get_select_box('treatments', 'create_spreadsheet_treatment_'+selected_trial_ids[i], { 'name':'html_select_treatment_create_spreadsheet', 'id':'html_select_treatment_create_spreadsheet_'+selected_trial_ids[i], 'trial_id':selected_trial_ids[i], 'empty':1 });
-    }
-}
-
 function create_phenotype_spreadsheet() {
     var list = new CXGN.List();
     var trait_list_id = jQuery('#trait_list_spreadsheet_list_select').val();
@@ -421,12 +385,6 @@ function create_phenotype_spreadsheet() {
 %  } else {
         var trial_ids = jQuery("#html_select_trial_for_create_spreadsheet").val();
 %  }
-    var trial_treatment_obj = {};
-    for (var i=0; i<trial_ids.length; i++){
-        var selected_treatment = jQuery("#html_select_treatment_create_spreadsheet_"+trial_ids[i]).val();
-        trial_treatment_obj[trial_ids[i]] = selected_treatment;
-    }
-    console.log(trial_treatment_obj);
 
     var predefcol_data = [];
     if (jQuery("#create_spreadsheet_data_level").val() == 'plants' && jQuery("#create_spreadsheet_trait_list_type").val() == 'metabolic') {
@@ -454,7 +412,6 @@ function create_phenotype_spreadsheet() {
             'data_level': jQuery("#create_spreadsheet_data_level").val(),
             'sample_number': jQuery("#create_spreadsheet_sample_number").val(),
             'predefined_columns' : JSON.stringify( predefcol_data ),
-            'treatment_project_hash': JSON.stringify(trial_treatment_obj),
         },
         beforeSend: function() {
             jQuery('#working_modal').modal("show");
