@@ -1,5 +1,5 @@
 
-<& /site/footer/common.mas &>
+<!-- the site/footer/common.mas is included in the default footer.mas in sgn -->
 
 <!-- BEGIN FOOTER -->
 
