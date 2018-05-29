@@ -1,0 +1,221 @@
+format-version: 1.2
+ontology: CASST_ontology
+default-namespace: CASST_ontology
+
+[Term]
+id: CASST:0000000
+name: CASST
+
+[Term]
+id: CASST:0000001
+name: Remote Sensing
+is_a: CASST:0000000
+
+[Term]
+id: CASST:0000002
+name: SfM canopy height (m)
+def: "Structure from motion canopy height in meters. Photographs taken from unmanned aerial vehicles (UAV) and processed using structure from motion procedure." []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000003
+name: F0’
+def: "Fluorescence yield (arbitrary units) of light-adapted leaf. Fluorescence level of light-adapted sample when all reaction centers of the photosystem II are open; it is lowered with respect to F0 by non-photochemical quenching." []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000004
+name: Fm’
+def: "Maximum fluorescence (arbitrary units) of light-adapted leaf. Fluorescence level of light-adapted sample when a high intensity pulse has been applied. All reaction centers of the photosystem II are closed." []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000005
+name: PAR
+def: "Photosynthetic active radiation (micromole quanta m-2 s-1)." []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000006
+name: F0
+def: "Fluorescence yield (arbitrary units) of dark adapted leaf. Fluorescence level of dark-adapted sample when all reaction centers of the photosystem II are open." []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000007
+name: Fm
+def: "Maximum fluorescence yield (arbitrary units) of the dark-adapted leaf. Fluorescence level of dark-adapted sample when a high intensity pulse has been applied. All reaction centers of the photosystem II are closed." []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000008
+name: Yday
+def: "Effective quantum yield of PS II ( (Fm’-F0’)/Fm’ ), efficiency of photosystem II, This parameter measures the proportion of light absorbed by PSII that is used in photochemistry. As such, it can give a measure of the rate of linear electron transport and so indicates overall photosynthesis." []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000009
+name: ETR
+def: "Apparent rate of photosynthetic electron transport of photosystem (PS) II. (Fm’-F0’)/Fm’ x PPFD (PAR) x 0.5 x 0.84 (micromole m-2 s-1)" []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000010
+name: Fv
+def: "Variable fluorescence yield of the dark-adapted leaf. Fm-F0 (arbitrary units)" []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000011
+name: Fv/Fm
+def: "Potential quantum yield of photosystem II (arbitrary units)" []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000012
+name: NPQ
+def: "Non photochemical quenching (Fm-Fm’)/Fm’" []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000013
+name: Field Traits
+is_a: CASST:0000000
+
+[Term]
+id: CASST:0000014
+name: dry fibrous root weight per plant in grams
+def: "Total dry weight of fibrous roots harvested per plant measured in grams (g)." []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000015
+name: peeled dry sample weight in grams
+def: "Total dry weight of peeled sample in grams (g)." []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000016
+name: peeled fresh sample weight in grams
+def: "Total fresh weight of peeled sample in grams (g)." []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000017
+name: unpeeled dry sample weight in grams
+def: "Total dry weight of unpeeled sample in grams (g)." []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000018
+name: unpeeled fresh sample weight in grams
+def: "Total fresh weight of unpeeled sample in grams (g)." []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000019
+name: number of leaves on main stem
+def: "Total number of leaves on the main stem." []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000020
+name: total number of leaves
+def: "Total number of leaves." []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000021
+name: leaf area index (m2/m2)
+def: "Leaf area index (m^2/m^2)" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000022
+name: specific leaf area (m2/kg)
+def: "Specific leaf area (m^2/kg)" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000023
+name: nitrogen percentage on weight basis
+def: "Percentage of Nitrogen on a weight basis" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000024
+name: carbon percentage on weight basis
+def: "Percentage of Carbon on a weight basis" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000025
+name: photosynthesis (μmol CO2 m−2 s−1)
+def: "Measurement of photosynthetic rate" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000026
+name: stomatal conductance (mol H2O m−2 s−1)
+def: "Stomatal conductance (mol H20 m-2 s-1)" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000027
+name: intercellular CO2 concentration (μmol mol−1)
+def: "Intercellular CO2 concentration (μmol mol−1)" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000028
+name: ratio intercellular CO2 concentration (μmol mol−1) over ambient CO2
+def: "Ratio of intercellular CO2 concentration (μmol mol−1) over ambient CO2" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000029
+name: leaf temperature (C)
+def: "Leaf temperature in degrees Celsius" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000030
+name: PARi
+def: "Photosynthetic active radiation inside the chamber (µmol m-2 s-1)" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000031
+name: Vcmax_25
+def: "Maximum rate of Rubisco-catalyzed carboxylation (μmol m−2s−1)" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000032
+name: Jmax_25
+def: "Regeneration rate of ribulose-1,5-biphosphate controlled by electron transport (μmol m−2s−1) " []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000033
+name: number of harvest
+def: "Number of harvest" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000034
+name: weight of dry storage roots per plant (g)
+def: "Weight of dry storage roots for a single plant in grams." []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000035
+name: weight of fresh above ground biomass in grams
+def: "Weight of fresh above ground biomass in grams." []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000036
+name: weight of dry above ground biomass in grams
+def: "Weight of dry above ground biomass in grams." []
+relationship: variable_of CASST:0000013
