@@ -150,26 +150,26 @@ relationship: variable_of CASST:0000013
 
 [Term]
 id: CASST:0000025
-name: photosynthesis (μmol CO2 m−2 s−1)
+name: photosynthesis (umol CO2 m-2 s-1)
 def: "Measurement of photosynthetic rate" []
 relationship: variable_of CASST:0000013
 
 [Term]
 id: CASST:0000026
-name: stomatal conductance (mol H2O m−2 s−1)
+name: stomatal conductance (mol H2O m-2 s-1)
 def: "Stomatal conductance (mol H20 m-2 s-1)" []
 relationship: variable_of CASST:0000013
 
 [Term]
 id: CASST:0000027
-name: intercellular CO2 concentration (μmol mol−1)
-def: "Intercellular CO2 concentration (μmol mol−1)" []
+name: intercellular CO2 concentration (umol mol-1)
+def: "Intercellular CO2 concentration (umol mol-1)" []
 relationship: variable_of CASST:0000013
 
 [Term]
 id: CASST:0000028
-name: ratio intercellular CO2 concentration (μmol mol−1) over ambient CO2
-def: "Ratio of intercellular CO2 concentration (μmol mol−1) over ambient CO2" []
+name: ratio intercellular CO2 concentration (umol mol-1) over ambient CO2
+def: "Ratio of intercellular CO2 concentration (umol mol-1) over ambient CO2" []
 relationship: variable_of CASST:0000013
 
 [Term]
@@ -181,19 +181,19 @@ relationship: variable_of CASST:0000013
 [Term]
 id: CASST:0000030
 name: PARi
-def: "Photosynthetic active radiation inside the chamber (µmol m-2 s-1)" []
+def: "Photosynthetic active radiation inside the chamber (umol m-2 s-1)" []
 relationship: variable_of CASST:0000013
 
 [Term]
 id: CASST:0000031
 name: Vcmax_25
-def: "Maximum rate of Rubisco-catalyzed carboxylation (μmol m−2s−1)" []
+def: "Maximum rate of Rubisco-catalyzed carboxylation (umol m-2 s-1)" []
 relationship: variable_of CASST:0000013
 
 [Term]
 id: CASST:0000032
 name: Jmax_25
-def: "Regeneration rate of ribulose-1,5-biphosphate controlled by electron transport (μmol m−2s−1) " []
+def: "Regeneration rate of ribulose-1,5-biphosphate controlled by electron transport (umol m-2 s-1)" []
 relationship: variable_of CASST:0000013
 
 [Term]
