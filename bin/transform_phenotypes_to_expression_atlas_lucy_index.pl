@@ -88,7 +88,7 @@ my $col_max = scalar(@columns)-1;
 my @data_out;
 my %units_seen;
 my @traits;
-for my $col ( 15 .. $col_max) {
+for my $col ( 30 .. $col_max) {
     my $multiterm_trait = $columns[$col];
     my @component_terms = split /\|\|/, $multiterm_trait; #/#
     if ($opt_v == 1){
@@ -318,10 +318,10 @@ while ( my $row = <$fh> ){
         die "Could not parse line $row\n";
     }
     
-    my $accession_name = $columns[7];
-    my $trial_name = $columns[2];
-    my $project_design = $columns[3];
-    my $project_location = $columns[5];
+    my $accession_name = $columns[18];
+    my $trial_name = $columns[5];
+    my $project_design = $columns[7];
+    my $project_location = $columns[16];
     my $project_year = $columns[0];
 
     if (!exists($unique_designs{$project_design})){
@@ -344,7 +344,7 @@ while ( my $row = <$fh> ){
     #print STDERR $accession_name."\n";
 
     for( my $i=0; $i<scalar(@traits); $i++) {
-        my $trait_col = $i + 15;
+        my $trait_col = $i + 30;
         #print STDERR "$row $trait_col\n";
         my $value = '';
         if ($columns[$trait_col]) {
