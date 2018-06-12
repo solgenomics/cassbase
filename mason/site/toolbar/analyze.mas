@@ -3,6 +3,8 @@
   <ul class="dropdown-menu">
     <li><a href="/tools/expression_atlas">Expression Atlas</a></li>
     <li><a href="http://ptools-cassbase.sgn.cornell.edu/MES/organism-summary">Mesculenta Cyc</a></li>
+    <li><a href="/accession_usage">Accession Usage</a></li>
+    <li><a href="/tools/graphicalfiltering">Graphical Filtering</a></li>
     <li><a href="/barcode">Barcode Tools</a></li>
     <!--li><a href="/solgs/search">Genomic Selection</a></li-->
     <li><a href="/pca/analysis">Population Structure</a></li>
