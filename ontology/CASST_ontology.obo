@@ -260,3 +260,15 @@ id: CASST:0000043
 name: Total number of leaves per plant
 def: "Total number of leaves on a single plant." []
 relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000044
+name: Number of Bemesia tabaci adult any leaf
+def: "Number of Bemesia tabaci adult present on any leaf" []
+relationship: variable_of CASST:0000037
+
+[Term]
+id: CASST:0000045
+name: Number of Bemesia tabaci nymphs any leaf
+def: "Number of Bemesia tabaci nymphs present on any leaf" []
+relationship: variable_of CASST:0000037
