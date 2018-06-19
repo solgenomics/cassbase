@@ -219,3 +219,44 @@ id: CASST:0000036
 name: weight of dry above ground biomass in grams
 def: "Weight of dry above ground biomass in grams." []
 relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000037
+name: Disease Traits
+is_a: CASST:0000000
+
+[Term]
+id: CASST:0000038
+name: Cassava bacterial blight severity
+def: "Severity of bacterial blight disease caused by Xanthomonas axonopodis pv. Manihotis" []
+relationship: variable_of CASST:0000037
+
+[Term]
+id: CASST:0000039
+name: Cassava anthracnose disease severity
+def: "Severity of the Cassava anthracnose disease caused by Colletotrichum gloeosporioides f. sp." []
+relationship: variable_of CASST:0000037
+
+[Term]
+id: CASST:0000040
+name: Cassava green mite severity
+def: "Severity of the damage caused by cassava green mite" []
+relationship: variable_of CASST:0000037
+
+[Term]
+id: CASST:0000041
+name: Cassava mosaic disease severity
+def: "Severity of the symptoms caused by the cassava mosaic virus, in the family Geminiviridae and genus Begomovirus" []
+relationship: variable_of CASST:0000037
+
+[Term]
+id: CASST:0000042
+name: Node number
+def: "Number of nodes on a stem" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000043
+name: Total number of leaves per plant
+def: "Total number of leaves on a single plant." []
+relationship: variable_of CASST:0000013
