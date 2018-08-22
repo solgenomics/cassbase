@@ -272,3 +272,9 @@ id: CASST:0000045
 name: Number of Bemesia tabaci nymphs any leaf
 def: "Number of Bemesia tabaci nymphs present on any leaf" []
 relationship: variable_of CASST:0000037
+
+[Term]
+id: CASST:0000046
+name: Chlorophyll Content SPAD
+def: "Chlorophyll content SPAD." []
+relationship: variable_of CASST:0000001
