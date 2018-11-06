@@ -278,3 +278,15 @@ id: CASST:0000046
 name: Chlorophyll Content SPAD
 def: "Chlorophyll content SPAD." []
 relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000047
+name: Number of nodes in lowest 40cm of stem
+def: "A single number indicating the number of nodes in the lowest 40cm of stem." []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000048
+name: Root length in cm for all roots on plant
+def: "A comma separated string of numbers for the root lengths in cm for all roots on a single plant." []
+relationship: variable_of CASST:0000013
