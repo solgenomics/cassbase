@@ -100,3 +100,31 @@ name: cass storage root
 synonym: "StrRt" EXACT
 def: "" []
 is_a: CASSTISS:0000003
+
+[Term]
+id: CASSTISS:0000014
+name: mother plant stem
+synonym: "Lf" EXACT
+def: "The position of the stem on the mother plant from which this plant was replanted. 1 is the lowest position." []
+is_a: CASSTISS:0000000
+
+[Term]
+id: CASSTISS:0000015
+name: stick 1
+synonym: "" EXACT
+def: "The position of the stem on the mother plant from which this plant was replanted. 1 is the lowest position, which is this term." []
+is_a: CASSTISS:0000014
+
+[Term]
+id: CASSTISS:0000016
+name: stick 2
+synonym: "" EXACT
+def: "The position of the stem on the mother plant from which this plant was replanted. 1 is the lowest position. This term is position 2." []
+is_a: CASSTISS:0000014
+
+[Term]
+id: CASSTISS:0000017
+name: stick 3
+synonym: "" EXACT
+def: "The position of the stem on the mother plant from which this plant was replanted. 1 is the lowest position. This term is position 3." []
+is_a: CASSTISS:0000014

@@ -290,3 +290,15 @@ id: CASST:0000048
 name: Root length in cm for all roots on plant
 def: "A comma separated string of numbers for the root lengths in cm for all roots on a single plant." []
 relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000049
+name: Planting stick node number
+def: "The number of nodes on the planting stick." []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000050
+name: Planting stick diameter in cm
+def: "The diameter of the planting stick in cm." []
+relationship: variable_of CASST:0000013
