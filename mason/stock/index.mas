@@ -107,14 +107,29 @@ my $allele_div = "stock_alleles";
 my $new_locus_link = !$person_id ? qq|<a href="/solpeople/login.pl">[log-in to associate new locus]</a> | : '' ;
 
 #owner
-my $owners = $stockref->{owners};
-my $editor_link;
-foreach my $o_id (@$owners) {
+my $owners = $stockref->{editor_info};
+my $owner_ids = $stockref->{owners};
+my $owners_html = '';
+my %unique_owners;
+foreach my $o_id (@$owner_ids) {
+    $unique_owners{$o_id}++;
+}
+my @owner_ids = keys %unique_owners;
+foreach my $o_id (@owner_ids){
   my $person = CXGN::People::Person->new($dbh, $o_id);
   my $first_name = $person->get_first_name;
   my $last_name = $person->get_last_name;
-  $editor_link .= qq|<a href="/solpeople/personal-info.pl?sp_person_id=$o_id">$first_name $last_name</a> |;
+  $owners_html .= qq|<a href="/solpeople/personal-info.pl?sp_person_id=$o_id">$first_name $last_name</a> |;
 }
+my $editor_link_table = "<table class='table table-bordered'><thead><tr><th>Editor</th><th>Timestamp</th><th>Modification Note</th></tr></thead><tbody>";
+foreach my $o_id (@$owners) {
+  my $person = CXGN::People::Person->new($dbh, $o_id->[0]);
+  my $first_name = $person->get_first_name;
+  my $last_name = $person->get_last_name;
+  $editor_link_table .= qq|<tr><td><a href="/solpeople/personal-info.pl?sp_person_id=$o_id->[0]">$first_name $last_name</a></td><td>$o_id->[1]</td><td>$o_id->[2]</td></tr>|;
+}
+$editor_link_table .= "</tbody></table>";
+$editor_link_table = "<br/>".$owners_html."<br/><br/>".$editor_link_table;
 
 #phenotypes measured directly on this stock
 my $direct_phenotypes = $stockref->{direct_phenotypes} || undef;
@@ -123,7 +138,7 @@ my $direct_phenotypes = $stockref->{direct_phenotypes} || undef;
 my $members_phenotypes = $stockref->{members_phenotypes};
 my $p_download_link = '<a class="btn btn-sm btn-default" style="margin:3px" target="_blank" href = "/breeders/trials/phenotype/download?format=csv&timestamp=1&dataLevel=all&'.$type_name.'_list=['.$stock_id.']&search_type=complete&">Download All Phenotypes</a>';
 my $direct_genotypes = $stockref->{direct_genotypes};
-my $g_download_link = keys %$direct_genotypes ? qq|<a class="btn btn-default btn-sm" style="margin:3px" href =  "/stock/$stock_id/genotypes">Download Genotypes</a>| : 'No genotypes available!' ;
+my $g_download_link = scalar(@$direct_genotypes) > 0 ? qq|<a class="btn btn-default btn-sm" style="margin:3px" href =  "/stock/$stock_id/genotypes">Download All Genotypes</a>| : 'No genotypes available!' ;
 ############################
 my $map_html = $stockref->{map_html};
 my $map;
@@ -200,7 +215,7 @@ function jqueryStuff() {
 </script>
 <& /page/page_title.mas, title=> join( ': ', grep $_, ucfirst($type_name), $uniquename ) || 'Create a new stock' &>
 
-<&| /page/info_section.mas, title=>"Stock details" , collapsible=>1, collapsed=>0, subtitle => "<button class='btn btn-sm btn-default' style='margin:3px' href='/phenome/qtl_form.pl'>New QTL population</button> <button class='btn btn-sm btn-default' style='margin:3px' href='/search/stocks/'>Back to stock search</button>"  &>
+<&| /page/info_section.mas, title=>"Stock details" , collapsible=>1, collapsed=>0, subtitle => "<button class='btn btn-sm btn-default' style='margin:3px' name='stock_new_qtl_link'>New QTL population</button> <button class='btn btn-sm btn-default' style='margin:3px' name='stock_go_to_stock_search'>Back to stock search</button>"  &>
 
     <div class="panel panel-default">
         <div class="panel-body">
@@ -217,7 +232,10 @@ function jqueryStuff() {
                         js_object_name=> 'stockForm',
                         page_url => "/stock/$stock_id/view/" ,
                         #alternate_new_button => '<a class="btn btn-sm btn-default" href ="/stock/0/new">New</a>'
-                        alternate_new_button => ''
+                        alternate_new_button => '',
+                        alternate_ghosted_new_button => '',
+                        alternate_delete_button => '',
+                        alternate_ghosted_delete_button => ''
                     &>
 
                 </div>
@@ -237,8 +255,7 @@ function jqueryStuff() {
 % my $subtitle = $edit_privs ? "<button class=\"btn btn-sm btn-primary\" style=\"margin:3px\" id=\"stock_add_synonym\" >Add Synonym</button>" : "<button disabled class=\"btn btn-sm btn-primary\" style=\"margin:3px\" title=\"Login to add info\">Add Synonym</button>";
 % my $props_subtitle = $edit_privs ? "<button class=\"btn btn-sm btn-primary\" style=\"margin:3px\" id=\"stock_add_props\" >Add Additional Info</button>" : "<button disabled class=\"btn btn-sm btn-primary\" style=\"margin:3px\" title=\"Login to add info\">Add Additional Info</button>";
 
-    <& /page/detail_page_2_col_section.mas, stock_id => $stock_id, type_name => $type_name, stockref => $stockref, buttons_html => $subtitle.$props_subtitle, info_section_title => "<h4 style='display:inline'>Additional Info</h4>", info_section_subtitle => 'View and edit additional properties such as synonyms, editors, and all types of properties.', icon_class => "glyphicon glyphicon-info-sign", info_section_id => "stock_additional_info_section", stockprops => $stockprops, edit_privs => $edit_privs, editable_stock_props => \@editable_stock_props, editor_link => $editor_link, source_dbs => \%source_dbs, locus_add_uri => $locus_add_uri, new_locus_link => $new_locus_link, allele_div => $allele_div, is_owner => $is_owner &>
-
+    <& /page/detail_page_2_col_section.mas, stock_id => $stock_id, type_name => $type_name, stockref => $stockref, buttons_html => $subtitle.$props_subtitle, info_section_title => "<h4 style='display:inline'>Additional Info</h4>", info_section_subtitle => 'View and edit additional properties such as synonyms, editors, and all types of properties.', icon_class => "glyphicon glyphicon-info-sign", info_section_id => "stock_additional_info_section", stockprops => $stockprops, edit_privs => $edit_privs, editable_stock_props => \@editable_stock_props, editor_link => $editor_link_table, source_dbs => \%source_dbs, locus_add_uri => $locus_add_uri, new_locus_link => $new_locus_link, allele_div => $allele_div, is_owner => $is_owner &>
 
 % if ($is_transgenic == 1) {
 
@@ -406,11 +423,13 @@ function jqueryStuff() {
 
     <& /page/detail_page_2_col_section.mas, stock_id => $stock_id, info_section_title => "<h4 style='display:inline'>Images</h4>", info_section_subtitle => 'View and add images of this stock and of related stocks.', icon_class => "glyphicon glyphicon-camera", info_section_id => "stock_images_section", image_ids => $image_ids, related_image_ids => $related_image_ids, dbh => $dbh, buttons_html => qq|<a class="btn btn-sm btn-default" style="margin:3px" href="/image/add?type_id=$stock_id&action=new&type=stock&refering_page=$this_page">Add new image</a>| &>
 
-    <& /page/detail_page_2_col_section.mas, stock_id => $stock_id, info_section_title => "<h4 style='display:inline'>Literature Annotation</h4>", info_section_subtitle => 'View annotations for this stock found in literatur and ontologies.', icon_class => "glyphicon glyphicon-book", info_section_id => "stock_literature_annotation_section", buttons_html => $new_pub_link.$ontology_subtitle, pubs => $pubs, cvterm_add_uri => $cvterm_add_uri, stockref => $stockref, trait_ontology_db_name => $trait_ontology_db_name, is_owner => $is_owner &>
+    <& /page/detail_page_2_col_section.mas, stock_id => $stock_id, info_section_title => "<h4 style='display:inline'>Literature Annotation</h4>", info_section_subtitle => 'View annotations for this stock found in literatur and ontologies.', icon_class => "glyphicon glyphicon-book", info_section_id => "stock_literature_annotation_section", buttons_html => $new_pub_link.$ontology_subtitle, pubs => $pubs, cvterm_add_uri => $cvterm_add_uri, stockref => $stockref, trait_ontology_db_name => $trait_ontology_db_name, is_owner => $is_owner, dbh=>$dbh &>
 
     <& /page/detail_page_2_col_section.mas, stock_id => $stock_id, info_section_title => "<h4 style='display:inline'>JBrowse Genome Alignments</h4>", info_section_subtitle => 'View JBrowse tracks for this stock.', icon_class => "glyphicon glyphicon-align-left", info_section_id => "stock_jbrowse_section" &>
 
     <& /page/detail_page_2_col_section.mas, stock_id => $stock_id, info_section_title => "<h4 style='display:inline'>Comments</h4>", info_section_subtitle => 'View and add comments to this stock.', icon_class => "glyphicon glyphicon-pencil", info_section_id => "stock_comments_section", referer => $this_page &>
+
+    <& /page/detail_page_2_col_section.mas, stock_id => $stock_id, info_section_title => "<h4 style='display:inline'>Obsolete This Stock</h4>", info_section_subtitle => 'Make a stock obsolete so that it does not show in searches.', icon_class => "glyphicon glyphicon-trash", info_section_id => "stock_delete_section" &>
 
 % } elsif ($stock->get_type->name() eq 'vector_construct') {
 
@@ -626,6 +645,14 @@ function jqueryStuff() {
     jQuery(document).ready(function() {
         stock_detail_page_init_dialogs();
 
+        jQuery('[name="stock_new_qtl_link"]').click(function(){
+            window.location.href = '/phenome/qtl_form.pl';
+        });
+
+        jQuery('[name="stock_go_to_stock_search"]').click(function(){
+            window.location.href = '/search/stocks/';
+        });
+
         jQuery('#stock_add_synonym').click(function(){
             synonyms_addPropDialog();
         });
@@ -653,5 +680,6 @@ function jqueryStuff() {
                 jQuery('#jbrowse_check').html(" <i>Jbrowse has not been set up for this database.</i>");
             }
         });
-    });
+  });
 </script>
+
