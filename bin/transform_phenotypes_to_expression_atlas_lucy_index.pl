@@ -88,7 +88,7 @@ my $col_max = scalar(@columns)-1;
 my @data_out;
 my %units_seen;
 my @traits;
-for my $col ( 30 .. $col_max) {
+for my $col ( 39 .. $col_max) {
     my $multiterm_trait = $columns[$col];
     my @component_terms = split /\|\|/, $multiterm_trait; #/#
     if ($opt_v == 1){
@@ -344,7 +344,7 @@ while ( my $row = <$fh> ){
     #print STDERR $accession_name."\n";
 
     for( my $i=0; $i<scalar(@traits); $i++) {
-        my $trait_col = $i + 30;
+        my $trait_col = $i + 39;
         #print STDERR "$row $trait_col\n";
         my $value = '';
         if ($columns[$trait_col]) {
