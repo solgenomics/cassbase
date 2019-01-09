@@ -8,7 +8,7 @@ transform_phenotypes_to_expression_atlas_lucy_index.pl
 
     transform_phenotypes_to_expression_atlas_lucy_index.pl  -i [infile]
     
-    perl bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i /home/vagrant/Downloads/cass_phenotype.csv -o /home/vagrant/cxgn/cassbase/bin/lucy.tsv -c /home/vagrant/cxgn/cassbase/bin/pre_corr.tsv -f /home/vagrant/cxgn/cassbase/bin/corr.tsv -p /home/vagrant/cxgn/cassbase/bin/project.txt -d /home/vagrant/cxgn/cassbase/bin/desc.tsv -v 1 -n project_name
+    perl bin/transform_phenotypes_to_expression_atlas_lucy_index.pl -i /home/vagrant/Downloads/cass_phenotype.csv -o /home/vagrant/cxgn/cassbase/bin/lucy.tsv -c /home/vagrant/cxgn/cassbase/bin/pre_corr.tsv -f /home/vagrant/cxgn/cassbase/bin/corr.tsv -p /home/vagrant/cxgn/cassbase/bin/project.txt -d /home/vagrant/cxgn/cassbase/bin/desc.tsv -v 1 -n project_name -s project_description -t /temp_dir/ -u username
 
 =head1 COMMAND-LINE OPTIONS
   ARGUMENTS
@@ -20,6 +20,9 @@ transform_phenotypes_to_expression_atlas_lucy_index.pl
  -d output description file that can be indexed by TEA script
  -v version number for how to group variables (e.g. grouping traits with tissues). currently 1 to 5
  -n project name
+ -s project_description
+ -t temp_dir
+ -u username
 
 =head1 DESCRIPTION
 
@@ -375,10 +378,16 @@ while ( my $row = <$fh> ){
                 $stage = 'root';
             } elsif (index($tissue_term, 'stem') != -1) {
                 $stage = 'stem';
+            } elsif (index($tissue_term, 'Phloem') != -1) {
+                $stage = 'Phloem (Parenchyma)';
+            } elsif (index($tissue_term, 'Xylem') != -1) {
+                $stage = 'Xylem';
+            } elsif (index($tissue_term, 'Cambium') != -1) {
+                $stage = 'Cambium';
             }
             if (!$stage) {
                 print STDERR Dumper $traits[$i];
-                print STDERR "Tissue not leaf, root, or stem\n";
+                print STDERR "Tissue not leaf, root, or stem, or Phloem, Xylem, or Cambium\n";
                 next;
             }
 
