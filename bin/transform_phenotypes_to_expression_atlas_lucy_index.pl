@@ -91,8 +91,11 @@ my $col_max = scalar(@columns)-1;
 my @data_out;
 my %units_seen;
 my @traits;
+my %trait_defs;
 for my $col ( 39 .. $col_max) {
-    my $multiterm_trait = $columns[$col];
+    my $multiterm_trait_with_def = $columns[$col];
+    my ($multiterm_trait, $definition) = split /\|\|\|\|/, $multiterm_trait_with_def; #/#
+    $definition = $definition ? $definition : 'NA';
     my @component_terms = split /\|\|/, $multiterm_trait; #/#
     if ($opt_v == 1){
         my $chebi_term;
@@ -151,7 +154,8 @@ for my $col ( 39 .. $col_max) {
         $unit =~ s/\(//g;
         $unit =~ s/\)//g;
         push @traits, [$metabolite."_".$institute, $tiss, $collection, $age, $unit];
-		$units_seen{$unit}++;
+        $units_seen{$unit}++;
+        $trait_defs{$metabolite."_".$institute} = $definition;
     } elsif ($opt_v == 2){
         if (scalar(@component_terms) == 6){
             my $chebi_term = $component_terms[0];
@@ -197,7 +201,8 @@ for my $col ( 39 .. $col_max) {
             $unit =~ s/\(//g;
             $unit =~ s/\)//g;
             push @traits, [$metabolite."_".$tiss."_".$institute, $tiss, $collection, $age, $unit];
-			$units_seen{$unit}++;
+            $units_seen{$unit}++;
+            $trait_defs{$metabolite."_".$tiss."_".$institute} = $definition;
         } elsif (scalar(@component_terms) == 3){
             my $agronomic_term = $component_terms[0];
             my $age_term = $component_terms[1];
@@ -222,7 +227,8 @@ for my $col ( 39 .. $col_max) {
             $institute =~ s/\(//g;
             $institute =~ s/\)//g;
             push @traits, [$agro."_".$institute, '', '', $age, ''];
-			$units_seen{'various'}++;
+            $units_seen{'various'}++;
+            $trait_defs{$agro."_".$institute} = $definition;
         }
     } elsif ($opt_v == 3 || $opt_v == 4 || $opt_v == 5){
         if (scalar(@component_terms) == 6){
@@ -269,7 +275,8 @@ for my $col ( 39 .. $col_max) {
             $unit =~ s/\(//g;
             $unit =~ s/\)//g;
             push @traits, [$metabolite."_".$tiss."_".$institute, $tiss, $collection, $age, $unit];
-			$units_seen{$unit}++;
+            $units_seen{$unit}++;
+            $trait_defs{$metabolite."_".$tiss."_".$institute} = $definition;
         } elsif (scalar(@component_terms) == 3){
             my $agronomic_term = $component_terms[0];
             my $age_term = $component_terms[1];
@@ -294,7 +301,8 @@ for my $col ( 39 .. $col_max) {
             $institute =~ s/\(//g;
             $institute =~ s/\)//g;
             push @traits, [$agro."_".$institute, '', '', $age, ''];
-			$units_seen{'various'}++;
+            $units_seen{'various'}++;
+            $trait_defs{$agro."_".$institute} = $definition;
         }
     }
 }
@@ -531,7 +539,7 @@ foreach (sort keys %intermed) {
 open(my $fh, ">", $opt_d);
     print STDERR $opt_d."\n";
     foreach (keys %unique_traits) {
-        print $fh "1\t$_\t$_\n";
+        print $fh "1\t$_\t$trait_defs{$_}\n";
     }
 close $fh;
 

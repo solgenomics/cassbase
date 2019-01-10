@@ -2,17 +2,19 @@
 
 =head1
 
-transform_wolfgang_rnaseq_to_pheno_file.pl 
+transform_wolfgang_3_proteomics_files_to_pheno_file.pl 
 
 =head1 SYNOPSIS
 
-    transform_wolfgang_rnaseq_to_pheno_file.pl  -i [infile] -o [outfile]
+    transform_wolfgang_3_proteomics_files_to_pheno_file.pl  -i [infile1] -j [infile2] -k [infile3] -o [outfile]
     
-    perl bin/transform_wolfgang_rnaseq_to_pheno_file.pl -i /home/vagrant/Downloads/rnaseq.csv -o /home/vagrant/cxgn/cassbase/bin/pheno.csv
+    perl bin/transform_wolfgang_3_proteomics_files_to_pheno_file.pl -i /home/vagrant/Downloads/proteomics1.csv -j /home/vagrant/Downloads/proteomics2.csv -k /home/vagrant/Downloads/proteomics3.csv -o /home/vagrant/cxgn/cassbase/bin/pheno.csv
 
 =head1 COMMAND-LINE OPTIONS
   ARGUMENTS
- -i rnaseq file from wolfgang for CASS 2018 rnaseq DESeq2NormaledCounts
+ -i proteomics data from experiment 1 CASS 2018
+ -j proteomics data from experiment 2 CASS 2018
+ -k proteomics data from experiment 3 CASS 2018
  -o output lucy.tsv file that can be indexed using TEA script
 
 =head1 DESCRIPTION
@@ -42,32 +44,26 @@ if (!$opt_i || !$opt_o) {
 }
 
 my %genotype_id_hash = (
-    'G02' => 'Z010116',
-    'G04' => 'I082418',
-    'G06' => 'SIMONYE',
-    'G07' => 'KALESO',
-    'G11' => 'I011231',
-    'G12' => 'I071378',
-    'G14' => 'I090485',
-    'G15' => 'I990304',
-    'G16' => 'I051599',
-    'G18' => 'I011663',
-    'G20' => 'I090576',
-    'G22' => 'I050128'
+    'EXP1' => 'I050128',
+    'EXP3' => 'I050128',
+    'EXP2' => {
+        '2' => 'Z010116',
+        '6' => 'SIMONYE'
+    }
 );
 
 my %tissue_type_hash = (
-    'p' => 'Phloem',
-    'c' => 'Cambium',
-    'x' => 'Xylem'
+    'EXP1' => ['Phloem', 'Cambium', 'Xylem'],
+    'EXP2' => ['Xylem'],
+    'EXP3' => ['Phloem', 'Outer Xylem', 'Central Xylem']
 );
 
 my $csv = Text::CSV->new({ sep_char => ',' });
 
-open(my $fh, '<', $opt_i)
+open(my $fh1, '<', $opt_i)
     or die "Could not open file '$opt_i' $!";
 
-my $header_row = <$fh>;
+my $header_row = <$fh1>;
 my @header_columns;
 if ($csv->parse($header_row)) {
     @header_columns = $csv->fields();
@@ -81,7 +77,7 @@ my @outfile_header_row = ("studyYear","programDbId","programName","programDescri
 my %data_hash;
 my %seen_composed_traits;
 
-while ( my $row = <$fh> ){
+while ( my $row = <$fh1> ){
     my @columns;
     if ($csv->parse($row)) {
         @columns = $csv->fields();
