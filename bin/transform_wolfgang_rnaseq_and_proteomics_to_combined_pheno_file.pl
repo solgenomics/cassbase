@@ -79,6 +79,8 @@ my $csv = Text::CSV->new({ sep_char => ',' });
 open(my $fh0, '<', $opt_r)
     or die "Could not open file '$opt_r' $!";
 
+print STDERR $opt_r."\n";
+
 my $header_row0 = <$fh0>;
 my @header_columns0;
 if ($csv->parse($header_row0)) {
@@ -104,11 +106,14 @@ while ( my $row = <$fh0> ){
     my $gene_name = $columns[0];
     my $gene_annotation = $columns[1];
 
+    $gene_annotation =~ s/,//g;
+
     foreach my $i (2 .. $col_max0) {
         my $sample = $header_columns0[$i];
         my $genotype_id = substr($sample, 0, 3);
         my $tissue_type = substr($sample, 3, 1);
         my $rep = substr($sample, 4, 1);
+        $rep = $rep + 100;
         my $value = $columns[$i];
         
         my $accession_name = $genotype_id_hash{$genotype_id};
@@ -153,11 +158,17 @@ while ( my $row = <$fh1> ){
     my $gene_annotation = $columns[1];
     my $accession_name = $genotype_id_hash{'EXP1'};
 
+    $gene_annotation =~ s/,//g;
+
     foreach my $i (4 .. $col_max1) {
         my $sample = $header_columns1[$i];
         my ($tissue_type, $rep) = split '\|', $sample;
         my $value = $columns[$i];
         
+        if (!$tissue_type) {
+            die "No Tissue Exp1\n";
+        }
+
         #print STDERR Dumper [$accession_name, $tissue_type, $rep, $gene_name, $value];
         my $composed_trait = $gene_name."|X:0000000||".$tissue_type."|X:0000000||NA|X:0000000||NA|X:0000000||Log2Intensity|X:0000000||ER|X:0000000|XX:0000000||||".$gene_annotation;
         $seen_composed_traits{$composed_trait}++;
@@ -190,6 +201,12 @@ while ( my $row = <$fh2> ){
     my $gene_name = $columns[0];
     my $gene_annotation = $columns[1];
     my $tissue_type = 'Xylem';
+
+    $gene_annotation =~ s/,//g;
+
+    if (!$tissue_type) {
+        die "No Tissue Exp2\n";
+    }
 
     foreach my $i (4 .. $col_max2) {
         my $sample = $header_columns2[$i];
@@ -229,10 +246,16 @@ while ( my $row = <$fh3> ){
     my $gene_annotation = $columns[1];
     my $accession_name = $genotype_id_hash{'EXP3'};
 
+    $gene_annotation =~ s/,//g;
+
     foreach my $i (4 .. $col_max3) {
         my $sample = $header_columns3[$i];
         my ($tissue_type, $rep) = split '\|', $sample;
         my $value = $columns[$i];
+
+        if (!$tissue_type) {
+            die "No Tissue Exp3\n";
+        }
 
         #print STDERR Dumper [$accession_name, $tissue_type, $rep, $gene_name, $value];
         my $composed_trait = $gene_name."|X:0000000||".$tissue_type."|X:0000000||NA|X:0000000||NA|X:0000000||Log2Intensity|X:0000000||ER|X:0000000|XX:0000000||||".$gene_annotation;
@@ -242,7 +265,7 @@ while ( my $row = <$fh3> ){
 }
 
 
-my @traits = keys %seen_composed_traits;
+my @traits = sort keys %seen_composed_traits;
 push @outfile_header_row, @traits;
 
 open(my $fh_o, ">", $opt_o) || die("\nERROR:\n");
