@@ -10,6 +10,8 @@ transform_wolfgang_rnaseq_to_pheno_file.pl
     
     perl bin/transform_wolfgang_rnaseq_to_pheno_file.pl -i /home/vagrant/Downloads/rnaseq.csv -o /home/vagrant/cxgn/cassbase/bin/pheno.csv
 
+    perl cxgn/cassbase/bin/transform_wolfgang_rnaseq_to_pheno_file.pl -i /home/nmorales/Documents/CASS_OMICS/DEglobal.csv -o /home/nmorales/Documents/CASS_OMICS/DEglobalPheno.csv
+
 =head1 COMMAND-LINE OPTIONS
   ARGUMENTS
  -i rnaseq file from wolfgang for CASS 2018 rnaseq DESeq2NormaledCounts
@@ -92,6 +94,8 @@ while ( my $row = <$fh> ){
     my $gene_name = $columns[0];
     my $gene_annotation = $columns[1];
 
+    $gene_annotation =~ s/,//g;
+
     foreach my $i (2 .. $col_max) {
         my $sample = $header_columns[$i];
         my $genotype_id = substr($sample, 0, 3);
@@ -115,7 +119,7 @@ while ( my $row = <$fh> ){
     }
 }
 
-my @traits = keys %seen_composed_traits;
+my @traits = sort keys %seen_composed_traits;
 push @outfile_header_row, @traits;
 
 open(my $fh_o, ">", $opt_o) || die("\nERROR:\n");

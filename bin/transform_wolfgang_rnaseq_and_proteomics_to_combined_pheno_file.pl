@@ -10,6 +10,8 @@ transform_wolfgang_rnaseq_and_proteomics_to_combined_pheno_file.pl
     
     perl bin/transform_wolfgang_rnaseq_and_proteomics_to_combined_pheno_file.pl -r /home/vagrant/Downloads/rnaseq.csv -i /home/vagrant/Downloads/proteomics1.csv -j /home/vagrant/Downloads/proteomics2.csv -k /home/vagrant/Downloads/proteomics3.csv -o /home/vagrant/cxgn/cassbase/bin/pheno.csv
 
+    perl cxgn/cassbase/bin/transform_wolfgang_rnaseq_and_proteomics_to_combined_pheno_file.pl -r /home/nmorales/Documents/CASS_OMICS/DEglobal.csv -i /home/nmorales/Documents/CASS_OMICS/ProteomicsExp1.csv -j /home/nmorales/Documents/CASS_OMICS/ProteomicsExp2.csv -k /home/nmorales/Documents/CASS_OMICS/ProteomicsExp3.csv -o /home/nmorales/Documents/CASS_OMICS/DEProteomicsCombinedPheno.csv
+
 =head1 COMMAND-LINE OPTIONS
   ARGUMENTS
  -r rnaseq file from wolfgang for CASS 2018 rnaseq DESeq2NormaledCounts

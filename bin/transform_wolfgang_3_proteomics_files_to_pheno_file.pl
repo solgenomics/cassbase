@@ -10,6 +10,8 @@ transform_wolfgang_3_proteomics_files_to_pheno_file.pl
     
     perl bin/transform_wolfgang_3_proteomics_files_to_pheno_file.pl -i /home/vagrant/Downloads/proteomics1.csv -j /home/vagrant/Downloads/proteomics2.csv -k /home/vagrant/Downloads/proteomics3.csv -o /home/vagrant/cxgn/cassbase/bin/pheno.csv
 
+    perl cxgn/cassbase/bin/transform_wolfgang_3_proteomics_files_to_pheno_file.pl -i /home/nmorales/Documents/CASS_OMICS/ProteomicsExp1.csv -j /home/nmorales/Documents/CASS_OMICS/ProteomicsExp2.csv -k /home/nmorales/Documents/CASS_OMICS/ProteomicsExp2.csv -o /home/nmorales/Documents/CASS_OMICS/ProteomicsPheno.csv
+
 =head1 COMMAND-LINE OPTIONS
   ARGUMENTS
  -i proteomics data from experiment 1 CASS 2018
@@ -91,6 +93,8 @@ while ( my $row = <$fh1> ){
     my $gene_annotation = $columns[1];
     my $accession_name = $genotype_id_hash{'EXP1'};
 
+    $gene_annotation =~ s/,//g;
+
     foreach my $i (4 .. $col_max1) {
         my $sample = $header_columns1[$i];
         my ($tissue_type, $rep) = split '\|', $sample;
@@ -128,6 +132,8 @@ while ( my $row = <$fh2> ){
     my $gene_name = $columns[0];
     my $gene_annotation = $columns[1];
     my $tissue_type = 'Xylem';
+
+    $gene_annotation =~ s/,//g;
 
     foreach my $i (4 .. $col_max2) {
         my $sample = $header_columns2[$i];
@@ -167,6 +173,8 @@ while ( my $row = <$fh3> ){
     my $gene_annotation = $columns[1];
     my $accession_name = $genotype_id_hash{'EXP3'};
 
+    $gene_annotation =~ s/,//g;
+
     foreach my $i (4 .. $col_max3) {
         my $sample = $header_columns3[$i];
         my ($tissue_type, $rep) = split '\|', $sample;
@@ -179,7 +187,7 @@ while ( my $row = <$fh3> ){
     }
 }
 
-my @traits = keys %seen_composed_traits;
+my @traits = sort keys %seen_composed_traits;
 push @outfile_header_row, @traits;
 
 open(my $fh_o, ">", $opt_o) || die("\nERROR:\n");
