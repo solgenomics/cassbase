@@ -1,7 +1,7 @@
 <li class="dropdown"><a class="menu_click_dropdown dropdown-toggle" data-toggle="dropdown" href="/tools/">Analyze</a>
 <!-- <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Genomes<span class="caret"></span></a> -->
   <ul class="dropdown-menu">
-    <li><a href="cea.sgn.cornell.edu">Expression Atlas</a></li>
+    <li><a href="http://cea.sgn.cornell.edu">Expression Atlas</a></li>
     <li><a href="http://ptools-cassbase.sgn.cornell.edu/MES/organism-summary">Mesculenta Cyc</a></li>
     <li><a href="/accession_usage">Accession Usage</a></li>
     <li><a href="/tools/graphicalfiltering">Graphical Filtering</a></li>
