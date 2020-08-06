@@ -33,6 +33,7 @@ $timestamp
             <div class="panel-heading">News</div>
             <div class="panel-body">
                 <ul>
+                <li><a href="/breeders/drone_imagery">Manage Drone Imagery</a></li>
                 <li><a href="/breeders/file_share_dump">File Share Dump</a></li>
                 <li><a href="http://cea.sgn.cornell.edu/">Expression Atlas correlation tool can now be used for user defined data sets</a></li>
                 <li><a href="http://cea.sgn.cornell.edu/">RNA seq data from Andreas and Frank are available in the Expression Atlas</a></li>

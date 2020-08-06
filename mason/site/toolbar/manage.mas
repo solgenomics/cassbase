@@ -18,5 +18,6 @@
     <li><a href="/breeders/upload">Upload</a></li>
     <li><a href="/breeders/identifier_generation">Identifier Generation</a></li>
     <li><a href="/breeders/file_share_dump">File Share</a></li>
+    <li><a href="/breeders/drone_imagery">Drone Imagery</a></li>
   </ul>
 </li>
