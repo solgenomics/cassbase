@@ -40,7 +40,7 @@ PGPASSWORD=${database_password} dropdb -U ${database_user} -h ${database_host} $
 PGPASSWORD=${database_password} createdb -U ${database_user} -h ${database_host} ${database_name}
 #DROP SCHEMA public CASCADE;
 #CREATE SCHEMA public;
-PGPASSWORD=${database_password} psql -U ${database_user} -d ${database_name} -h ${database_host} -a -f ${root_dir}/Tea/import_project/create_tea_schema.sql
+PGPASSWORD=${database_password} psql -U ${database_user} -d ${database_name} -h ${database_host} -a -f ${root_dir}/TEA/import_project/create_tea_schema.sql
 fi
 
 mkdir ${correlation_index_dir}/${directory_name}
@@ -53,9 +53,9 @@ rm -R ${expression_index_dir}/${directory_name}/*
 rm -R ${description_index_dir}/${directory_name}/*
 fi
 
-perl ${root_dir}/Tea/import_project/TEA_import_project_metadata.pl -d ${database_name} -H ${database_host} -u ${database_user} -p ${database_password} -t ${processing_file_dir}/project.txt -n
+perl ${root_dir}/TEA/import_project/TEA_import_project_metadata.pl -d ${database_name} -H ${database_host} -u ${database_user} -p ${database_password} -t ${processing_file_dir}/project.txt -n
 
-perl ${root_dir}/Tea/import_project/index_correlation_file.pl ${processing_file_dir}/corr.tsv ${correlation_index_dir}/${directory_name}/
-perl ${root_dir}/Tea/import_project/index_expression_file.pl ${processing_file_dir}/lucy.tsv ${expression_index_dir}/${directory_name}/
-perl ${root_dir}/Tea/import_project/index_description_file.pl ${processing_file_dir}/desc.tsv ${description_index_dir}/${directory_name}/
+perl ${root_dir}/TEA/import_project/index_correlation_file.pl ${processing_file_dir}/corr.tsv ${correlation_index_dir}/${directory_name}/
+perl ${root_dir}/TEA/import_project/index_expression_file.pl ${processing_file_dir}/lucy.tsv ${expression_index_dir}/${directory_name}/
+perl ${root_dir}/TEA/import_project/index_description_file.pl ${processing_file_dir}/desc.tsv ${description_index_dir}/${directory_name}/
 
