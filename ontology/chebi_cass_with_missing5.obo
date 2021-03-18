@@ -5881,3 +5881,68 @@ relationship: has_role CHEBI:76924
 relationship: has_role CHEBI:78295
 relationship: has_role CHEBI:75771
 is_a: CHEBI:00000
+
+[Term]
+id: CHEBI:16914
+name: salicylic acid
+alt_id: CHEBI:45521
+alt_id: CHEBI:9006
+alt_id: CHEBI:26597
+subset: 3_STAR
+def: "A monohydroxybenzoic acid that is benzoic acid with a hydroxy group at the ortho position. It is obtained from the bark of the white willow and wintergreen leaves." []
+synonym: "2-hydroxybenzoic acid" EXACT IUPAC_NAME [IUPAC]
+synonym: "o-hydroxybenzoic acid" RELATED [NIST Chemistry WebBook]
+synonym: "2-carboxyphenol" RELATED [NIST Chemistry WebBook]
+synonym: "o-carboxyphenol" RELATED [NIST Chemistry WebBook]
+synonym: "2-HYDROXYBENZOIC ACID" RELATED [PDBeChem]
+synonym: "Salicylic acid" EXACT [KEGG COMPOUND]
+synonym: "o-Hydroxybenzoic acid" RELATED [KEGG COMPOUND]
+synonym: "138.032" RELATED MONOISOTOPIC_MASS [ChEBI]
+synonym: "C7H6O3" RELATED FORMULA [ChEBI]
+synonym: "138.12070" RELATED MASS [ChEBI]
+synonym: "InChI=1S/C7H6O3/c8-6-4-2-1-3-5(6)7(9)10/h1-4,8H,(H,9,10)" RELATED InChI [ChEBI]
+synonym: "YGSDEFSMJLZEOE-UHFFFAOYSA-N" RELATED InChIKey [ChEBI]
+synonym: "OC(=O)c1ccccc1O" RELATED SMILES [ChEBI]
+xref: PMID:11016405 "Europe PMC"
+xref: MetaCyc:CPD-110 
+xref: KEGG:D00097 
+xref: Wikipedia:Salicylic_Acid 
+xref: PMID:1650428 "Europe PMC"
+xref: KNApSAcK:C00000206 
+xref: PMID:19400653 "Europe PMC"
+xref: Gmelin:3418 "Gmelin"
+xref: Reaxys:774890 "Reaxys"
+xref: DrugBank:DB00936 
+xref: PMID:3425858 "Europe PMC"
+xref: CAS:69-72-7 "NIST Chemistry WebBook"
+xref: Beilstein:774890 "Beilstein"
+xref: LINCS:LSM-4763 
+xref: PMID:22770225 "Europe PMC"
+xref: HMDB:HMDB01895 
+xref: PMID:12865403 "Europe PMC"
+xref: PMID:19816125 "Europe PMC"
+xref: CAS:69-72-7 "ChemIDplus"
+xref: PDBeChem:SAL 
+xref: KEGG:C00805 
+xref: CAS:69-72-7 "KEGG COMPOUND"
+relationship: is_conjugate_acid_of CHEBI:30762
+relationship: has_role CHEBI:35441
+relationship: has_role CHEBI:35718
+relationship: has_role CHEBI:50176
+relationship: has_role CHEBI:73181
+is_a: CHEBI:25389
+relationship: has_role CHEBI:76924
+relationship: has_role CHEBI:84735
+relationship: has_role CHEBI:37848
+is_a: CHEBI:00000
+
+[Term]
+id: CHEBI:15243
+name: threonate
+subset: 3_STAR
+def: "A 2,3,4-trihydroxybutanoate that is the conjugate base of threonic acid." []
+synonym: "threonate" EXACT [UniProt]
+synonym: "C4H7O5" RELATED FORMULA [ChEBI]
+is_a: CHEBI:49061
+relationship: is_conjugate_base_of CHEBI:26984
+is_a: CHEBI:00000
