@@ -302,3 +302,96 @@ id: CASST:0000050
 name: Planting stick diameter in cm
 def: "The diameter of the planting stick in cm." []
 relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000051
+name: L chromometer value
+def: "L chromometer value" []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000052
+name: a chromometer value
+def: "a chromometer value" []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000053
+name: b chromometer value
+def: "b chromometer value" []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000054
+name: weibull fit scale variable; week 33
+def: "weibull fit scale variable|week 33" []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000055
+name: weibull fit scale variable; week 38
+def: "weibull fit scale variable|week 38" []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000056
+name: weibull fit scale variable; week 46
+def: "weibull fit scale variable|week 46" []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000057
+name: weibull fit shape variable; week 33
+def: "weibull fit shape variable|week 33" []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000058
+name: weibull fit shape variable; week 38
+def: "weibull fit shape variable|week 38" []
+relationship: variable_of CASST:0000001
+
+[Term]
+id: CASST:0000059
+name: weibull fit shape variable; week 46
+def: "weibull fit shape variable|week 46" []
+relationship: variable_of CASST:0000001
+
+plant height per plot in m|week 33|COMP:0000086	plant height per plot in m|week 38|COMP:0000087	plant height per plot in m|week 46|COMP:0000088
+plot volume in m3|week 33|COMP:0000089	plot volume in m3|week 38|COMP:0000090	plot volume in m3|week 46|COMP:0000091
+
+[Term]
+id: CASST:0000060
+name: plant height per plot in m; week 33
+def: "plant height per plot in m|week 33" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000061
+name: plant height per plot in m; week 38
+def: "plant height per plot in m|week 38" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000062
+name: plant height per plot in m; week 46
+def: "plant height per plot in m|week 46" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000063
+name: plot volume in m3; week 33
+def: "plot volume in m3|week 33" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000064
+name: plot volume in m3; week 38
+def: "plot volume in m3|week 38" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000065
+name: plot volume in m3; week 46
+def: "plot volume in m3|week 46" []
+relationship: variable_of CASST:0000013
