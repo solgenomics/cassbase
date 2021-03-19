@@ -40,7 +40,7 @@ $timestamp
                 <li><a href="/breeders/drone_imagery">Manage Drone Imagery</a></li>
                 <li><a href="/breeders/file_share_dump">File Share Dump</a></li>
                 <li><a href="http://cea.sgn.cornell.edu/">Expression Atlas correlation tool can now be used for user defined data sets</a></li>
-                <li><a href="http://cea.sgn.cornell.edu/">RNA seq data from Andreas and Frank are available in the Expression Atlas</a></li>
+                <li><a href="http://cea.sgn.cornell.edu/">RNA seq data in the Expression Atlas</a></li>
                 <!--li><a href="">Mesculenta PathwayTools Cyc available at http://ptools-cassbase.sgn.cornell.edu</a></li-->
                 </ul>
             </div>
@@ -85,11 +85,11 @@ $timestamp
             <div class="panel-body">
                 <ul>
                 <li><a href="https://cassbase.org/breeders/phenotyping/download/3261">2019 Metabolomic Data</a></li>
-                <li><a href="ftp://cassbase.org/RNAseq/Frank_RNA_Samples.xlsx">Frank's RNAseq Samples Information</a></li>
-                <li><a href="ftp://cassbase.org/RNAseq/Frank_RNA_expression_file.txt">Frank's RNAseq Expression Values</a></li>
-                <li><a href="ftp://cassbase.org/RNAseq/Andreas_RNA_SampleDescription.txt">Andreas' RNAseq Samples Information</a></li>
-                <li><a href="ftp://cassbase.org/RNAseq/Andreas_RNA_RootBulkingExpression.txt">Andreas' RNAseq Expression Values </a></li>
-                <!--li><a href="ftp://cassbase.org/RNAseq/Andreas_RNA_BTI_expression_file.txt">Andreas' RNAseq Expression Values (BTI Pipeline)</a></li-->
+                <li><a href="ftp://cassbase.org/RNAseq/Frank_RNA_Samples.xlsx">RNAseq Samples Information</a></li>
+                <li><a href="ftp://cassbase.org/RNAseq/Frank_RNA_expression_file.txt">RNAseq Expression Values</a></li>
+                <li><a href="ftp://cassbase.org/RNAseq/Andreas_RNA_SampleDescription.txt">IITA RNAseq Samples Information</a></li>
+                <li><a href="ftp://cassbase.org/RNAseq/Andreas_RNA_RootBulkingExpression.txt">IITA RNAseq Expression Values </a></li>
+                <!--li><a href="ftp://cassbase.org/RNAseq/Andreas_RNA_BTI_expression_file.txt">IITA RNAseq Expression Values (BTI Pipeline)</a></li-->
                 </ul>
                 <ul>
                 <li><a href="https://cassbase.org/expression_viewer/input">Expression Viewer (Select one of the two available RNA Projects)</a></li>
