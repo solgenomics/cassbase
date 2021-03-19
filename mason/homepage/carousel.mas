@@ -160,6 +160,7 @@
       <li data-target="#myCarousel" data-slide-to="1"></li>
       <li data-target="#myCarousel" data-slide-to="2"></li>
       <li data-target="#myCarousel" data-slide-to="3"></li>
+      <li data-target="#myCarousel" data-slide-to="4"></li>
       <br/><br/>
     </ol>
 
@@ -199,6 +200,14 @@
     };
     if ($@) { 
         print "Sorry. Could not get image # 77990\n"; 
+    }
+    my $url5 = "";
+    eval { 
+        my $image = SGN::Image->new( $c->dbc->dbh, 77991 );
+        $url5 = $image->get_image_url('large');
+    };
+    if ($@) { 
+        print "Sorry. Could not get image # 77991\n"; 
     }
 </%perl>
 
@@ -254,20 +263,26 @@
         </div>
       </div>
 
-
       <div class="item">
         <div style="background:url(<% $url4 %>) center center; background-size:cover;" class="slider-size">
-            <div class="carousel-sgn-caption">
-                <h3><a href="/breeders/manage_programs/"> Breeding Programs</a></h3>
-                <p><a href="/breeders/trials/" target="_blank">Search, retrieve, save breeding trials</a></p>
+          <div class="carousel-sgn-caption">
+             <p><a href="https://onlinelibrary.wiley.com/doi/full/10.1111/tpj.14693">Metabolic profiles of six African cultivars</a></p>
+          </div>
+        
+          <div class="carousel-sgn-links">
+            <ul>
+              <p><a href="/breeders/trials/" target="_blank">Search, retrieve, save breeding trials</a></p>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div style="background:url(<% $url5 %>) center center; background-size:cover;" class="slider-size">
+            <!--div class="carousel-sgn-caption">
             </div>
             <div class="carousel-sgn-links">
-                <ul>
-                    <li><a href="/breeders/search">Search accessions and trials</a></li>
-                    <li><a href="/fieldbook">Fieldbook App & uploading</a></li>
-                    <li><a href="/tools/onto/">Cassava Trait Ontology</a></li>
-                </ul>
-            </div>
+            </div-->
         </div>
 
     <!-- Left and right controls -->
