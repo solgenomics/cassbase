@@ -166,11 +166,21 @@
     <div class="carousel-inner" role="listbox">
 
  
+<%perl>
+     my $url1 = "";
+     eval { 
+       my $image = SGN::Image->new( $c->dbc->dbh, 77987 );
+       $url1 = $image->get_image_url('large');
+   };
+   if ($@) { 
+       print "Sorry. Could not get image # $image_id\n"; 
+   }
+</%perl>
 
 
 
 <div class="item">
-          <div style="background:url(/documents/img/CASSbase/cass_berlin.jpg) center center; background-size:cover;" class="slider-size">
+          <div style="background:url(<% $url1 %>) center center; background-size:cover;" class="slider-size">
             <div class="carousel-sgn-caption">
               <a href="http://www.biochemie.nat.uni-erlangen.de/Cassava/index.html" target="_blank">
                 <h3>Cassava Source-Sink Project</h3>
