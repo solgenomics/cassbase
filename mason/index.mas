@@ -10,6 +10,12 @@ $editable_stock_props => {}
 $timestamp
 </%args>
 
+<div class="well well-sm">
+<center>
+<iframe width="853" height="505" src="https://www.youtube.com/embed/videoseries?list=PLiUTq4-ZYpYImTbqKnvUD-XK-BZ0mPed8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</center>
+</div>
+
 <center>
 <br/>
 <& homepage/carousel.mas &>
@@ -18,8 +24,6 @@ $timestamp
 
 
 <div class="container-fluid">
-    <& /help/workflow_guided/begin.mas, breeding_programs=>$breeding_programs, locations=>$locations, preferred_species=>$preferred_species, editable_stock_props=>$editable_stock_props, timestamp=>$timestamp &>
-
     <center>
         <& homepage/usage_popup.mas &>
     </center>
