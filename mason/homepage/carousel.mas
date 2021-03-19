@@ -173,7 +173,7 @@
        $url1 = $image->get_image_url('large');
    };
    if ($@) { 
-       print "Sorry. Could not get image # $image_id\n"; 
+       print "Sorry. Could not get image # 77987\n"; 
    }
 </%perl>
 
