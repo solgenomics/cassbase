@@ -473,3 +473,39 @@ id: CASST:0000078
 name: Rheology on purified starch setback from trough
 def: "Rheology on purified starch setback from trough" []
 relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000079
+name: Amylose (%)
+def: "Amylose (%)" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000080
+name: Galactose
+def: "Galactose" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000081
+name: Cellulose
+def: "Cellulose" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000082
+name: Glucose matrix
+def: "Glucose matrix" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000083
+name: Glucose total
+def: "Glucose total" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000084
+name: Glucuronic acid
+def: "Glucuronic acid" []
+relationship: variable_of CASST:0000013
