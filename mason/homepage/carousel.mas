@@ -167,14 +167,38 @@
 
  
 <%perl>
-     my $url1 = "";
-     eval { 
-       my $image = SGN::Image->new( $c->dbc->dbh, 77987 );
-       $url1 = $image->get_image_url('large');
-   };
-   if ($@) { 
-       print "Sorry. Could not get image # 77987\n"; 
-   }
+    my $url1 = "";
+    eval { 
+        my $image = SGN::Image->new( $c->dbc->dbh, 77987 );
+        $url1 = $image->get_image_url('large');
+    };
+    if ($@) { 
+        print "Sorry. Could not get image # 77987\n"; 
+    }
+    my $url2 = "";
+    eval { 
+        my $image = SGN::Image->new( $c->dbc->dbh, 77988 );
+        $url2 = $image->get_image_url('large');
+    };
+    if ($@) { 
+        print "Sorry. Could not get image # 77988\n"; 
+    }
+    my $url3 = "";
+    eval { 
+        my $image = SGN::Image->new( $c->dbc->dbh, 77989 );
+        $url3 = $image->get_image_url('large');
+    };
+    if ($@) { 
+        print "Sorry. Could not get image # 77989\n"; 
+    }
+    my $url4 = "";
+    eval { 
+        my $image = SGN::Image->new( $c->dbc->dbh, 77990 );
+        $url4 = $image->get_image_url('large');
+    };
+    if ($@) { 
+        print "Sorry. Could not get image # 77990\n"; 
+    }
 </%perl>
 
 
@@ -198,9 +222,22 @@
         </a>
       </div>
 
+      <div class="item">
+        <div style="background:url(<% $url2 %>) center center; background-size:cover;" class="slider-size">
+          <div class="carousel-sgn-caption">
+             <p><a href="https://onlinelibrary.wiley.com/doi/full/10.1111/tpj.14693">Metabolic profiles of six African cultivars</a></p>
+          </div>
+        
+          <div class="carousel-sgn-links">
+            <ul>
+              <p><a href="/breeders/trials/" target="_blank">Search, retrieve, save breeding trials</a></p>
+            </ul>
+          </div>
+        </div>
+      </div>
 
       <div class="item">
-        <div style="background:url(/documents/img/CASSbase/cass_img.png) center center; background-size:cover;" class="slider-size">
+        <div style="background:url(<% $url3 %>) center center; background-size:cover;" class="slider-size">
           <div class="carousel-sgn-caption">
              <p><a href="http://www.nature.com/ncomms/2014/141010/ncomms6110/full/ncomms6110.html?wptouch_preview_theme=enabled">The Cassava genome: from a wild ancestor to cultivated varieties</a></p>
           </div>
@@ -218,21 +255,19 @@
 
 
       <div class="item">
-			<div style="background:url(/documents/img/CASSbase/cass_group.jpg) center center; background-size:cover;" class="slider-size">
-				<div class="carousel-sgn-caption">
-				<h3><a href="/breeders/manage_programs/"> Breeding Programs</a></h3>
-				<p><a href="/breeders/trials/" target="_blank">Search, retrieve, save breeding trials</a></p>
-		</div>
-		   <div class="carousel-sgn-links">
-			<ul>
-				<li><a href="/breeders/search">Search accessions and trials</a></li>
-				<li><a href="/fieldbook">Fieldbook App & uploading</a></li>
-				<li><a href="/tools/onto/">Cassava Trait Ontology</a></li>
-			</ul>
-		</div>
-
-
-    </div>
+        <div style="background:url(<% $url4 %>) center center; background-size:cover;" class="slider-size">
+            <div class="carousel-sgn-caption">
+                <h3><a href="/breeders/manage_programs/"> Breeding Programs</a></h3>
+                <p><a href="/breeders/trials/" target="_blank">Search, retrieve, save breeding trials</a></p>
+            </div>
+            <div class="carousel-sgn-links">
+                <ul>
+                    <li><a href="/breeders/search">Search accessions and trials</a></li>
+                    <li><a href="/fieldbook">Fieldbook App & uploading</a></li>
+                    <li><a href="/tools/onto/">Cassava Trait Ontology</a></li>
+                </ul>
+            </div>
+        </div>
 
     <!-- Left and right controls -->
     <!-- <a id="prev_slide" class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
