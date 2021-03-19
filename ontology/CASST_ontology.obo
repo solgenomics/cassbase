@@ -395,3 +395,81 @@ id: CASST:0000065
 name: plot volume in m3; week 46
 def: "plot volume in m3|week 46" []
 relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000066
+name: mealiness
+def: "mealiness" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000067
+name: Amylopectin dp 3-12(%)
+def: "Amylopectin dp 3-12(%)" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000068
+name: Amylopectin dp 13-80(%)
+def: "Amylopectin dp 13-80(%)" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000069
+name: Granule size <4.5um (%)
+def: "Granule size <4.5um (%)" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000070
+name: Granule size 4.5-10um (%)
+def: "Granule size 4.5-10um (%)" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000071
+name: Granule size >10um (%)
+def: "Granule size >10um (%)" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000072
+name: Rheology on purified starch pasting temperature
+def: "Rheology on purified starch pasting temperature" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000073
+name: Rheology on purified starch peak viscosity
+def: "Rheology on purified starch peak viscosity" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000074
+name: Rheology on purified starch holding strength
+def: "Rheology on purified starch holding strength" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000075
+name: Rheology on purified starch breakdown
+def: "Rheology on purified starch breakdown" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000076
+name: Rheology on purified starch final viscosity
+def: "Rheology on purified starch final viscosity" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000077
+name: Rheology on purified starch setback from peak
+def: "Rheology on purified starch setback from peak" []
+relationship: variable_of CASST:0000013
+
+[Term]
+id: CASST:0000078
+name: Rheology on purified starch setback from trough
+def: "Rheology on purified starch setback from trough" []
+relationship: variable_of CASST:0000013
