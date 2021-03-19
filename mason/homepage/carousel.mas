@@ -279,9 +279,13 @@
 
       <div class="item">
         <div style="background:url(<% $url5 %>) center center; background-size:cover;" class="slider-size">
-            <!--div class="carousel-sgn-caption">
+            <div class="carousel-sgn-caption">
+                <a href="http://www.biochemie.nat.uni-erlangen.de/Cassava/index.html" target="_blank">
+                  <h3>Cassava Source-Sink Project</h3>
+                  <p>Information and Goals</p>
+                </a>
             </div>
-            <div class="carousel-sgn-links">
+            <!--div class="carousel-sgn-links">
             </div-->
         </div>
 
