@@ -3,24 +3,16 @@
   <ul class="dropdown-menu">
     <li><a href="https://cass-research.org/">About</a></li>
     <li><a href="/contact/form">Contact</a></li>
-    <li><a href="/help/index.pl">Cite SGN</a></li>
+    <li><a href="/help/index.pl">Cite CassBase</a></li>
     
     <li role="separator" class="divider"></li>
     
     <li><a class="footer" href="https://solgenomics.github.io/sgn">Manual</a></li>
-    <li><a class="footer" href="http://cassavabase.wikispaces.com/">Wiki</a></li>
-    <li><a href="/help/">Help</a></li>
-    <li><a href="/help/faq.pl">FAQ</a></li>
     <li><a href="/phenome">Become SGN Editor</a></li>
     <li><a href="/forum/topics.pl">Forum</a></li>
     
     <li role="separator" class="divider"></li>
     
-    <li><a href="https://twitter.com/solgenomics">Twitter</a></li>
-    <li><a href="https://www.facebook.com/solgenomics">Facebook</a></li>
-
-    <li role="separator" class="divider"></li>
-
-    <li><a href="ftp://ftp.cassbase.org">FTP Site</a></li>
+    <li><a href="https://cassbase.org/ftp">FTP Site</a></li>
   </ul>
 </li>
