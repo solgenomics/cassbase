@@ -100,7 +100,7 @@ $timestamp
 </div>
 </div>
 
-<& homepage/github_pullrequests.mas &>
+<!-- & homepage/github_pullrequests.mas & -->
 
 % if ($phenotype_files) {
      <& homepage/phenotype_uploads.mas, phenotype_files=>$phenotype_files &>
