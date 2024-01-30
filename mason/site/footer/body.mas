@@ -9,20 +9,11 @@
     <br/>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-1 col-lg-1 col-xl-2">
 	        <a href="https://btiscience.org"><img src="/documents/img/bti_logo_2024.png" width="200" /></a><br />
 		<div class="container-fluid">
                   CASSbase is located at the <a href="https://btiscience.org/" class="footer" >Boyce Thompson Institute  for Plant Research</a>.
                 </div>
 
-            </div>
-
-            <div class="col-sm-12 col-md-10 col-lg-10 col-xl-8">
-            </div>
-
-            <div class="col-md-1 col-lg-1 col-xl-2">
-
-            </div>
         </div>
     </div>
 
