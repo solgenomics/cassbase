@@ -15,8 +15,11 @@
 
     <li role="separator" class="divider"></li>
     <li class="dropdown-header">Other</li>
+
     <li><a href="/tools/onto/">Ontology Browser</a></li>
-    <li><a href="/tools/documents/">Document Browser</a></li>
     <li><a href="/tools/compose">Compose a New Trait</a></li>
+    <li><a href="https://submit.rtbbase.org">Request a New Trait</a></li>
+    <li role="separator" class="divider"></li>	
+    <li><a href="/tools/documents/">Document Browser</a></li>	
   </ul>
 </li>
