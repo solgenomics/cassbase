@@ -1,9 +1,11 @@
 
-<& /page/page_title.mas, title=>"CassavaBase Help" &>
+<& /page/page_title.mas, title=>"CASSbase Help" &>
+
+CASSbase is a comprehensive data management and analysis software for the <a href="https://cass-research.org">Cassava Source Sink (CASS)</a> project. It can be used to design field layouts, collect phenotypic information using tablets, support the collection of genotyping samples in a field, store large amounts of high density genotypic information, and provide Genomic Selection related analyses and predictions. CASS software also includes Expression Atlases, including transcriptomics, proteomics, and metabolomics tools.
+
 
 <div class="panel panel-default">
 <div class="panel-body">
-<p>The complete CassavaBase help is available from the <a href="https://solgenomics.github.io/sgn/">CassavaBase Manual</a>.</p>
-<p>For frequently asked questions, see the <a href="/help/faq">FAQ page</a>.</p>
+<p>The complete Breedbase help is available from the <a href="https://solgenomics.github.io/sgn/">Breedbase and SGN manual</a>.</p>
 </div>
 </div>
