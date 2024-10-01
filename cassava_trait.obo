@@ -10528,7 +10528,7 @@ created_by: Ukoabasi Ekanem
 creation_date: 2023-10-02T10:07:21Z
 
 [Term]
-id: CO_334:00060001
+id: CO_334:0006001
 name: Greenhouse trait
 namespace: cassava_trait
 def: "Trait to be taken in greenhouse. As plants are much smaller, some of these traits will be measured, for example, in g instead of kg." []
@@ -10536,7 +10536,7 @@ is_a: CO_334:0000000 ! CGIAR cassava trait ontology
 
 [Term]
 id: CO_334:00060002
-name: "Dry matter content greenhouse"
+name: Dry matter content greenhouse
 namespace: cassava_trait
 is_a: CO_334:0006001 ! Greenhouse trait
 
@@ -10545,49 +10545,49 @@ id: CO_334:00060003
 name: dry matter content percentage of stem in greenhouse
 def: "Percentage dry matter of the stem, calculated as dry weight of stem divided by fresh weight of stem as measured in a greenhouse." []
 namespace: cassava_trait
-relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
+relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 [Term]
 id: CO_334:00060004
 name: total dry matter content of storage root greenhouse
 def: "Total dry matter content of the storage root, calculated as: fresh weight of storage root times dry matter centent % of storage root as measured in a greenhouse." []
 namespace: cassava_trait
-relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
+relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 [Term]
 id: CO_334:00060005
 name: total dry matter content of stem greenhouse
 def: "Total dry matter content of the stem, calculated as: fresh weight of stem times dry matter centent % of stem as measured in a greenhouse" []
 namespace: cassava_trait
-relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
+relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 [Term]
 id: CO_334:00060006
 name: total dry matter content of leaves greenhouse
 def: "Total dry matter content of the leaves, calculated as: fresh weight of leaves times dry matter centent % of leaves as measured in a greenhouse." []
 namespace: cassava_trait
-relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
+relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 [Term]
 id: CO_334:00060007
 name: dry weight of biomass in g greenhouse
 def: "Measurement of the dry weight of the total plant mass above ground in grams (g), by drying in the oven at 60 degrees Celsius and weighted using a scale." []
 namespace: cassava_trait
-relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
+relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 [Term]
 id: CO_334:00060008
 name: fresh weight of biomass in g greenhouse
 def: "Measurement of the fresh weight of the total plant mass above ground in grams (g), weighted using a scale as measured in a greenhouse." []
 namespace: cassava_trait
-relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
+relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 [Term]
 id: CO_334:00060009
 name: stem dry weight in g
 def: "Dry weight in grams (g) of plantable portion of the plant excluding the leaves, and stump as measured in a greenhouse. Dried in oved at 60 degrees Celcius." []
 namespace: cassava_trait
-relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
+relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 
 [Term]
@@ -10595,21 +10595,21 @@ id: CO_334:00060010
 name: dry fibrous root weight in g per plant greenhouse
 def: "Total dry weight of fibrous roots harvested per plant measured in grams (g) as measured in a greenhouse." []
 namespace: cassava_trait
-relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
+relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 [Term]
 id: CO_334:00060011
 name: dry storage root weight in g per plant
 def: "Total dry weight of storage roots harvested per plant measured in grams (g). Dried in the oven at 60 degrees Celcius." []
 namespace: cassava_trait
-relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
+relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 [Term]
 id: CO_334:00060012
 name: leaf dry weight measurement in g greenhouse
 def: "Weight of dried foliage leaf (the above-ground biomass excluding the stem), dried at 60 degrees Celcius, measured in grams (g), as measured in a greenhouse." []
 namespace: cassava_trait
-relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
+relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 [Term]
 id: CO_334:00060013
@@ -10664,10 +10664,7 @@ id: CO_334:00060020
 name: internode length in greenhouse
 def: "the length of stem internodes."
 namespace: cassava_trait
-is_a: CO_334:00060018 ! stemtraits in greenhouse
-
-
-
+is_a: CO_334:00060018 ! stem traits in greenhouse
 
 [Term]
 id: CO_334:00060021
