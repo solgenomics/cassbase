@@ -10576,18 +10576,12 @@ namespace: cassava_trait
 relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 [Term]
-id: CO_334:00060008
-name: fresh weight of biomass in g greenhouse
-def: "Measurement of the fresh weight of the total plant mass above ground in grams (g), weighted using a scale as measured in a greenhouse." []
-namespace: cassava_trait
-relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
-
-[Term]
 id: CO_334:00060009
 name: stem dry weight in g
 def: "Dry weight in grams (g) of plantable portion of the plant excluding the leaves, and stump as measured in a greenhouse. Dried in oved at 60 degrees Celcius." []
 namespace: cassava_trait
 relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
+
 
 
 [Term]
@@ -10616,6 +10610,13 @@ id: CO_334:00060013
 name: fresh weight in greenhouse
 namespace: cassava_trait
 is_a: CO_334:0006001 ! Greenhouse trait
+
+[Term]
+id: CO_334:00060008
+name: fresh weight of biomass in g greenhouse
+def: "Measurement of the fresh weight of the total plant mass above ground in grams (g), weighted using a scale as measured in a greenhouse." []
+namespace: cassava_trait
+relationship: variable_of CO_334:00060013 ! fresh weight in greenhouse
 
 [Term]
 id: CO_334:00060014
@@ -10647,9 +10648,10 @@ relationship: variable_of CO_334:00060013 ! fresh weight in greenhouse
 
 [Term]
 id: CO_334:00060018
-name: stem traits in greenhouse
-def: "Stem related traits as measured in a greenhouse" []
+name: stem traits
+def: "Stem related traits" []
 namespace: cassava_trait
+is_a: CO_334:0000001 ! Agronomic trait
 is_a: CO_334:0006001 ! Greenhouse trait
 
 [Term]
@@ -10657,119 +10659,119 @@ id: CO_334:00060019
 name: stem base diameter in mm
 def: "Measurement of stem diameter taken on the base (at soil level) of the plant in millimeters (mm) using the vernier caliper." []
 namespace: cassava_trait
-relationship: variable_of CO_334:00060018 ! stem traits in greenhouse
+relationship: variable_of CO_334:00060018 ! stem traits
 
 [Term]
 id: CO_334:00060020
-name: internode length in greenhouse
+name: Internode length
 def: "the length of stem internodes."
 namespace: cassava_trait
-is_a: CO_334:00060018 ! stem traits in greenhouse
+is_a: CO_334:00060018 ! stem traits
 
 [Term]
 id: CO_334:00060021
-name: Internode length 1 greenhouse
+name: internode length 1
 def: "Length of first (basal) internode measured in centimeters (cm)." []
 namesapce: cassava_trait
-relationship: variable_of CO_334:00060020 ! internode length in greenhouse
+relationship: variable_of CO_334:00060020 ! internode length
 
 [Term]
 id: CO_334:00060022
-name: Internode length 2
-def: "Length of second (from base) internode measured in centimeters (cm) as measured in a greenhouse." []
+name: internode length 2
+def: "Length of second (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
-relationship: variable_of CO_334:00060020 ! internode length in greenhouse
+relationship: variable_of CO_334:00060020 ! internode length
 
 [Term]
 id: CO_334:00060023
-name: Internode length 3
+name: internode length 3
 def: "Length of third (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
-relationship: variable_of CO_334:00060020 ! internode length in greenhouse
+relationship: variable_of CO_334:00060020 ! internode length
 
 [Term]
 id: CO_334:00060024
-name: Internode length 4
-def: "Length of third (from base) internode measured in centimeters (cm)." []
+name: internode length 4
+def: "Length of forth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
 relationship: variable_of CO_334:00060020 ! internode length in greenhouse
 
 [Term]
 id: CO_334:00060025
-name: Internode length 5
-def: "Length of third (from base) internode measured in centimeters (cm)." []
+name: internode length 5
+def: "Length of fifth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
-relationship: variable_of CO_334:00060020 ! internode length in greenhouse
+relationship: variable_of CO_334:00060020 ! internode length
 
 [Term]
 id: CO_334:00060026
-name: Internode length 6
-def: "Length of third (from base) internode measured in centimeters (cm)." []
+name: internode length 6
+def: "Length of sixth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
-relationship: variable_of CO_334:00060020 ! internode length in greenhouse
+relationship: variable_of CO_334:00060020 ! internode length
 
 [Term]
 id: CO_334:00060027
-name: Internode length 7
-def: "Length of third (from base) internode measured in centimeters (cm)." []
+name: internode length 7
+def: "Length of seventh (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
-relationship: variable_of CO_334:00060020 ! internode length in greenhouse
+relationship: variable_of CO_334:00060020 ! internode length
 
 [Term]
 id: CO_334:00060028
-name: Internode length 8
-def: "Length of third (from base) internode measured in centimeters (cm)." []
+name: internode length 8
+def: "Length of eighth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
-relationship: variable_of CO_334:00060020 ! internode length in greenhouse
+relationship: variable_of CO_334:00060020 ! internode length
 
 [Term]
 id: CO_334:00060029
-name: Internode length 9
-def: "Length of third (from base) internode measured in centimeters (cm)." []
+name: internode length 9
+def: "Length of ninth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
-relationship: variable_of CO_334:00060020 ! internode length in greenhouse
+relationship: variable_of CO_334:00060020 ! internode length
 
 [Term]
 id: CO_334:00060030
-name: Internode length 10
-def: "Length of third (from base) internode measured in centimeters (cm)." []
+name: internode length 10
+def: "Length of tenth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
-relationship: variable_of CO_334:00060020 ! internode length in greenhouse
+relationship: variable_of CO_334:00060020 ! internode length
 
 [Term]
 id: CO_334:00060031
-name: Internode length 11
-def: "Length of third (from base) internode measured in centimeters (cm)." []
+name: internode length 11
+def: "Length of eleventh (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
 relationship: variable_of CO_334:00060020 ! internode length in greenhouse
 
 [Term]
 id: CO_334:00060032
-name: Internode length 12
-def: "Length of third (from base) internode measured in centimeters (cm)." []
+name: internode length 12
+def: "Length of twelveth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
-relationship: variable_of CO_334:00060020 ! internode length in greenhouse
+relationship: variable_of CO_334:00060020 ! internode length
 
 [Term]
 id: CO_334:00060033
-name: Internode length 13
-def: "Length of third (from base) internode measured in centimeters (cm)." []
+name: internode length 13
+def: "Length of thirteenth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
-relationship: variable_of CO_334:00060020 ! internode length in greenhouse
+relationship: variable_of CO_334:00060020 ! internode length
 
 [Term]
 id: CO_334:00060034
-name: Internode length 14
-def: "Length of third (from base) internode measured in centimeters (cm)." []
+name: internode length 14
+def: "Length of fourteenth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
-relationship: variable_of CO_334:00060020 ! internode length in greenhouse
+relationship: variable_of CO_334:00060020 ! internode length
 
 [Term]
 id: CO_334:00060035
-name: Internode length 15
-def: "Length of third (from base) internode measured in centimeters (cm)." []
+name: internode length 15
+def: "Length of fifteenth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
-relationship: variable_of CO_334:00060020 ! internode length in greenhouse
+relationship: variable_of CO_334:00060020 ! internode length
 
 [Term]
 id: CO_334:0010000
