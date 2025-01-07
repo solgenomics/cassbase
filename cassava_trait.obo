@@ -4891,6 +4891,18 @@ xref: TO:1000007
 is_a: CO_334:0000004 ! Quality trait
 
 [Term]
+id: CO_334:0006036
+name: Dry storage root weight
+def: "Dry storage root weight" []
+is_a: CO_334:0000001 ! Agronomic trait
+
+[Term]
+id: CO_334:0006037
+name: Dry storage root weight in kg
+def: "Dry storage root weight per plant measured in kg" []
+relationship_of: variable_of CO_334:0006036 ! Dry storage root weight
+
+[Term]
 id: CO_334:0000448
 name: Root evaluation
 namespace: cassava_trait
