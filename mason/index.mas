@@ -23,11 +23,11 @@ $timestamp
 </center>
 
 
-<div class="container-fluid">
+<!-- div class="container-fluid">
     <center>
         <& homepage/usage_popup.mas &>
     </center>
-</div>
+</div -->
 
 
 <div class="container-fluid">
