@@ -5,7 +5,6 @@ auto-generated-by: OBO-Edit 2.3.1
 default-namespace: CassavaTraitOntology
 namespace-id-rule: * CO_334:$sequence(7,0100000,0999999)$
 ontology: co_334
-owl-axioms: Prefix(owl:=<http://www.w3.org/2002/07/owl#>)\nPrefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)\nPrefix(xml:=<http://www.w3.org/XML/1998/namespace>)\nPrefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)\nPrefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)\n\n\nOntology(\nDeclaration(AnnotationProperty(<http://www.geneontology.org/formats/oboInOwl#id>))\n\n\nAnnotationAssertion(<http://www.geneontology.org/formats/oboInOwl#id> <http://purl.obolibrary.org/obo/co_334.owl#CO_334:0006039> \"CO_334:0000018\"^^xsd:string)\nAnnotationAssertion(<http://www.geneontology.org/formats/oboInOwl#id> <http://purl.obolibrary.org/obo/co_334.owl#CO_334:0006040> \"CO_334:0000304\"^^xsd:string)\nAnnotationAssertion(<http://www.geneontology.org/formats/oboInOwl#id> <http://purl.obolibrary.org/obo/co_334.owl#CO_334:0006041> \"CO_334:0006019\"^^xsd:string)\nAnnotationAssertion(<http://www.geneontology.org/formats/oboInOwl#id> <http://purl.obolibrary.org/obo/co_334.owl#CO_334:0006042> \"CO_334:0000257\"^^xsd:string)\nAnnotationAssertion(<http://www.geneontology.org/formats/oboInOwl#id> <http://purl.obolibrary.org/obo/co_334.owl#CO_334:0006043> \"CO_334:0000015\"^^xsd:string)\n)
 
 [Term]
 id: CO_334:0000000
@@ -10987,6 +10986,31 @@ relationship: variable_of CO_334:0010512 ! Calculation: Harvest index_method
 relationship: variable_of CO_334:0100582 ! ratio
 
 [Term]
+id: CO_334:0006044
+name: derived dry weight of root stock in kg
+namespace: cassava_trait
+def: "Dry Weight of root stock derived from root stock fresh weight multipled by dry matter content of the storage root, WRFW*DM.  CO_334:0006040 x CO_334:0000092" [CO:curators]
+synonym: "eWRDW" EXACT []
+xref: CO:curators
+is_a: CO_334:0001000 ! Variables
+relationship: derives_from CO_334:0000092 ! dry matter content of storage root in percentage
+relationship: derives_from CO_334:0006040 ! total fresh root stock weight per plant in kg
+relationship: variable_of CO_334:0000484 ! Stock weight
+relationship: variable_of CO_334:0100493 ! kg
+
+[Term]
+id: CO_334:0006045
+name: dry matter content of whole root stock
+namespace: cassava_trait
+def: "dry matter content of the whole root stock (fibrous, storage root, and parts of stem), calculated as dry weight of whole root stock divided by fresh weight of whole root stock weight. derived trait WRFW/eWRDW CO_334:0006040/CO_334:0006044" [CO:curators]
+xref: CO:curators
+is_a: CO_334:0001000 ! Variables
+relationship: derives_from CO_334:0006044 ! derived dry weight of root stock in kg
+relationship: derives_from CO_334:0006040 ! total fresh root stock weight per plant in kg
+relationship: variable_of CO_334:0000484 ! Stock weight
+relationship: variable_of CO_334:0100493 ! kg
+
+[Term]
 id: CO_334:0010000
 name: Measurement: Plant height with leaf_method
 namespace: CassavaMethod
@@ -16156,4 +16180,3 @@ name: scale_of
 [Typedef]
 id: variable_of
 name: variable_of
-
