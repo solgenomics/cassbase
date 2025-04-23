@@ -5875,6 +5875,7 @@ creation_date: 2017-07-25T17:04:28Z
 id: CO_334:0001000
 name: Variables
 namespace: CassavaVariable
+is_a: CO_334:0000000 ! CGIAR cassava trait ontology
 
 [Term]
 id: CO_334:0001001
@@ -10919,6 +10920,7 @@ id: CO_334:0006038
 name: CassBase Variables
 namespace: cassava_trait
 def: "Parent class for CassBase variables." []
+is_a: CO_334:0000000 ! CGIAR cassava trait ontology
 
 [Term]
 id: CO_334:0010000
