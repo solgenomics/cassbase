@@ -10613,68 +10613,6 @@ created_by: Ukoabasi Ekanem
 creation_date: 2023-10-02T10:07:21Z
 
 [Term]
-id: CO_334:00060002
-name: Dry matter content greenhouse
-namespace: cassava_trait
-is_a: CO_334:0006001 ! Greenhouse trait
-
-[Term]
-id: CO_334:00060003
-name: dry matter content percentage of stem in greenhouse
-namespace: cassava_trait
-def: "Percentage dry matter of the stem, calculated as dry weight of stem divided by fresh weight of stem as measured in a greenhouse." []
-is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
-
-[Term]
-id: CO_334:00060004
-name: total dry matter content of storage root greenhouse
-namespace: cassava_trait
-def: "Total dry matter content of the storage root, calculated as: fresh weight of storage root times dry matter centent % of storage root as measured in a greenhouse." []
-is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
-
-[Term]
-id: CO_334:00060005
-name: total dry matter content of stem greenhouse
-namespace: cassava_trait
-def: "Total dry matter content of the stem, calculated as: fresh weight of stem times dry matter centent % of stem as measured in a greenhouse" []
-is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
-
-[Term]
-id: CO_334:00060006
-name: total dry matter content of leaves greenhouse
-namespace: cassava_trait
-def: "Total dry matter content of the leaves, calculated as: fresh weight of leaves times dry matter centent % of leaves as measured in a greenhouse." []
-is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
-
-[Term]
-id: CO_334:00060007
-name: dry weight of biomass in g greenhouse
-namespace: cassava_trait
-def: "Measurement of the dry weight of the total plant mass above ground in grams (g), by drying in the oven at 60 degrees Celsius and weighted using a scale." []
-is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
-
-[Term]
-id: CO_334:00060008
-name: fresh weight of biomass in g greenhouse
-namespace: cassava_trait
-def: "Measurement of the fresh weight of the total plant mass above ground in grams (g), weighted using a scale as measured in a greenhouse." []
-is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060013 ! fresh weight in greenhouse
-
-[Term]
-id: CO_334:00060009
-name: stem dry weight in g
-namespace: cassava_trait
-def: "Dry weight in grams (g) of plantable portion of the plant excluding the leaves, and stump as measured in a greenhouse. Dried in oved at 60 degrees Celcius." []
-is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
-
-[Term]
 id: CO_334:0006001
 name: Greenhouse trait
 namespace: cassava_trait
@@ -10682,69 +10620,131 @@ def: "Trait to be taken in greenhouse. As plants are much smaller, some of these
 is_a: CO_334:0000000 ! CGIAR cassava trait ontology
 
 [Term]
-id: CO_334:00060010
+id: CO_334:0006002
+name: Dry matter content greenhouse
+namespace: cassava_trait
+is_a: CO_334:0006001 ! Greenhouse trait
+
+[Term]
+id: CO_334:0006003
+name: dry matter content percentage of stem in greenhouse
+namespace: cassava_trait
+def: "Percentage dry matter of the stem, calculated as dry weight of stem divided by fresh weight of stem as measured in a greenhouse." []
+is_a: CO_334:0001000 ! Variables
+relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
+
+[Term]
+id: CO_334:0006004
+name: total dry matter content of storage root greenhouse
+namespace: cassava_trait
+def: "Total dry matter content of the storage root, calculated as: fresh weight of storage root times dry matter centent % of storage root as measured in a greenhouse." []
+is_a: CO_334:0001000 ! Variables
+relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
+
+[Term]
+id: CO_334:0006005
+name: total dry matter content of stem greenhouse
+namespace: cassava_trait
+def: "Total dry matter content of the stem, calculated as: fresh weight of stem times dry matter centent % of stem as measured in a greenhouse" []
+is_a: CO_334:0001000 ! Variables
+relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
+
+[Term]
+id: CO_334:0006006
+name: total dry matter content of leaves greenhouse
+namespace: cassava_trait
+def: "Total dry matter content of the leaves, calculated as: fresh weight of leaves times dry matter centent % of leaves as measured in a greenhouse." []
+is_a: CO_334:0001000 ! Variables
+relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
+
+[Term]
+id: CO_334:0006007
+name: dry weight of biomass in g greenhouse
+namespace: cassava_trait
+def: "Measurement of the dry weight of the total plant mass above ground in grams (g), by drying in the oven at 60 degrees Celsius and weighted using a scale." []
+is_a: CO_334:0001000 ! Variables
+relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
+
+[Term]
+id: CO_334:0006008
+name: fresh weight of biomass in g greenhouse
+namespace: cassava_trait
+def: "Measurement of the fresh weight of the total plant mass above ground in grams (g), weighted using a scale as measured in a greenhouse." []
+is_a: CO_334:0001000 ! Variables
+relationship: variable_of CO_334:0006013 ! fresh weight in greenhouse
+
+[Term]
+id: CO_334:0006009
+name: stem dry weight in g
+namespace: cassava_trait
+def: "Dry weight in grams (g) of plantable portion of the plant excluding the leaves, and stump as measured in a greenhouse. Dried in oved at 60 degrees Celcius." []
+is_a: CO_334:0001000 ! Variables
+relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
+
+[Term]
+id: CO_334:0006010
 name: dry fibrous root weight in g per plant greenhouse
 namespace: cassava_trait
 def: "Total dry weight of fibrous roots harvested per plant measured in grams (g) as measured in a greenhouse." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
+relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
 
 [Term]
-id: CO_334:00060011
+id: CO_334:0006011
 name: dry storage root weight in g per plant
 namespace: cassava_trait
 def: "Total dry weight of storage roots harvested per plant measured in grams (g). Dried in the oven at 60 degrees Celcius." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
+relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
 
 [Term]
-id: CO_334:00060012
+id: CO_334:0006012
 name: leaf dry weight measurement in g greenhouse
 namespace: cassava_trait
 def: "Weight of dried foliage leaf (the above-ground biomass excluding the stem), dried at 60 degrees Celcius, measured in grams (g), as measured in a greenhouse." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
+relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
 
 [Term]
-id: CO_334:00060013
+id: CO_334:0006013
 name: fresh weight in greenhouse
 namespace: cassava_trait
 is_a: CO_334:0006001 ! Greenhouse trait
 
 [Term]
-id: CO_334:00060014
+id: CO_334:0006014
 name: leaf fresh weight measurement in g
 namespace: cassava_trait
 def: "Weight of fresh foliage leaf (the above-ground biomass excluding the stem), measured in grams (g)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060013 ! fresh weight in greenhouse
+relationship: variable_of CO_334:0006013 ! fresh weight in greenhouse
 
 [Term]
-id: CO_334:00060015
+id: CO_334:0006015
 name: stem fresh weight in g
 namespace: cassava_trait
 def: "Fresh weight in grams (g) of plantable portion of the plant excluding the leaves, and stump." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060013 ! fresh weight in greenhouse
+relationship: variable_of CO_334:0006013 ! fresh weight in greenhouse
 
 [Term]
-id: CO_334:00060016
+id: CO_334:0006016
 name: fresh storage root weight in g per plant
 namespace: cassava_trait
 def: "Total fresh weight of storage roots harvested per plant measured in grams (g)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060013 ! fresh weight in greenhouse
+relationship: variable_of CO_334:0006013 ! fresh weight in greenhouse
 
 [Term]
-id: CO_334:00060017
+id: CO_334:0006017
 name: fresh fibrous root weight in g per plant
 namespace: cassava_trait
 def: "Total fresh weight of fibrous roots harvested per plant measured in grams (g)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060013 ! fresh weight in greenhouse
+relationship: variable_of CO_334:0006013 ! fresh weight in greenhouse
 
 [Term]
-id: CO_334:00060018
+id: CO_334:0006018
 name: stem traits
 namespace: cassava_trait
 def: "Stem related traits" []
@@ -10752,139 +10752,154 @@ is_a: CO_334:0000001 ! Agronomic trait
 is_a: CO_334:0006001 ! Greenhouse trait
 
 [Term]
-id: CO_334:00060019
+id: CO_334:0006019
 name: stem base diameter in mm
 namespace: cassava_trait
 def: "Measurement of stem diameter taken on the base (at soil level) of the plant in millimeters (mm) using the vernier caliper." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060018 ! stem traits
+relationship: variable_of CO_334:0006018 ! stem traits
 
 [Term]
-id: CO_334:00060020
+id: CO_334:0006020
 name: Internode length
 namespace: cassava_trait
 def: "the length of stem internodes." []
-is_a: CO_334:00060018 ! stem traits
+is_a: CO_334:0006018 ! stem traits
 
 [Term]
-id: CO_334:00060021
+id: CO_334:0006021
 name: internode length 1
 namespace: cassava_trait
 def: "Length of first (basal) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! Internode length
+relationship: variable_of CO_334:0006020 ! Internode length
+relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
-id: CO_334:00060022
+id: CO_334:0006022
 name: internode length 2
 namespace: cassava_trait
 def: "Length of second (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! Internode length
+relationship: variable_of CO_334:0006020 ! Internode length
+relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
-id: CO_334:00060023
+id: CO_334:0006023
 name: internode length 3
 namespace: cassava_trait
 def: "Length of third (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! Internode length
+relationship: variable_of CO_334:0006020 ! Internode length
+relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
-id: CO_334:00060024
+id: CO_334:0006024
 name: internode length 4
 namespace: cassava_trait
 def: "Length of forth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! Internode length
+relationship: variable_of CO_334:0006020 ! Internode length
+relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
-id: CO_334:00060025
+id: CO_334:0006025
 name: internode length 5
 namespace: cassava_trait
 def: "Length of fifth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! Internode length
+relationship: variable_of CO_334:0006020 ! Internode length
+relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
-id: CO_334:00060026
+id: CO_334:0006026
 name: internode length 6
 namespace: cassava_trait
 def: "Length of sixth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! Internode length
+relationship: variable_of CO_334:0006020 ! Internode length
+relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
-id: CO_334:00060027
+id: CO_334:0006027
 name: internode length 7
 namespace: cassava_trait
 def: "Length of seventh (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! Internode length
+relationship: variable_of CO_334:0006020 ! Internode length
+relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
-id: CO_334:00060028
+id: CO_334:0006028
 name: internode length 8
 namespace: cassava_trait
 def: "Length of eighth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! Internode length
+relationship: variable_of CO_334:0006020 ! Internode length
+relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
-id: CO_334:00060029
+id: CO_334:0006029
 name: internode length 9
 namespace: cassava_trait
 def: "Length of ninth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! Internode length
+relationship: variable_of CO_334:0006020 ! Internode length
+relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
-id: CO_334:00060030
+id: CO_334:0006030
 name: internode length 10
 namespace: cassava_trait
 def: "Length of tenth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! Internode length
+relationship: variable_of CO_334:0006020 ! Internode length
+relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
-id: CO_334:00060031
+id: CO_334:0006031
 name: internode length 11
 namespace: cassava_trait
 def: "Length of eleventh (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! Internode length
+relationship: variable_of CO_334:0006020 ! Internode length
+relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
-id: CO_334:00060032
+id: CO_334:0006032
 name: internode length 12
 namespace: cassava_trait
 def: "Length of twelveth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! Internode length
+relationship: variable_of CO_334:0006020 ! Internode length
+relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
-id: CO_334:00060033
+id: CO_334:0006033
 name: internode length 13
 namespace: cassava_trait
 def: "Length of thirteenth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! Internode length
+relationship: variable_of CO_334:0006020 ! Internode length
+relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
-id: CO_334:00060034
+id: CO_334:0006034
 name: internode length 14
 namespace: cassava_trait
 def: "Length of fourteenth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! Internode length
+relationship: variable_of CO_334:0006020 ! Internode length
+relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
-id: CO_334:00060035
+id: CO_334:0006035
 name: internode length 15
 namespace: cassava_trait
 def: "Length of fifteenth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! Internode length
+relationship: variable_of CO_334:0006020 ! Internode length
+relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
 id: CO_334:0006036
@@ -10898,6 +10913,12 @@ name: Dry storage root weight in kg
 def: "Dry storage root weight per plant measured in kg" []
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:0006036 ! Dry storage root weight
+
+[Term]
+id: CO_334:0006038
+name: CassBase Variables
+namespace: cassava_trait
+def: "Parent class for CassBase variables." []
 
 [Term]
 id: CO_334:0010000
