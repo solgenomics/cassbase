@@ -4891,19 +4891,6 @@ xref: TO:1000007
 is_a: CO_334:0000004 ! Quality trait
 
 [Term]
-id: CO_334:0006036
-name: Dry storage root weight
-def: "Dry storage root weight" []
-is_a: CO_334:0000001 ! Agronomic trait
-
-[Term]
-id: CO_334:0006037
-name: Dry storage root weight in kg
-def: "Dry storage root weight per plant measured in kg" []
-is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:0006036 ! Dry storage root weight
-
-[Term]
 id: CO_334:0000448
 name: Root evaluation
 namespace: cassava_trait
@@ -6460,7 +6447,6 @@ name: 0-5 scale for fufu ease of cooking
 namespace: CassavaScale
 is_a: CO_334:0100495 ! 6pt scale
 
-
 [Term]
 id: CO_334:0001098
 name: fufu turbidity percentage %
@@ -6584,8 +6570,8 @@ namespace: cassava_trait
 def: "Assessment of the decrease in clarity of the fermenting liquor by visual observation. The rate of bubble formation and water clarity/turbidity is evaluated by the processors with structured questionnaire on a scale of 1 to 5; where 5=extremely foamy and extremely turbid, 4=foamy and turbid, 3=moderately foamy and neither turbid nor clear, 2=scanty foam and clear, 1=no foam and extremely clear." [CO:curators]
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:0001073 ! Fufu quality
-relationship: variable_of CO_334:0001113 ! Visual Observation: Cassava fufu water clarity evaluation method
 relationship: variable_of CO_334:0001112 ! Fufu water clarity 1-5 scale
+relationship: variable_of CO_334:0001113 ! Visual Observation: Cassava fufu water clarity evaluation method
 creation_date: 02-27-2024
 
 [Term]
@@ -6620,6 +6606,92 @@ name: Fufu foaming ability 1-5 scale
 namespace: CassavaScale
 def: "5=extremely foamy, 4=foamy, 3=moderately foamy, 2=scanty foam and 1=no foam." []
 is_a: CO_334:0100436 ! 5 point scales
+
+[Term]
+id: CO_334:0001116
+name: Relative growth rate trait
+namespace: cassava_trait
+def: "The speed of crop growth." [CO:curators]
+is_a: CO_334:0000001 ! Agronomic trait
+
+[Term]
+id: CO_334:0001117
+name: relative growth rate measured from an unmanned aerial vehicle (UAV) in cubic meters per day m^3/day
+namespace: cassava_trait
+def: "the speed of the crop growth in terms of volume per unit of time (a day) m3/day." [CO:curators]
+synonym: "RGR_vol" EXACT []
+is_a: CO_334:0001000 ! Variables
+relationship: variable_of CO_334:0001116 ! Relative growth rate trait
+relationship: variable_of CO_334:0001118 ! Cubic meter per day m3/day
+relationship: variable_of CO_334:0001119 ! Measurement: Relative Growth Rate Remote sensing from unmanned aerial vehicles (UAV)
+
+[Term]
+id: CO_334:0001118
+name: Cubic meter per day m3/day
+namespace: CassavaScale
+synonym: "m3/day" EXACT []
+is_a: CO_334:0001001 ! Scales
+relationship: scale_of CO_334:0001119 ! Measurement: Relative Growth Rate Remote sensing from unmanned aerial vehicles (UAV)
+
+[Term]
+id: CO_334:0001119
+name: Measurement: Relative Growth Rate Remote sensing from unmanned aerial vehicles (UAV)
+namespace: CassavaMethod
+def: "Measurement using a Remote sensing, from unmanned aerial vehicles (UAV)." [CO:curators]
+is_a: CO_334:0001002 ! Methods
+relationship: method_of CO_334:0001117 ! relative growth rate measured from an unmanned aerial vehicle (UAV) in cubic meters per day m^3/day
+
+[Term]
+id: CO_334:0001120
+name: Cubic meter per celcius degree m3/C
+namespace: CassavaScale
+synonym: "m3/C" EXACT []
+is_a: CO_334:0001001 ! Scales
+relationship: scale_of CO_334:0001119 ! Measurement: Relative Growth Rate Remote sensing from unmanned aerial vehicles (UAV)
+
+[Term]
+id: CO_334:0001121
+name: relative growth rate measured from an unmanned aerial vehicle (UAV) in cubic meters per celcius degree m^3/C
+namespace: cassava_trait
+def: "the speed of the crop growth in terms of volume per unit of temperature (celcius) m3/C." [CO:curators]
+is_a: CO_334:0001000 ! Variables
+relationship: variable_of CO_334:0001116 ! Relative growth rate trait
+relationship: variable_of CO_334:0001119 ! Measurement: Relative Growth Rate Remote sensing from unmanned aerial vehicles (UAV)
+relationship: variable_of CO_334:0001120 ! Cubic meter per celcius degree m3/C
+
+[Term]
+id: CO_334:0001122
+name: Electron transport rate trait
+namespace: cassava_trait
+def: "The rate of transport of electrons between photosystems I and II, and it is considered a close approximation of photosynthetic rates." [CO:curators]
+is_a: CO_334:0000003 ! Physiological trait
+
+[Term]
+id: CO_334:0001123
+name: Maximum electron transport rate (ETRmax) measured in mmol electrons using pulse amplitude modulation (PAM)-based methods
+namespace: cassava_trait
+def: "the electron transport rate between photosystems I and II, and it is considered as a close approximation of photosynthetic efficiency. The maximum ETR, or ETRmax, refers to maximum rate at saturating light intensities. ETR is measured using pulse amplitude modulation (PAM)-based methods, which consists of emitting blue light pulses over a leaf area of about 1 square cm. The ETR data is collected every 15 minutes during the day and every 2 hours during the evening, typically measured on 50-100 plants in a time window of 2-4 weeks." [CO:curators]
+synonym: "ETRmax" EXACT []
+is_a: CO_334:0001000 ! Variables
+relationship: variable_of CO_334:0001122 ! Electron transport rate trait
+relationship: variable_of CO_334:0001124 ! Measurement: Pulse Amplitude Modulation (PAM) technique for measuring electron transport rate
+relationship: variable_of CO_334:0001125 ! millimol electrons
+
+[Term]
+id: CO_334:0001124
+name: Measurement: Pulse Amplitude Modulation (PAM) technique for measuring electron transport rate
+namespace: CassavaMethod
+def: "the method to measure ETR is based on the pulse amplitude modulation (PAM) technique.\nIt  consists of emitting blue light pulse (over a leaf area of about 1 square cm) which will cause chlorophyll fluorescence (ChlF);\nChlF information is used to estimate the quantum efficiency of photosystem II, and subsequently ETR as a proxy of photosynthesis." [CO:curators]
+is_a: CO_334:0001002 ! Methods
+relationship: method_of CO_334:0001123 ! Maximum electron transport rate (ETRmax) measured in mmol electrons using pulse amplitude modulation (PAM)-based methods
+
+[Term]
+id: CO_334:0001125
+name: millimol electrons
+namespace: CassavaScale
+synonym: "mmol electrons" EXACT []
+is_a: CO_334:0001001 ! Scales
+relationship: scale_of CO_334:0001124 ! Measurement: Pulse Amplitude Modulation (PAM) technique for measuring electron transport rate
 
 [Term]
 id: CO_334:0002001
@@ -7678,7 +7750,7 @@ is_a: CO_334:0000004 ! Quality trait
 id: CO_334:0002110
 name: Cassava white leaf spot disease severity
 namespace: cassava_trait
-def: Severity of white leaf spot caused by Phaeoramularia manihotis (previosly named Passalora manihotis)" [CO:curators]
+def: "Severity of white leaf spot caused by Phaeoramularia manihotis (previosly named Passalora manihotis)" [CO:curators]
 synonym: "cwlsds" RELATED []
 xref: CO:curators
 is_a: CO_334:0000029 ! fungal disease
@@ -10541,13 +10613,6 @@ created_by: Ukoabasi Ekanem
 creation_date: 2023-10-02T10:07:21Z
 
 [Term]
-id: CO_334:0006001
-name: Greenhouse trait
-namespace: cassava_trait
-def: "Trait to be taken in greenhouse. As plants are much smaller, some of these traits will be measured, for example, in g instead of kg." []
-is_a: CO_334:0000000 ! CGIAR cassava trait ontology
-
-[Term]
 id: CO_334:00060002
 name: Dry matter content greenhouse
 namespace: cassava_trait
@@ -10556,72 +10621,87 @@ is_a: CO_334:0006001 ! Greenhouse trait
 [Term]
 id: CO_334:00060003
 name: dry matter content percentage of stem in greenhouse
-def: "Percentage dry matter of the stem, calculated as dry weight of stem divided by fresh weight of stem as measured in a greenhouse." []
 namespace: cassava_trait
+def: "Percentage dry matter of the stem, calculated as dry weight of stem divided by fresh weight of stem as measured in a greenhouse." []
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 [Term]
 id: CO_334:00060004
 name: total dry matter content of storage root greenhouse
-def: "Total dry matter content of the storage root, calculated as: fresh weight of storage root times dry matter centent % of storage root as measured in a greenhouse." []
 namespace: cassava_trait
+def: "Total dry matter content of the storage root, calculated as: fresh weight of storage root times dry matter centent % of storage root as measured in a greenhouse." []
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 [Term]
 id: CO_334:00060005
 name: total dry matter content of stem greenhouse
-def: "Total dry matter content of the stem, calculated as: fresh weight of stem times dry matter centent % of stem as measured in a greenhouse" []
 namespace: cassava_trait
+def: "Total dry matter content of the stem, calculated as: fresh weight of stem times dry matter centent % of stem as measured in a greenhouse" []
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 [Term]
 id: CO_334:00060006
 name: total dry matter content of leaves greenhouse
-def: "Total dry matter content of the leaves, calculated as: fresh weight of leaves times dry matter centent % of leaves as measured in a greenhouse." []
 namespace: cassava_trait
+def: "Total dry matter content of the leaves, calculated as: fresh weight of leaves times dry matter centent % of leaves as measured in a greenhouse." []
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 [Term]
 id: CO_334:00060007
 name: dry weight of biomass in g greenhouse
-def: "Measurement of the dry weight of the total plant mass above ground in grams (g), by drying in the oven at 60 degrees Celsius and weighted using a scale." []
 namespace: cassava_trait
+def: "Measurement of the dry weight of the total plant mass above ground in grams (g), by drying in the oven at 60 degrees Celsius and weighted using a scale." []
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
+
+[Term]
+id: CO_334:00060008
+name: fresh weight of biomass in g greenhouse
+namespace: cassava_trait
+def: "Measurement of the fresh weight of the total plant mass above ground in grams (g), weighted using a scale as measured in a greenhouse." []
+is_a: CO_334:0001000 ! Variables
+relationship: variable_of CO_334:00060013 ! fresh weight in greenhouse
 
 [Term]
 id: CO_334:00060009
 name: stem dry weight in g
-def: "Dry weight in grams (g) of plantable portion of the plant excluding the leaves, and stump as measured in a greenhouse. Dried in oved at 60 degrees Celcius." []
 namespace: cassava_trait
+def: "Dry weight in grams (g) of plantable portion of the plant excluding the leaves, and stump as measured in a greenhouse. Dried in oved at 60 degrees Celcius." []
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 [Term]
+id: CO_334:0006001
+name: Greenhouse trait
+namespace: cassava_trait
+def: "Trait to be taken in greenhouse. As plants are much smaller, some of these traits will be measured, for example, in g instead of kg." []
+is_a: CO_334:0000000 ! CGIAR cassava trait ontology
+
+[Term]
 id: CO_334:00060010
 name: dry fibrous root weight in g per plant greenhouse
-def: "Total dry weight of fibrous roots harvested per plant measured in grams (g) as measured in a greenhouse." []
 namespace: cassava_trait
+def: "Total dry weight of fibrous roots harvested per plant measured in grams (g) as measured in a greenhouse." []
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 [Term]
 id: CO_334:00060011
 name: dry storage root weight in g per plant
-def: "Total dry weight of storage roots harvested per plant measured in grams (g). Dried in the oven at 60 degrees Celcius." []
 namespace: cassava_trait
+def: "Total dry weight of storage roots harvested per plant measured in grams (g). Dried in the oven at 60 degrees Celcius." []
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
 [Term]
 id: CO_334:00060012
 name: leaf dry weight measurement in g greenhouse
-def: "Weight of dried foliage leaf (the above-ground biomass excluding the stem), dried at 60 degrees Celcius, measured in grams (g), as measured in a greenhouse." []
 namespace: cassava_trait
+def: "Weight of dried foliage leaf (the above-ground biomass excluding the stem), dried at 60 degrees Celcius, measured in grams (g), as measured in a greenhouse." []
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:00060002 ! Dry matter content greenhouse
 
@@ -10632,186 +10712,192 @@ namespace: cassava_trait
 is_a: CO_334:0006001 ! Greenhouse trait
 
 [Term]
-id: CO_334:00060008
-name: fresh weight of biomass in g greenhouse
-def: "Measurement of the fresh weight of the total plant mass above ground in grams (g), weighted using a scale as measured in a greenhouse." []
-namespace: cassava_trait
-is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060013 ! fresh weight in greenhouse
-
-[Term]
 id: CO_334:00060014
 name: leaf fresh weight measurement in g
-def: "Weight of fresh foliage leaf (the above-ground biomass excluding the stem), measured in grams (g)." []
 namespace: cassava_trait
+def: "Weight of fresh foliage leaf (the above-ground biomass excluding the stem), measured in grams (g)." []
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:00060013 ! fresh weight in greenhouse
 
 [Term]
 id: CO_334:00060015
 name: stem fresh weight in g
-def: "Fresh weight in grams (g) of plantable portion of the plant excluding the leaves, and stump." []
 namespace: cassava_trait
+def: "Fresh weight in grams (g) of plantable portion of the plant excluding the leaves, and stump." []
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:00060013 ! fresh weight in greenhouse
 
 [Term]
 id: CO_334:00060016
 name: fresh storage root weight in g per plant
-def: "Total fresh weight of storage roots harvested per plant measured in grams (g)." []
 namespace: cassava_trait
+def: "Total fresh weight of storage roots harvested per plant measured in grams (g)." []
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:00060013 ! fresh weight in greenhouse
 
 [Term]
 id: CO_334:00060017
 name: fresh fibrous root weight in g per plant
-def: "Total fresh weight of fibrous roots harvested per plant measured in grams (g)." []
 namespace: cassava_trait
+def: "Total fresh weight of fibrous roots harvested per plant measured in grams (g)." []
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:00060013 ! fresh weight in greenhouse
 
 [Term]
 id: CO_334:00060018
 name: stem traits
-def: "Stem related traits" []
 namespace: cassava_trait
+def: "Stem related traits" []
 is_a: CO_334:0000001 ! Agronomic trait
 is_a: CO_334:0006001 ! Greenhouse trait
 
 [Term]
 id: CO_334:00060019
 name: stem base diameter in mm
-def: "Measurement of stem diameter taken on the base (at soil level) of the plant in millimeters (mm) using the vernier caliper." []
 namespace: cassava_trait
+def: "Measurement of stem diameter taken on the base (at soil level) of the plant in millimeters (mm) using the vernier caliper." []
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:00060018 ! stem traits
 
 [Term]
 id: CO_334:00060020
 name: Internode length
-def: "the length of stem internodes."
 namespace: cassava_trait
+def: "the length of stem internodes." []
 is_a: CO_334:00060018 ! stem traits
 
 [Term]
 id: CO_334:00060021
 name: internode length 1
+namespace: cassava_trait
 def: "Length of first (basal) internode measured in centimeters (cm)." []
-namesapce: cassava_trait
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! internode length
+relationship: variable_of CO_334:00060020 ! Internode length
 
 [Term]
 id: CO_334:00060022
 name: internode length 2
-def: "Length of second (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
+def: "Length of second (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! internode length
+relationship: variable_of CO_334:00060020 ! Internode length
 
 [Term]
 id: CO_334:00060023
 name: internode length 3
-def: "Length of third (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
+def: "Length of third (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! internode length
+relationship: variable_of CO_334:00060020 ! Internode length
 
 [Term]
 id: CO_334:00060024
 name: internode length 4
-def: "Length of forth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
+def: "Length of forth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! internode length in greenhouse
+relationship: variable_of CO_334:00060020 ! Internode length
 
 [Term]
 id: CO_334:00060025
 name: internode length 5
-def: "Length of fifth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
-relationship: variable_of CO_334:00060020 ! internode length
+def: "Length of fifth (from base) internode measured in centimeters (cm)." []
+is_a: CO_334:0001000 ! Variables
+relationship: variable_of CO_334:00060020 ! Internode length
 
 [Term]
 id: CO_334:00060026
 name: internode length 6
-def: "Length of sixth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
+def: "Length of sixth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! internode length
+relationship: variable_of CO_334:00060020 ! Internode length
 
 [Term]
 id: CO_334:00060027
 name: internode length 7
-def: "Length of seventh (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
+def: "Length of seventh (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! internode length
+relationship: variable_of CO_334:00060020 ! Internode length
 
 [Term]
 id: CO_334:00060028
 name: internode length 8
-def: "Length of eighth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
+def: "Length of eighth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! internode length
+relationship: variable_of CO_334:00060020 ! Internode length
 
 [Term]
 id: CO_334:00060029
 name: internode length 9
-def: "Length of ninth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
+def: "Length of ninth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! internode length
+relationship: variable_of CO_334:00060020 ! Internode length
 
 [Term]
 id: CO_334:00060030
 name: internode length 10
-def: "Length of tenth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
+def: "Length of tenth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! internode length
+relationship: variable_of CO_334:00060020 ! Internode length
 
 [Term]
 id: CO_334:00060031
 name: internode length 11
-def: "Length of eleventh (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
+def: "Length of eleventh (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! internode length in greenhouse
+relationship: variable_of CO_334:00060020 ! Internode length
 
 [Term]
 id: CO_334:00060032
 name: internode length 12
-def: "Length of twelveth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
+def: "Length of twelveth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! internode length
+relationship: variable_of CO_334:00060020 ! Internode length
 
 [Term]
 id: CO_334:00060033
 name: internode length 13
-def: "Length of thirteenth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
+def: "Length of thirteenth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! internode length
+relationship: variable_of CO_334:00060020 ! Internode length
 
 [Term]
 id: CO_334:00060034
 name: internode length 14
-def: "Length of fourteenth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
+def: "Length of fourteenth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! internode length
+relationship: variable_of CO_334:00060020 ! Internode length
 
 [Term]
 id: CO_334:00060035
 name: internode length 15
-def: "Length of fifteenth (from base) internode measured in centimeters (cm)." []
 namespace: cassava_trait
+def: "Length of fifteenth (from base) internode measured in centimeters (cm)." []
 is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:00060020 ! internode length
+relationship: variable_of CO_334:00060020 ! Internode length
+
+[Term]
+id: CO_334:0006036
+name: Dry storage root weight
+def: "Dry storage root weight" []
+is_a: CO_334:0000001 ! Agronomic trait
+
+[Term]
+id: CO_334:0006037
+name: Dry storage root weight in kg
+def: "Dry storage root weight per plant measured in kg" []
+is_a: CO_334:0001000 ! Variables
+relationship: variable_of CO_334:0006036 ! Dry storage root weight
 
 [Term]
 id: CO_334:0010000
@@ -15968,92 +16054,6 @@ namespace: CassavaScale
 is_a: CO_334:0001001 ! Scales
 relationship: scale_of CO_334:0013054 ! comparative ranking by users method
 
-[Term]
-id: CO_334:0001116
-name: Relative growth rate trait
-namespace: cassava_trait
-def: "The speed of crop growth." [CO:curators]
-is_a: CO_334:0000001 ! Agronomic trait
-
-[Term]
-id: CO_334:0001117
-name: relative growth rate measured from an unmanned aerial vehicle (UAV) in cubic meters per day m^3/day
-namespace: cassava_trait
-def: "the speed of the crop growth in terms of volume per unit of time (a day) m3/day." [CO:curators]
-synonym: "RGR_vol" EXACT []
-is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:0001116 ! Relative growth rate trait
-relationship: variable_of CO_334:0001118 ! Cubic meter per day m3/day
-relationship: variable_of CO_334:0001119 ! Measurement: Relative Growth Rate Remote sensing from unmanned aerial vehicles (UAV)
-
-[Term]
-id: CO_334:0001118
-name: Cubic meter per day m3/day
-namespace: CassavaScale
-synonym: "m3/day" EXACT []
-is_a: CO_334:0001001 ! Scales
-relationship: scale_of CO_334:0001119 ! Measurement: Relative Growth Rate Remote sensing from unmanned aerial vehicles (UAV)
-
-[Term]
-id: CO_334:0001119
-name: Measurement: Relative Growth Rate Remote sensing from unmanned aerial vehicles (UAV)
-namespace: CassavaMethod
-def: "Measurement using a Remote sensing, from unmanned aerial vehicles (UAV)." [CO:curators]
-is_a: CO_334:0001002 ! Methods
-relationship: method_of CO_334:0001117 ! relative growth rate measured from an unmanned aerial vehicle (UAV) in cubic meters per day m^3/day
-
-[Term]
-id: CO_334:0001120
-name: Cubic meter per celcius degree m3/C
-namespace: CassavaScale
-synonym: "m3/C" EXACT []
-is_a: CO_334:0001001 ! Scales
-relationship: scale_of CO_334:0001119 ! Measurement: Relative Growth Rate Remote sensing from unmanned aerial vehicles (UAV)
-
-[Term]
-id: CO_334:0001121
-name: relative growth rate measured from an unmanned aerial vehicle (UAV) in cubic meters per celcius degree m^3/C
-namespace: cassava_trait
-def: "the speed of the crop growth in terms of volume per unit of temperature (celcius) m3/C." [CO:curators]
-is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:0001116 ! Relative growth rate trait
-relationship: variable_of CO_334:0001119 ! Measurement: Relative Growth Rate Remote sensing from unmanned aerial vehicles (UAV)
-relationship: variable_of CO_334:0001120 ! Cubic meter per celcius degree m3/C
-
-[Term]
-id: CO_334:0001122
-name: Electron transport rate trait
-namespace: cassava_trait
-def: "The rate of transport of electrons between photosystems I and II, and it is considered a close approximation of photosynthetic rates." [CO:curators]
-is_a: CO_334:0000003 ! Physiological trait
-
-[Term]
-id: CO_334:0001123
-name: Maximum electron transport rate (ETRmax) measured in mmol electrons using pulse amplitude modulation (PAM)-based methods
-namespace: cassava_trait
-def: "the electron transport rate between photosystems I and II, and it is considered as a close approximation of photosynthetic efficiency. The maximum ETR, or ETRmax, refers to maximum rate at saturating light intensities. ETR is measured using pulse amplitude modulation (PAM)-based methods, which consists of emitting blue light pulses over a leaf area of about 1 square cm. The ETR data is collected every 15 minutes during the day and every 2 hours during the evening, typically measured on 50-100 plants in a time window of 2-4 weeks." [CO:curators]
-synonym: "ETRmax" EXACT []
-is_a: CO_334:0001000 ! Variables
-relationship: variable_of CO_334:0001122 ! Electron transport rate trait
-relationship: variable_of CO_334:0001124 ! Measurement: Pulse Amplitude Modulation (PAM) technique for measuring electron transport rate
-relationship: variable_of CO_334:0001125 ! millimol electrons
-
-[Term]
-id: CO_334:0001124
-name: Measurement: Pulse Amplitude Modulation (PAM) technique for measuring electron transport rate
-namespace: CassavaMethod
-def: "the method to measure ETR is based on the pulse amplitude modulation (PAM) technique.\nIt  consists of emitting blue light pulse (over a leaf area of about 1 square cm) which will cause chlorophyll fluorescence (ChlF);\nChlF information is used to estimate the quantum efficiency of photosystem II, and subsequently ETR as a proxy of photosynthesis." [CO:curators]
-is_a: CO_334:0001002 ! Methods
-relationship: method_of CO_334:0001123 ! Maximum electron transport rate measured in mmol electrons using pulse amplitude modulation (PAM)
-
-[Term]
-id: CO_334:0001125
-name: millimol electrons
-namespace: CassavaScale
-synonym: "mmol electrons" EXACT []
-is_a: CO_334:0001001 ! Scales
-relationship: scale_of CO_334:0001124 ! Measurement: Pulse Amplitude Modulation (PAM) technique for measuring electron transport rate
-
 [Typedef]
 id: derives_from
 name: derives_from
@@ -16069,3 +16069,4 @@ name: scale_of
 [Typedef]
 id: variable_of
 name: variable_of
+
