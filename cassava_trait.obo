@@ -156,9 +156,9 @@ relationship: variable_of CO_334:0100535 ! t/ha
 
 [Term]
 id: CO_334:0000015
-name: harvest index variable
+name: harvest index of storage root
 namespace: cassava_trait
-def: "Proportion of fresh root weight in total biomass." [CO:curators]
+def: "Proportion of fresh storage root weight in total biomass." [CO:curators]
 synonym: "HI" EXACT []
 xref: TO:0000128
 is_a: CO_334:0001000 ! Variables
@@ -1053,9 +1053,9 @@ relationship: variable_of CO_334:0100505 ! 9pt scale
 
 [Term]
 id: CO_334:0000092
-name: dry matter content percentage
+name: dry matter content of storage root in percentage
 namespace: cassava_trait
-def: "Percentage dry matter storage root." [CO:curators]
+def: "Percentage dry matter storage root calculated as dry weight of storage root divided by fresh weight of storage root." [CO:curators]
 synonym: "dm" EXACT []
 synonym: "DMCt_Comp_r" EXACT []
 synonym: "Water content" EXACT []
@@ -1229,7 +1229,7 @@ relationship: variable_of CO_334:0100555 ! 7pt scale
 id: CO_334:0000106
 name: first apical branch height measurement in cm
 namespace: cassava_trait
-def: "Height of first apical branch (ground level to point of first Apical branch, 9 months after planting) in cm." [CO:curators]
+def: "The length of the longest straight, unbranched stem of the plant from the ground to the main branching point measured in cm. Proxy for plant multiply rate." [CO:curators]
 synonym: "BrnchHt_Meas_cm" EXACT []
 synonym: "brnht" EXACT []
 is_a: CO_334:0001000 ! Variables
@@ -3048,9 +3048,9 @@ creation_date: 2015-09-28T17:48:12Z
 
 [Term]
 id: CO_334:0000257
-name: stem diameter measurement in cm
+name: middle stem diameter measurement in cm
 namespace: cassava_trait
-def: "Measurement of stem diameter taken on the middle of the plant in centimeter (cm) using the vernier caliper." [CO:curators]
+def: "Measurement of stem diameter taken on the middle of the plant, below the main branching pont, in centimeter (cm) using the vernier caliper." [CO:curators]
 synonym: "STE" RELATED []
 synonym: "STMDIAM" RELATED []
 is_a: CO_334:0001000 ! Variables
@@ -10660,7 +10660,7 @@ relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
 
 [Term]
 id: CO_334:0006007
-name: dry weight of biomass in g greenhouse
+name: dry shoot weight in grams (greenhouse)
 namespace: cassava_trait
 def: "Measurement of the dry weight of the total plant mass above ground in grams (g), by drying in the oven at 60 degrees Celsius and weighted using a scale." []
 is_a: CO_334:0001000 ! Variables
@@ -10668,7 +10668,7 @@ relationship: variable_of CO_334:0006002 ! Dry matter content greenhouse
 
 [Term]
 id: CO_334:0006008
-name: fresh weight of biomass in g greenhouse
+name: fresh shoot weight in grams (greenhouse)
 namespace: cassava_trait
 def: "Measurement of the fresh weight of the total plant mass above ground in grams (g), weighted using a scale as measured in a greenhouse." []
 is_a: CO_334:0001000 ! Variables
