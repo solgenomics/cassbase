@@ -2797,4 +2797,3 @@ id: CASSTIME:0000464
 name: cass day 86
 synonym: "day86" EXACT []
 is_a: CASSTIME:0000073 ! cass number of days
-
