@@ -617,27 +617,6 @@ def: "" []
 is_a: CASSTIME:0000060
 
 [Term]
-id: CASSTIME:0000061
-name: cass month 1
-synonym: "Mo1" EXACT
-def: "" []
-is_a: CASSTIME:0000060
-
-[Term]
-id: CASSTIME:0000061
-name: cass month 1
-synonym: "Mo1" EXACT
-def: "" []
-is_a: CASSTIME:0000060
-
-[Term]
-id: CASSTIME:0000061
-name: cass month 1
-synonym: "Mo1" EXACT
-def: "" []
-is_a: CASSTIME:0000060
-
-[Term]
 id: CASSTIME:0000062
 name: cass month 2
 synonym: "Mo2" EXACT
