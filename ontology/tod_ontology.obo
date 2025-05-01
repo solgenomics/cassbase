@@ -2805,16 +2805,20 @@ is_a: CASSTIME:0000000 ! cass_time_terms
 
 [Term]
 id: CASSTIME:0000466
-name: early harvest
+name: Intermediate harvest
 is_a: CASSTIME:0000465 ! Event relations
 
 [Term]
 id: CASSTIME:0000467
-name: mid harvest
+name: Pre-bulking
 is_a: CASSTIME:0000465 ! Event relations
 
 [Term]
 id: CASSTIME:0000468
-name: late harvest
+name: Early bulking
 is_a: CASSTIME:0000465 ! Event relations
 
+[Term]
+id: CASSTIME:0000469
+name: During bulking
+is_a: CASSTIME:0000465 ! Event relations
