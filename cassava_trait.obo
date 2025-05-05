@@ -3728,7 +3728,7 @@ creation_date: 2017-04-10T12:26:09Z
 id: CO_334:0000325
 name: total fresh weight by plot
 namespace: cassava_trait
-def: "The sum of fresh root weight + fresh root weight by plot." [CO:curators]
+def: "The sum of fresh root weight + fresh shoot weight by plot in kg." [CO:curators]
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:0000324 ! Total fresh weight
 relationship: variable_of CO_334:0010286 ! Measurement: Fresh weight of storage root_method
@@ -3740,7 +3740,7 @@ creation_date: 2017-04-10T12:26:56Z
 id: CO_334:0000326
 name: total fresh weight by plant
 namespace: cassava_trait
-def: "The sum of fresh root weight + fresh root weight by plant." [CO:curators]
+def: "The sum of fresh root weight + fresh shoot weight by plant in kg." [CO:curators]
 is_a: CO_334:0001000 ! Variables
 relationship: variable_of CO_334:0000324 ! Total fresh weight
 relationship: variable_of CO_334:0010514 ! Measurement: Storage root weight per plant_method
@@ -11012,8 +11012,8 @@ is_a: CO_334:0001000 ! Variables
 relationship: derives_from CO_334:0000092 ! dry matter content of storage root in percentage
 relationship: derives_from CO_334:0006040 ! total fresh root stock weight per plant in kg
 relationship: variable_of CO_334:0000484 ! Stock weight
-relationship: variable_of CO_334:0100493 ! kg
 relationship: variable_of CO_334:0006038 ! CassBase Variables
+relationship: variable_of CO_334:0100493 ! kg
 
 [Term]
 id: CO_334:0006045
@@ -11022,11 +11022,11 @@ namespace: cassava_trait
 def: "dry matter content of the whole root stock (fibrous, storage root, and parts of stem), calculated as dry weight of whole root stock divided by fresh weight of whole root stock weight. derived trait WRFW/eWRDW CO_334:0006040/CO_334:0006044" [CO:curators]
 xref: CO:curators
 is_a: CO_334:0001000 ! Variables
-relationship: derives_from CO_334:0006044 ! derived dry weight of root stock in kg
 relationship: derives_from CO_334:0006040 ! total fresh root stock weight per plant in kg
+relationship: derives_from CO_334:0006044 ! derived dry weight of root stock in kg
 relationship: variable_of CO_334:0000484 ! Stock weight
-relationship: variable_of CO_334:0100493 ! kg
 relationship: variable_of CO_334:0006038 ! CassBase Variables
+relationship: variable_of CO_334:0100493 ! kg
 
 [Term]
 id: CO_334:0010000
@@ -16198,3 +16198,4 @@ name: scale_of
 [Typedef]
 id: variable_of
 name: variable_of
+
