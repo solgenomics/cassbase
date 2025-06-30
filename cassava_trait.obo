@@ -160,7 +160,7 @@ id: CO_334:0000015
 name: harvest index of storage root
 namespace: cassava_trait
 def: "Proportion of fresh storage root weight in total biomass." [CO:curators]
-synonym: "HI" EXACT []
+synonym: "HI_gh" EXACT []
 xref: TO:0000128
 is_a: CO_334:0001000 ! Variables
 relationship: derives_from CO_334:0000013 ! fresh root yield
@@ -1055,6 +1055,7 @@ relationship: variable_of CO_334:0100505 ! 9pt scale
 [Term]
 id: CO_334:0000092
 name: dry matter content of storage root in percentage
+synonym: "DMC" EXACT []
 namespace: cassava_trait
 def: "Percentage dry matter storage root calculated as dry weight of storage root divided by fresh weight of storage root." [CO:curators]
 synonym: "dm" EXACT []
@@ -10664,6 +10665,7 @@ relationship: variable_of CO_334:0006038 ! CassBase Variables
 [Term]
 id: CO_334:0006007
 name: dry shoot weight in grams (greenhouse)
+synonym: "SDW_gh" EXACT []
 namespace: cassava_trait
 def: "Measurement of the dry weight of the total plant mass above ground in grams (g), by drying in the oven at 60 degrees Celsius and weighted using a scale." []
 is_a: CO_334:0001000 ! Variables
@@ -10673,6 +10675,7 @@ relationship: variable_of CO_334:0006038 ! CassBase Variables
 [Term]
 id: CO_334:0006008
 name: fresh shoot weight in grams (greenhouse)
+synonym: "SFW_gh" EXACT []
 namespace: cassava_trait
 def: "Measurement of the fresh weight of the total plant mass above ground in grams (g), weighted using a scale as measured in a greenhouse." []
 is_a: CO_334:0001000 ! Variables
@@ -10682,6 +10685,7 @@ relationship: variable_of CO_334:0006038 ! CassBase Variables
 [Term]
 id: CO_334:0006009
 name: stem dry weight in g
+synonym: "STDW_gh" EXACT []
 namespace: cassava_trait
 def: "Dry weight in grams (g) of plantable portion of the plant excluding the leaves, and stump as measured in a greenhouse. Dried in oved at 60 degrees Celcius." []
 is_a: CO_334:0001000 ! Variables
@@ -10700,6 +10704,7 @@ relationship: variable_of CO_334:0006038 ! CassBase Variables
 [Term]
 id: CO_334:0006011
 name: dry storage root weight in g per plant
+synonym: "RDW_gh" EXACT []
 namespace: cassava_trait
 def: "Total dry weight of storage roots harvested per plant measured in grams (g). Dried in the oven at 60 degrees Celcius." []
 is_a: CO_334:0001000 ! Variables
@@ -10733,6 +10738,7 @@ relationship: variable_of CO_334:0006038 ! CassBase Variables
 [Term]
 id: CO_334:0006015
 name: stem fresh weight in g
+synonym: "STFW_gh" EXACT []
 namespace: cassava_trait
 def: "Fresh weight in grams (g) of plantable portion of the plant excluding the leaves, and stump." []
 is_a: CO_334:0001000 ! Variables
@@ -10742,6 +10748,7 @@ relationship: variable_of CO_334:0006038 ! CassBase Variables
 [Term]
 id: CO_334:0006016
 name: fresh storage root weight in g per plant
+synonym: "RFW_gh" EXACT []
 namespace: cassava_trait
 def: "Total fresh weight of storage roots harvested per plant measured in grams (g)." []
 is_a: CO_334:0001000 ! Variables
@@ -10768,6 +10775,7 @@ is_a: CO_334:0006001 ! Greenhouse trait
 [Term]
 id: CO_334:0006019
 name: lower stem base diameter in mm
+synonym: "LS_D_gh" EXACT []
 namespace: cassava_trait
 def: "Measurement of stem diameter taken on the base (at soil level) of the plant in millimeters (mm) using the vernier caliper." []
 is_a: CO_334:0001000 ! Variables
@@ -10940,6 +10948,7 @@ is_a: CO_334:0000000 ! CGIAR cassava trait ontology
 [Term]
 id: CO_334:0006039
 name: plant height until apical meristem in cm per plant
+synonym: "PH_gh" EXACT []
 namespace: cassava_trait
 def: "Plant height measured from ground to shoot apical meristem in cm." [CO:curators]
 synonym: "PH" EXACT []
