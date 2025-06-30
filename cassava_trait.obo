@@ -1058,9 +1058,6 @@ name: dry matter content of storage root in percentage
 synonym: "DMC" EXACT []
 namespace: cassava_trait
 def: "Percentage dry matter storage root calculated as dry weight of storage root divided by fresh weight of storage root." [CO:curators]
-synonym: "dm" EXACT []
-synonym: "DMCt_Comp_r" EXACT []
-synonym: "Water content" EXACT []
 is_a: CO_334:0001000 ! Variables
 is_a: CO_334:0001025 ! farmer preference trait post-harvest
 is_a: CO_334:0002010 ! Farmer trait
