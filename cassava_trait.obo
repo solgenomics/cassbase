@@ -11053,6 +11053,26 @@ relationship: variable_of CO_334:0001119 ! Measurement: Relative Growth Rate Rem
 relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
+id: CO_334:0006048
+name: fresh storage root sample
+namespace: cassava_trait
+def: "exact weight of approximately 100g of fresh root from a cross section of a storage root used for dry weight calculation."	[]
+
+[Term]
+id: CO_334:0006049
+name: fresh storage root sample weight in grams
+namespace: cassava_trait
+def: "exact weight of approximately 100g of fresh root from a cross section of a storage root, used for dry matter percentage calculation of storage root, CO_334:0000092 and total root stock dry matter CO_334:0006045." []
+relationship: variable_of CO_334:0006038 ! CassBase Variables
+
+[Term]
+id: CO_334:0006050
+name: dry storage root sample weight in grams
+namespace: cassava_trait
+def: "exact weight of approximately 100g of dried root from a cross section of a storage root, used for dry matter percentage calculation of storage root, CO_334:0000092 and total root stock dry matter CO_334:0006045." []
+relationship: variable_of CO_334:0006039 ! CassBase Variables
+
+[Term]
 id: CO_334:0010000
 name: Measurement: Plant height with leaf_method
 namespace: CassavaMethod
@@ -16205,6 +16225,7 @@ name: Ranking:3
 namespace: CassavaScale
 is_a: CO_334:0001001 ! Scales
 relationship: scale_of CO_334:0013054 ! comparative ranking by users method
+
 
 [Typedef]
 id: derives_from
