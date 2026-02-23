@@ -1,4 +1,6 @@
 *~
+sgn_local.conf
+bash_history
 /blib/
 /.build/
 _build/
