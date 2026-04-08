@@ -11067,6 +11067,34 @@ def: "exact weight of approximately 100g of dry root from a cross section of a s
 relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
+id: CO_334:0006050
+name: total starch of storage roots (mg starch / g dry weight)
+namespace: cassava_trait
+def: "total starch of storage roots (mg starch / g dry weight)" []
+relationship: variable_of CO_334:0006038 ! CassBase Variables
+
+[Term]
+id: CO_334:0006051
+name: total glucose of storage roots (mg glucose / g DW)
+namespace: cassava_trait
+def: "total glucose of storage roots (mg glucose / g DW)" []
+relationship: variable_of CO_334:0006038 ! CassBase Variables
+
+[Term]
+id: CO_334:0006052
+name: total fructose of storage roots (mg fructose / g DW)
+namespace: cassava_trait
+def: "total fructose of storage roots (mg fructose / g DW)" []
+relationship: variable_of CO_334:0006038 ! CassBase Variables
+
+[Term]
+id: CO_334:0006053
+name: total sucrose of storage roots (mg sucrose / g DW)
+namespace: cassava_trait
+def: "total sucrose of storage roots (mg sucrose / g DW)" []
+relationship: variable_of CO_334:0006038 ! CassBase Variables
+
+[Term]
 id: CO_334:0010000
 name: Measurement: Plant height with leaf_method
 namespace: CassavaMethod
