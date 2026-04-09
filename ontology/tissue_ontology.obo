@@ -15,112 +15,185 @@ id: CASSTISS:0000001
 name: cass leaf
 synonym: "Lf" EXACT
 def: "" []
-is_a: CASSTISS:0000000
+is_a: CASSTISS:0000000 ! cass_tissues
 
 [Term]
 id: CASSTISS:0000002
 name: cass stem
 synonym: "Stm" EXACT
 def: "" []
-is_a: CASSTISS:0000000
+is_a: CASSTISS:0000000 ! cass_tissues
 
 [Term]
 id: CASSTISS:0000003
 name: cass root
 synonym: "Rt" EXACT
 def: "" []
-is_a: CASSTISS:0000000
+is_a: CASSTISS:0000000 ! cass_tissues
 
 [Term]
 id: CASSTISS:0000004
 name: cass sink leaf
 synonym: "SnkLf" EXACT
 def: "" []
-is_a: CASSTISS:0000001
+is_a: CASSTISS:0000001 ! cass leaf
 
 [Term]
 id: CASSTISS:0000005
 name: cass source leaf
 synonym: "SrcLf" EXACT
 def: "" []
-is_a: CASSTISS:0000001
+is_a: CASSTISS:0000001 ! cass leaf
 
 [Term]
 id: CASSTISS:0000006
 name: cass lower leaf
 synonym: "LwrLf" EXACT
 def: "" []
-is_a: CASSTISS:0000001
+is_a: CASSTISS:0000001 ! cass leaf
 
 [Term]
 id: CASSTISS:0000007
 name: cass upper stem
 synonym: "UpStm" EXACT
 def: "Green and not woody." []
-is_a: CASSTISS:0000002
+is_a: CASSTISS:0000002 ! cass stem
 
 [Term]
 id: CASSTISS:0000008
 name: cass lower stem
 synonym: "LwrStm" EXACT
 def: "" []
-is_a: CASSTISS:0000002
+is_a: CASSTISS:0000002 ! cass stem
 
 [Term]
 id: CASSTISS:0000009
 name: cass lower stem whole
 synonym: "LwrStmWhl" EXACT
 def: "" []
-is_a: CASSTISS:0000008
+is_a: CASSTISS:0000008 ! cass lower stem
 
 [Term]
 id: CASSTISS:0000010
 name: cass lower stem bark
 synonym: "LwStmBrk" EXACT
 def: "" []
-is_a: CASSTISS:0000008
+is_a: CASSTISS:0000008 ! cass lower stem
 
 [Term]
 id: CASSTISS:0000011
 name: cass fibrous root
 synonym: "FbrRt" EXACT
 def: "" []
-is_a: CASSTISS:0000003
+is_a: CASSTISS:0000003 ! cass root
 
 [Term]
 id: CASSTISS:0000012
 name: cass pre-storage root
 synonym: "PreStrRt" EXACT
 def: "Potential storage root." []
-is_a: CASSTISS:0000003
+is_a: CASSTISS:0000003 ! cass root
 
 [Term]
 id: CASSTISS:0000013
 name: cass storage root
 synonym: "StrRt" EXACT
 def: "" []
-is_a: CASSTISS:0000003
+is_a: CASSTISS:0000003 ! cass root
 
 [Term]
 id: CASSTISS:0000014
 name: mother plant stem
 def: "The position of the stem on the mother plant from which this plant was replanted. 1 is the lowest position." []
-is_a: CASSTISS:0000000
+is_a: CASSTISS:0000000 ! cass_tissues
 
 [Term]
 id: CASSTISS:0000015
 name: stick 1
 def: "The position of the stem on the mother plant from which this plant was replanted. 1 is the lowest position, which is this term." []
-is_a: CASSTISS:0000014
+is_a: CASSTISS:0000014 ! mother plant stem
 
 [Term]
 id: CASSTISS:0000016
 name: stick 2
 def: "The position of the stem on the mother plant from which this plant was replanted. 1 is the lowest position. This term is position 2." []
-is_a: CASSTISS:0000014
+is_a: CASSTISS:0000014 ! mother plant stem
 
 [Term]
 id: CASSTISS:0000017
 name: stick 3
 def: "The position of the stem on the mother plant from which this plant was replanted. 1 is the lowest position. This term is position 3." []
-is_a: CASSTISS:0000014
+is_a: CASSTISS:0000014 ! mother plant stem
+
+[Term]
+id: CASSTISS:0000018
+name: tip leaf section (5. & 6. leave)
+def: "tip leaf section of the 5th and 6th leaves (counting from the top), using only the two lateral leaflets (next to the middle leaflet)" []
+is_a: CASSTISS:0000001 ! cass leaf
+
+
+[Term]
+id: CASSTISS:0000019
+name: base leaf section (5. & 6. leave)
+def: "base leaf section of the 5th and 6th leaves (counting from the top), using only the two lateral leaflets (next to the middle leaflet)" []
+is_a: CASSTISS:0000001 ! cass leaf
+
+[Term]
+id: CASSTISS:0000020
+name: tip petiole segment (5. & 6. leave)
+def: "tip petiole segment (closest to the leaflet) of the 5th and 6th leaves" []
+is_a: CASSTISS:0000001 ! cass leaf
+
+[Term]
+id: CASSTISS:0000021
+name: middle petiole segment (5. & 6. leave)
+def: "tip petiole segment (closest to the leaflet) of the 5th and 6th leaves" []
+is_a: CASSTISS:0000001 ! cass leaf
+
+[Term]
+id: CASSTISS:0000022
+name: base petiole segment (5. & 6. leave)
+def: "base petiole segment (closest to the main stem) of the 5th and 6th leaves" []
+is_a: CASSTISS:0000001 ! cass leaf
+
+[Term]
+id: CASSTISS:0000023
+name: peel tip stem segment
+def: "peel of the tip stem segment (furtherest from the root)" []
+is_a: CASSTISS:0000002 ! cass stem
+
+[Term]
+id: CASSTISS:0000024
+name: peel middle stem segment
+def: "peel of the middle stem segment" []
+is_a: CASSTISS:0000002 ! cass stem
+
+[Term]
+id: CASSTISS:0000025
+name: peel base stem segment
+def: "peel of the base stem segment (closest to the root)" []
+is_a: CASSTISS:0000002 ! cass stem
+
+[Term]
+id: CASSTISS:0000026
+name: phloem layer of storage root
+def: "phloem layer of storage root" []
+is_a: CASSTISS:0000013 ! cass storage root
+
+[Term]
+id: CASSTISS:0000027
+name: core of storage root
+def: "core of storage root (without the phloem layer and without the central part of the root)" []
+is_a: CASSTISS:0000013 ! cass storage root
+
+[Term]
+id: CASSTISS:0000028
+name: central part (circular cut) of the storage root
+def: "central part (circular cut) of the storage root" []
+is_a: CASSTISS:0000013 ! cass storage root
+
+[Term]
+id: CASSTISS:0000029
+name: Sap
+def: "Sap" []
+is_a: CASSTISS:0000000 ! cass_tissues
