@@ -11095,6 +11095,30 @@ def: "total sucrose of storage roots (mg sucrose / g DW)" []
 relationship: variable_of CO_334:0006038 ! CassBase Variables
 
 [Term]
+id: CO_334:0006054
+name: Total protein content (mg/g DW)
+def: "Total protein content (mg/g DW)" []
+relationship: variable_of CO_334:0006038 ! CassBase Variables
+
+[Term]
+id: CO_334:0006055
+name: Node number per plant
+def: "Node number per plant" []
+relationship: variable_of CO_334:0006038 ! CassBase Variables
+
+![Term]
+!id: CO_334:0006056
+!name: Metabolite concentrations
+!def: "Metabolite concentrations as measured with HPLC or GCMS" []
+!is_a: CO_334:0006038 ! CassBase Variables
+
+![Term]
+!id: CO_334:0006057
+!name: cinnamic acid (mg/g DW)
+!def: "cinnamic acid (mg/g DW)" []
+!relationship: variable_of CO_334:0006055
+
+[Term]
 id: CO_334:0010000
 name: Measurement: Plant height with leaf_method
 namespace: CassavaMethod
@@ -16264,4 +16288,3 @@ name: scale_of
 [Typedef]
 id: variable_of
 name: variable_of
-
