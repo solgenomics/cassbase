@@ -11112,12 +11112,6 @@ name: CassBase Metabolites
 is_a: CO_334:0000000 ! CGIAR cassava trait ontology
 
 [Term]
-id: CO_334:0006058
-name: trait_name
-def: "description" []
-relationship: variable_of CO_334:0006057 ! CassBase Metabolites
-
-[Term]
 id: CO_334:0006059
 name: Linamarin (ug/DW)
 def: "Linamarin (CHEBI:16441) content measured with GC-MS in ug/DW." []
