@@ -11106,17 +11106,538 @@ name: Node number per plant
 def: "Node number per plant" []
 relationship: variable_of CO_334:0006038 ! CassBase Variables
 
-![Term]
-!id: CO_334:0006056
-!name: Metabolite concentrations
-!def: "Metabolite concentrations as measured with HPLC or GCMS" []
-!is_a: CO_334:0006038 ! CassBase Variables
+[Term]
+id: CO_334:0006057
+name: CassBase Metabolites
+is_a: CO_334:0000000 ! CGIAR cassava trait ontology
 
-![Term]
-!id: CO_334:0006057
-!name: cinnamic acid (mg/g DW)
-!def: "cinnamic acid (mg/g DW)" []
-!relationship: variable_of CO_334:0006055
+[Term]
+id: CO_334:0006058
+name: trait_name
+def: "description" []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006059
+name: Linamarin (ug/DW)
+def: "Linamarin (CHEBI:16441) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006060
+name: Glycerol-3-phosphate (ug/DW)
+def: "Glycerol-3-phosphate (CHEBI:15978) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006061
+name: 4-hydroxy-trans-cinnamate (ug/DW)
+def: "4-hydroxy-trans-cinnamate (CHEBI:32374) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006062
+name: Glycolic acid (ug/DW)
+def: "Glycolic acid (CHEBI:17497) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006063
+name: Valine (ug/DW)
+def: "Valine (CHEBI:27266) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006064
+name: Glycerol (ug/DW)
+def: "Glycerol (CHEBI:17754) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006065
+name: Leucine (ug/DW)
+def: "Leucine (CHEBI:25017) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006066
+name: Isoleucine (ug/DW)
+def: "Isoleucine (CHEBI:24898) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006067
+name: Glycine (ug/DW)
+def: "Glycine (CHEBI:15428) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006068
+name: Phosphate (ug/DW)
+def: "Phosphate (CHEBI:26078) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006069
+name: Proline (ug/DW)
+def: "Proline (CHEBI:26271) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006070
+name: Urea (ug/DW)
+def: "Urea (CHEBI:16199) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006071
+name: Glyceric acid (ug/DW)
+def: "Glyceric acid (CHEBI:33508) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006072
+name: Alanine (ug/DW)
+def: "Alanine (CHEBI:16449) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006073
+name: Serine (ug/DW)
+def: "Serine (CHEBI:17822) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006074
+name: Succinic acid (ug/DW)
+def: "Succinic acid (CHEBI:15741) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006075
+name: Threonine (ug/DW)
+def: "Threonine (CHEBI:26986) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006076
+name: Fumaric acid (ug/DW)
+def: "Fumaric acid (CHEBI:18012) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006077
+name: Maleic acid (ug/DW)
+def: "Maleic acid (CHEBI:18300) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006078
+name: Nicotinic acid (ug/DW)
+def: "Nicotinic acid (CHEBI:15940) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006079
+name: Beta-Alanine (ug/DW)
+def: "Beta-Alanine (CHEBI:16958) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006080
+name: Homoserine (ug/DW)
+def: "Homoserine (CHEBI:30653) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006081
+name: Erythritol (ug/DW)
+def: "Erythritol (CHEBI:17113) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006082
+name: O-Acetyl-Serine (ug/DW)
+def: "O-Acetyl-Serine (CHEBI:17981) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006083
+name: Malic acid (ug/DW)
+def: "Malic acid (CHEBI:6650) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006084
+name: Gamma-aminobutyric acid (ug/DW)
+def: "Gamma-aminobutyric acid (CHEBI:16865) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006085
+name: Aspartic acid (ug/DW)
+def: "Aspartic acid (CHEBI:22660) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006086
+name: Threonic acid (ug/DW)
+def: "Threonic acid (CHEBI:15908) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006087
+name: Methionine (ug/DW)
+def: "Methionine (CHEBI:16811) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006088
+name: Asparagine (ug/DW)
+def: "Asparagine (CHEBI:22653) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006089
+name: Ornithine (ug/DW)
+def: "Ornithine (CHEBI:18257) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006090
+name: N-Acety-Serine (ug/DW)
+def: "N-Acety-Serine (CHEBI:45441) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006091
+name: Xylose (ug/DW)
+def: "Xylose (CHEBI:18222) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006092
+name: Glutamic acid (ug/DW)
+def: "Glutamic acid (CHEBI:18237) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006093
+name: Rhamnose (ug/DW)
+def: "Rhamnose (CHEBI:26546) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006094
+name: Putrescine (ug/DW)
+def: "Putrescine (CHEBI:17148) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006095
+name: 2-Oxoglutaric acid (ug/DW)
+def: "2-Oxoglutaric acid (CHEBI:30915) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006096
+name: Fucose (ug/DW)
+def: "Fucose (CHEBI:33984) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006097
+name: Phenylalanine (ug/DW)
+def: "Phenylalanine (CHEBI:28044) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006098
+name: Quinic acid (ug/DW)
+def: "Quinic acid (CHEBI:26493) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006099
+name: Fructose (ug/DW)
+def: "Fructose (CHEBI:28757) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006100
+name: Shikimic acid (ug/DW)
+def: "Shikimic acid (CHEBI:16119) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006101
+name: Citric acid (ug/DW)
+def: "Citric acid (CHEBI:30769) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006102
+name: Glutamine (ug/DW)
+def: "Glutamine (CHEBI:28300) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006103
+name: Glucose (ug/DW)
+def: "Glucose (CHEBI:17234) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006104
+name: Arginine (ug/DW)
+def: "Arginine (CHEBI:29016) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006105
+name: Lysine (ug/DW)
+def: "Lysine (CHEBI:25094) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006106
+name: Myo-Inositol (ug/DW)
+def: "Myo-Inositol (CHEBI:17268) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006107
+name: Tyrosine (ug/DW)
+def: "Tyrosine (CHEBI:18186) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006108
+name: Histidine (ug/DW)
+def: "Histidine (CHEBI:27570) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006109
+name: cis-Caffeic acid (ug/DW)
+def: "cis-Caffeic acid (CHEBI:17395) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006110
+name: trans-Caffeic acid (ug/DW)
+def: "trans-Caffeic acid (CHEBI:16433) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006111
+name: Sucrose (ug/DW)
+def: "Sucrose (CHEBI:17992) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006112
+name: Trehalose (ug/DW)
+def: "Trehalose (CHEBI:16551) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006113
+name: Galactinol (ug/DW)
+def: "Galactinol (CHEBI:17505) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006114
+name: Raffinose (ug/DW)
+def: "Raffinose (CHEBI:16634) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006115
+name: Lactic acid (ug/DW)
+def: "Lactic acid (CHEBI:28358) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006116
+name: Benzoic acid (ug/DW)
+def: "Benzoic acid (CHEBI:30746) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006117
+name: Galactonolactone (ug/DW)
+def: "Galactonolactone (CHEBI:15895) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006118
+name: Tryptophan (ug/DW)
+def: "Tryptophan (CHEBI:27897) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006119
+name: Maltose (ug/DW)
+def: "Maltose (CHEBI:17306) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006120
+name: Pyruvic acid (ug/DW)
+def: "Pyruvic acid (CHEBI:32816) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006121
+name: 3-trans-caffeoylquinic acid (ug/DW)
+def: "3-trans-caffeoylquinic acid (CHEBI:16112) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006122
+name: Aspartate (ug/DW)
+def: "Aspartate (CHEBI:22660) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006123
+name: GABA (ug/DW)
+def: "GABA (CHEBI:16865) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006124
+name: Glutamate (ug/DW)
+def: "Glutamate (CHEBI:18237) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006125
+name: Proline,4-hydroxy-,trans (ug/DW)
+def: "Proline,4-hydroxy-,trans (CHEBI:20392) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006126
+name: Serine,N-acetyl (ug/DW)
+def: "Serine,N-acetyl (CHEBI:45441) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006127
+name: Serine,O-acetyl (ug/DW)
+def: "Serine,O-acetyl (CHEBI:17981) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006128
+name: Threonate (ug/DW)
+def: "Threonate (CHEBI:15243) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006129
+name: 2-oxoglutarate (ug/DW)
+def: "2-oxoglutarate (CHEBI:30915) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006130
+name: Citrate (ug/DW)
+def: "Citrate (CHEBI:30769) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006131
+name: Fumarate (ug/DW)
+def: "Fumarate (CHEBI:18012) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006132
+name: Glycerate (ug/DW)
+def: "Glycerate (CHEBI:33508) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006133
+name: Glycolate (ug/DW)
+def: "Glycolate (CHEBI:17497) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006134
+name: Malate (ug/DW)
+def: "Malate (CHEBI:6650) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006135
+name: Pyruvate (ug/DW)
+def: "Pyruvate (CHEBI:15361) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006136
+name: Succinate (ug/DW)
+def: "Succinate (CHEBI:15741) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006137
+name: Phosphoric acid (ug/DW)
+def: "Phosphoric acid (CHEBI:26078) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006138
+name: Glycerol-3-phosphate (ug/DW)
+def: "Glycerol-3-phosphate (CHEBI:15978) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006139
+name: Shikimate (ug/DW)
+def: "Shikimate (CHEBI:16119) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006140
+name: Fructose-6-phosphate (ug/DW)
+def: "Fructose-6-phosphate (CHEBI:78697) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006141
+name: Trehalose,alpha (ug/DW)
+def: "Trehalose,alpha (CHEBI:16551) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006142
+name: Quinic acid,3-caffeoyl-trans (ug/DW)
+def: "Quinic acid,3-caffeoyl-trans (CHEBI:26493) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006143
+name: Caffeic acid,cis (ug/DW)
+def: "Caffeic acid,cis (CHEBI:17395) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006144
+name: Caffeic acid,trans (ug/DW)
+def: "Caffeic acid,trans (CHEBI:16433) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
+
+[Term]
+id: CO_334:0006145
+name: Cinnamic acid (ug/DW)
+def: "Cinnamic acid (CHEBI:27386)) content measured with GC-MS in ug/DW." []
+relationship: variable_of CO_334:0006057 ! CassBase Metabolites
 
 [Term]
 id: CO_334:0010000
