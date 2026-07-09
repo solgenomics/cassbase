@@ -10,6 +10,7 @@
     <li><a href="/breeders/seedlots/">Seed Lots</a></li>
     <li><a href="/breeders/crosses/">Crosses</a></li>
     <li><a href="/breeders/trials/">Field Trials</a></li>
+    <li><a href="/treatments/design">Treatments</a></li>
     <li role="separator" class="divider"></li>
     <li><a href="/order/stocks/view">Stock Orders</a></li>
     <li><a href="/breeders/activities">Tracking Activities</a></li>
@@ -23,7 +24,7 @@
     <li><a href="/barcode">Barcodes</a></li>
     <li><a href="/tools/label_designer">Label Designer</a></li>
     <li><a href="/breeders/NIRS">NIRS</a></li>
-    <li><a href="/breeders/transcriptomics">Transcriptomics</a></li>    
+    <li><a href="/breeders/transcriptomics">Transcriptomics</a></li>
     <li><a href="/breeders/download">Download</a></li>
     <li><a href="/breeders/upload">Upload</a></li>
     <li><a href="/breeders/identifier_generation">Identifier Generation</a></li>

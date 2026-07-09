@@ -6,6 +6,7 @@
     <li><a href="/search/organisms">Organisms</a></li>
     <li role="separator" class="divider"></li>
     <li><a href="/search/trials">Field Trials</a></li>
+    <li><a href="/search/treatments">Treatments</a></li>
     <li><a href="/search/genotyping_trials">Genotyping Plates</a></li>
     <li><a href="/search/genotyping_data_projects">Genotyping Data Projects</a></li>
     <li><a href="/search/genotyping_protocols">Genotyping Protocols</a></li>
