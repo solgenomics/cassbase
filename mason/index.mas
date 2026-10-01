@@ -12,13 +12,15 @@ $timestamp
 
 <div class="well well-sm">
 <center>
-<iframe width="740" height="416" src="https://www.youtube.com/embed/videoseries?list=PLiUTq4-ZYpYImTbqKnvUD-XK-BZ0mPed8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<!-- iframe width="740" height="416" src="https://www.youtube.com/embed/videoseries?list=PLiUTq4-ZYpYImTbqKnvUD-XK-BZ0mPed8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe -->
+
+<img src="/img/cassbase/2026-09-22_09_35_05_Helsinki_Annual_Meeting_2026.JPG" width="500" />
 </center>
 </div>
 
 <center>
 <br/>
-<& homepage/carousel.mas &>
+<!-- & homepage/carousel.mas & -->
 <br/><br/>
 </center>
 
